@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Could something alive be made of plasma? The full essay | Karan Akbari</title>
+  <meta name="description" content="The full essay on whether something alive could be made of plasma: two simulations that write a pattern into plasma and try to read it back, with the numbers and why I stopped.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/plasma-life/essay/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Could something alive be made of plasma?">
+  <meta property="og:description" content="The full essay on whether something alive could be made of plasma: two simulations that write a pattern into plasma and try to read it back, with the numbers and why I stopped.">
+  <meta property="og:url" content="https://karanakbari.com/research/plasma-life/essay/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Could something alive be made of plasma?">
+  <meta name="twitter:description" content="The full essay on whether something alive could be made of plasma: two simulations that write a pattern into plasma and try to read it back, with the numbers and why I stopped.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Could something alive be made of plasma?","alternativeHeadline":"Writing a pattern into hot plasma and trying to read it back","description":"The full essay on whether something alive could be made of plasma: two simulations that write a pattern into plasma and try to read it back, with the numbers and why I stopped.","url":"https://karanakbari.com/research/plasma-life/essay/","mainEntityOfPage":"https://karanakbari.com/research/plasma-life/essay/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-10-01","image":"https://karanakbari.com/assets/images/og-card.png","about":["plasma physics","astrobiology","simulation"],"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    /* one text column; on wide screens a margin column on the right for notes and captions */
+    .essay{--note-w:0px;--gap:0px;--out:calc(-1 * (var(--note-w) + var(--gap)));width:min(calc(100% - 2.5rem),60rem);margin-inline:auto;font-size:1.1rem;line-height:1.66}
+    .essay-head{width:min(calc(100% - 2.5rem),60rem);margin:0 auto}
+    .kick{margin:2.6rem 0 1rem;color:var(--rust);font:700 .74rem/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+    h1{max-width:15em;font-size:clamp(2.3rem,5.4vw,3.7rem);font-weight:400;letter-spacing:-.025em;line-height:1.05;margin:0 0 .8rem}
+    .subtitle{max-width:32em;margin:0 0 2rem;color:var(--ink-soft);font-size:clamp(1.15rem,2.4vw,1.45rem);font-style:italic;line-height:1.35}
+    .top{margin:0;background:#000;padding-block:1.5rem}
+    .top img{display:block;width:auto;max-width:min(calc(100% - 2.5rem),560px);max-height:62vh;height:auto;margin:0 auto}
+    .top figcaption{width:min(calc(100% - 2.5rem),560px);margin:.6rem auto 0;color:#cfc8bb;font:.78rem/1.45 var(--sans)}
+    .top figcaption a{color:inherit}
+    .dek{margin:2.2rem 0 1rem;font-size:1.22rem;font-style:italic;line-height:1.55}
+    .dek .up{font-style:normal}
+    .byline{margin:0 0 2.6rem;color:var(--muted);font:.85rem/1.4 var(--sans)}
+    .byline strong{margin-right:.7rem;color:var(--ink)}
+    .byline a{margin-left:.7rem;color:var(--teal)}
+    .essay p{margin:0 0 1.05rem;hyphens:auto}
+    .essay a{color:var(--teal)}
+    .lede::first-letter{float:left;margin:.07em .09em 0 0;color:var(--rust);font-size:3.55em;line-height:.84}
+    .essay h2{margin:2.9rem 0 1rem;font-size:1.65rem;font-weight:400;line-height:1.2;scroll-margin-top:1rem}
+    .essay h2::before{content:"";display:block;width:2.2em;height:2px;margin-bottom:.6rem;background:var(--rust)}
+    /* inline maths */
+    math{font-family:"Cambria Math","STIX Two Math","Latin Modern Math",math;font-size:1.02em}
+    .m{white-space:nowrap}
+    .m b,.vec{font-weight:700;font-style:normal}
+    .eq{display:flex;align-items:center;gap:1rem;margin:.7rem 0 .9rem;overflow-x:auto;overflow-y:hidden;padding-block:.2rem}
+    .eq math{flex:1 1 auto}
+    .eq-parts{display:flex;flex:1 1 auto;flex-wrap:wrap;justify-content:center;align-items:center;gap:.4rem 2em}
+    .eq-parts math{flex:none}
+    .eqno{flex:none;color:var(--muted);font:.85rem var(--sans)}
+    /* sidenotes: margin notes on wide screens, tap to open on narrow ones */
+    .sn-toggle{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+    .sn-ref{color:var(--teal);font:700 .68em/0 var(--sans);vertical-align:super;cursor:pointer;padding:.9em .45em;margin:0 -.3em}
+    .sn-toggle:focus-visible + .sn-ref{outline:2px solid var(--rust);outline-offset:2px;border-radius:2px}
+    .sidenote{display:none;color:var(--ink-soft);font:.8rem/1.5 var(--sans);hyphens:manual}
+    .sidenote i{font-style:italic}
+    .sn-num{margin-right:.25em;color:var(--teal);font-weight:700;font-size:.8em;vertical-align:super;line-height:0}
+    .sn-toggle:checked + .sn-ref + .sidenote{display:block;margin:.55rem 0 .8rem;padding:.6rem .8rem;border-left:2px solid var(--teal);background:var(--paper-deep)}
+    /* figures */
+    .fig{margin:2rem 0}
+    .fig img{display:block;width:100%;height:auto;box-sizing:border-box;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .fig figcaption{margin-top:.6rem;color:var(--ink-soft);font:.8rem/1.5 var(--sans)}
+    .fig figcaption b{color:var(--teal)}
+    .fig-wide .fig-img-86 img{width:86%;margin-inline:auto}
+    .fig-wide .fig-img-86{background:var(--figure-bg);padding:var(--figure-pad);border-radius:3px;filter:var(--figure-filter)}
+    .fig-wide .fig-img-86 img{padding:0;border-radius:0;filter:none}
+    .fig-timeline img{padding:1rem .6rem}
+    /* technical box */
+    .techbox{margin:2.4rem 0;padding:1.4rem clamp(1rem,3vw,1.8rem);border-left:3px solid var(--rust);background:var(--paper-deep);font-size:.95rem;line-height:1.6}
+    .techbox h2{margin:0 0 .5rem;color:var(--rust);font:700 1.12rem/1.3 var(--sans)}
+    .techbox h2::before{display:none}
+    .techbox h3{margin:1.7rem 0 .6rem;color:var(--rust);font:700 .76rem/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase;scroll-margin-top:1rem}
+    .techbox p{margin:0 0 .7rem}
+    .box-intro{color:var(--ink-soft)}
+    .tbl{margin:.8rem 0 .9rem;overflow-x:auto}
+    .tbl table{border-collapse:collapse;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);font:.8rem/1.4 var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap}
+    .tbl th,.tbl td{padding:.28rem 1rem .28rem 0;text-align:left;vertical-align:baseline}
+    .tbl th:last-child,.tbl td:last-child{padding-right:0}
+    .tbl thead th{border-bottom:1px solid var(--ink);font-weight:600}
+    .tbl .r{text-align:right}
+    .tbl-note{color:var(--ink-soft);font:.8rem/1.5 var(--sans)}
+    /* list, ending, references */
+    .needs{margin:1rem 0 1.5rem;padding-left:1.2em}
+    .needs li{margin-bottom:.55rem;padding-left:.2em}
+    .needs li::marker{color:var(--rust)}
+    .endmark{display:inline-block;width:.5em;height:.5em;margin-left:.45em;background:var(--rust)}
+    .refs p{margin:0 0 .65rem;padding-left:1.2em;text-indent:-1.2em;font-size:.93rem;line-height:1.5;scroll-margin-top:1rem}
+    .refs p:target{background:var(--teal-pale)}
+    .refs a{overflow-wrap:anywhere}
+    .colophon{margin:2.4rem 0 4.5rem;color:var(--muted);font:.78rem/1.5 var(--sans)}
+    .fig:target figcaption b{background:var(--teal-pale)}
+    @media (min-width:900px){
+      .essay{--note-w:clamp(11.5rem,21vw,16rem);--gap:clamp(1.5rem,2.8vw,2.5rem);padding-right:calc(var(--note-w) + var(--gap));box-sizing:border-box}
+      .sn-toggle{display:none}
+      .sn-ref{cursor:default}
+      .sidenote{display:block;position:relative;float:right;clear:right;width:var(--note-w);margin:.35rem var(--out) .9rem 0}
+      .fig-side{display:grid;grid-template-columns:minmax(0,1fr) var(--note-w);column-gap:var(--gap);align-items:end;margin-right:var(--out);clear:right}
+      .fig-side figcaption{margin-top:0}
+      .fig-wide,.techbox{margin-right:var(--out);clear:right}
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="essay-head">
+      <p class="kick">Exploratory work · stopped for now</p>
+      <h1>Could something alive be made of plasma?</h1>
+      <p class="subtitle">Writing a pattern into hot plasma and trying to read it back</p>
+    </header>
+
+    <figure class="top">
+      <img src="/assets/images/sdo-prominence.jpg" width="720" height="720" decoding="async" alt="Extreme-ultraviolet image of a large plasma prominence erupting from the edge of the Sun.">
+      <figcaption>Plasma erupting off the Sun, 13&nbsp;October&nbsp;2015, in extreme ultraviolet.<br>NASA/GSFC/Solar Dynamics Observatory, <a href="https://science.nasa.gov/photojournal/hefty-prominence-eruption/">“Hefty Prominence Eruption”</a>.</figcaption>
+    </figure>
+
+    <article class="essay">
+      <p class="dek">In the <span class="up">Project Hail Mary</span> movie there are cells that come from the surface of the Sun. This is the long version of where that idea took me, from what life would need there to the two plasma simulations I ran and why I stopped, with the numbers.</p>
+      <p class="byline"><strong>Karan Akbari</strong> September 2026 <span aria-hidden="true">·</span><a href="/research/plasma-life/">Short version</a></p>
+
+      <p class="lede">In <i>Project Hail Mary</i> there are these cells called Astrophage, and they come from the surface of the Sun. So, lifeforms living on the surface of the Sun. I stopped watching as soon as they said that and went off with my own idea, before the movie even got to showing that the cells were made of carbon, hydrogen and oxygen. I only found that part out later. But if something actually wanted to survive on the surface of the Sun, it would probably have to be made of the stellar plasma too.</p>
+
+      <p>Plasma is gas in which enough electrons have come loose from their atoms that the whole thing conducts electricity, so it drags magnetic field around with it and the field pushes back. The outer layers of a star are made of it. The Sun's visible surface is only weakly ionized, and cool enough that a few molecules form there, but it gets hotter and more fully ionized higher up. A lifeform living in those layers wouldn't get much choice of material, and hot magnetized plasma is the obvious candidate.</p>
+
+      <p>Plasma life on its own isn't a new idea. <a href="#ref-tsytovich">Tsytovich and others</a> suggested back in 2007 that helical structures of charged dust grains in cold, dusty plasma could behave a bit like living matter.<input type="checkbox" id="sn-1" class="sn-toggle" aria-label="Note 1"><label for="sn-1" class="sn-ref">1</label><span class="sidenote"><span class="sn-num">1</span>Tsytovich et al. (2007), <i>New J. Phys.</i> 9, 263. Their structures are built from charged solid microparticles, so the grains are part of the idea. <a href="#ref-tsytovich">Reference</a>.</span> The surface of a star is a very different place, dust grains wouldn't survive there, so I was asking about the hot magnetized plasma itself.</p>
+
+      <p>That's way too big a question to simulate, so I asked a smaller one: if you write a pattern into plasma, can you read it back later?</p>
+
+      <p>I ran two tests. In the first, a magnetic wave written into a box of moving plasma could still partly be read at the end, but by then the electrical resistance I had chosen would have shrunk it to about a tenth of its starting size even with nothing else going on, so how much of it survived mostly depends on one setting I picked. The second wrote a heat pattern near a point where the magnetic field is zero and tried to read it by pushing on the plasma, and the reading changed so much on a finer grid that it failed the check I had fixed in advance in all eight cases. It can't say whether the pattern was read or lost. I came out of it with a sharper version of the question and a list of what a test would need to answer it.</p>
+
+      <h2 id="what-life-needs-without-water-and-carbon">What life needs without water and carbon</h2>
+
+      <p>The first thing was working out what life actually needs once you take away water and carbon. Water and carbon are parochial requirements, which means they're just how life happens to work on Earth. Pattern is different. If something has no structure you can tell apart from its surroundings, you can't even say it's there, never mind alive.</p>
+
+      <p>The pattern doesn't have to keep the same material, though. A flame is always burning new fuel and it's still one flame. A hurricane keeps pulling in new air and throwing old air out, and it's the same hurricane from one day to the next. The useful question for a plasma lifeform is then what it would have to keep, whatever it happens to be made of at the moment.</p>
+
+      <p>The reason pattern matters is lineage: a parent has to pass something on to whatever comes after it, and that something is a pattern. For us that's DNA and RNA, where the order of the bases is what gets copied. A plasma lifeform would need its own version of that.</p>
+
+      <p>That rules out the cheapest version of plasma life. Structures form in a star's atmosphere all the time and fall apart again, and if one forms, dissolves, and a similar one shows up later on its own, the second one didn't inherit anything from the first. I'll call that recurrence, and snowflakes and ripple marks in sand recur constantly without anyone calling them alive. To count as a lineage, the first structure has to leave something behind that changes what forms next, some trace in the field or the gas that the next one picks up.</p>
+
+      <p>So the question turned into one about information: can a plasma hold a pattern for long enough, and can you read it back later?<input type="checkbox" id="sn-2" class="sn-toggle" aria-label="Note 2"><label for="sn-2" class="sn-ref">2</label><span class="sidenote"><span class="sn-num">2</span>Scharf and Witkowski (2024) rebuild the habitable zone from the bottom up around computation, meaning physical processes that act on information stored in states of matter, and call the result computational zones. My question sits inside that idea, for one very hot environment. <a href="#ref-scharf">Reference</a>.</span></p>
+
+      <h2 id="a-first-draft-that-didnt-survive">A first draft that didn't survive</h2>
+
+      <p>Every time I tried to argue that plasma life was impossible, the argument turned into a question about some quantity I could actually calculate. So I wrote it all down.</p>
+
+      <p>A good chunk of that first document didn't survive checking. I had claimed chemistry fails completely in the Sun's photosphere, but molecules like CO do form there.<input type="checkbox" id="sn-3" class="sn-toggle" aria-label="Note 3"><label for="sn-3" class="sn-ref">3</label><span class="sidenote"><span class="sn-num">3</span>Carbon monoxide has been observed in the solar atmosphere for decades, and Wedemeyer-Böhm and Steffen (2007) model it forming and breaking apart in the photosphere and chromosphere. <a href="#ref-wedemeyer">Reference</a>.</span> A couple of other arguments, like a hard limit on how many magnetic structures could exist side by side, needed assumptions I hadn't justified.<input type="checkbox" id="sn-4" class="sn-toggle" aria-label="Note 4"><label for="sn-4" class="sn-ref">4</label><span class="sidenote"><span class="sn-num">4</span>That limit leaned on magnetic helicity, a measure of how twisted and linked a field is. Two closed flux tubes that aren't linked have zero mutual helicity no matter how close together they are (Démoulin, Pariat and Berger 2006), so crowding structures together doesn't set a limit on its own. <a href="#ref-demoulin">Reference</a>.</span></p>
+
+      <p>The part that held up was the framing. Life needs a lineage, a lineage needs a pattern that gets passed on, so the question is how long a turbulent magnetized plasma can remember a pattern and whether anything can read it back.</p>
+
+      <p>Before simulating anything I needed a definition of remembering, and the one I used is plain. Write one of two possible patterns into the plasma, wait, and then check whether some reader can still tell which one you wrote. If it can't do better than a coin flip, the plasma has forgotten, at least as far as that reader is concerned. One bit is a small message, but it's enough to see whether anything survives at all.</p>
+
+      <h2 id="test-one-a-wave-in-the-field">Test one: a wave in the field</h2>
+
+      <p>The first test wrote magnetic patterns into a simplified plasma simulation, as one of two signs of a chosen wave pattern, and checked whether a reader could still tell which sign it was later. With the right reader, some of it stayed readable.</p>
+
+      <p>The simulation was a periodic box, a cube <span class="m">2<i>π</i></span> on a side with 24 grid points each way, filled with an incompressible magnetized fluid that has some electrical resistance. The message was a magnetic wave added to a random moving background, with either a plus or a minus sign in front of it. After the plasma had evolved for a while, the reader projected the field back onto the wave, got a number, added its own measurement noise, and guessed the sign from whether the number came out positive or negative. The noise was Gaussian with a fixed size <span class="m"><i>σ</i></span>, in units where the wave starts with a mean square of 1, and I tried <span class="m"><i>σ</i> = 0.1</span>, 0.3 and 1. I ran this on 32 different random backgrounds, both signs on each, so 64 runs. Everything is in simulation units, so the box isn't tied to any particular place on the Sun.</p>
+
+      <figure class="fig fig-side" id="figure-1">
+        <img src="/assets/plasma/essay/fig_reader_error.svg" width="422" height="278" loading="lazy" decoding="async" alt="Line chart of the chance of reading the wrong sign against time for three noise levels, each rising toward 0.5, with a dashed no-background curve below each one.">
+        <figcaption><b>Figure 1.</b> How often the reader gets the sign wrong over time, in the first test. Solid lines are averages over the 32 random backgrounds, with a shaded 95% bootstrap interval that is thinner than the line at most points. Dashed lines are the exact answer for the same reader when there is no background and the wave only fades by diffusion. The dotted line at 0.5 is guessing.</figcaption>
+      </figure>
+
+      <p>By <span class="m"><i>t</i> = 6</span> in simulation units, the least noisy reader got the sign wrong 33% of the time (<a href="#figure-1">Figure&nbsp;1</a>). That 33% is a probability: for each run I worked out the chance of a wrong guess exactly from the noise, then averaged over the 64 runs. A coin gets it wrong 50% of the time, so part of the bit was still there, about 0.08 bits. The bits are the mutual information between the sign I wrote and the reader's guess, which is 1 bit for a reader that's never wrong and 0 for one that's wrong half the time. The same reader on the wave alone, with no background and nothing happening except the wave slowly fading, gets it wrong 18% of the time. The moving background made it worse, which is about what you'd expect, but it didn't wipe the message out.</p>
+
+      <p>Most of the fading comes from the resistance. On its own the wave decays by diffusion as <math><msup><mi>e</mi><mrow><mo>−</mo><mi>η</mi><msup><mi>k</mi><mn>2</mn></msup><mi>t</mi></mrow></msup></math>, and with the diffusivity <span class="m"><i>η</i> = 0.1</span> I chose and the wave's wavenumber <span class="m"><i>k</i> = 2</span> that is <span class="m"><i>e</i><sup>−2.4</sup></span> by <span class="m"><i>t</i> = 6</span>, about 9% of its starting size. So how much of the bit survives here is mostly set by the value of <span class="m"><i>η</i></span> I picked, and the background accounts for the step from 18% to 33%.</p>
+
+      <p>That reader was generous though. It knew exactly where the pattern was supposed to be, and it got to look at the whole simulation at once.</p>
+
+      <p>The first of those matters because, for a single wave on its own, sliding it by half a wavelength is the same as flipping its sign, so if the reader doesn't know where the wave starts, a plus and a minus look identical and the message is gone. I tried a second code that carries its own reference, a longer wave written alongside the message wave, so the reader compares the two waves with each other and doesn't need to know where anything is. That kept some of the bit too. Its least noisy reader was wrong 37% of the time, against 29% for the same code with no background.<input type="checkbox" id="sn-5" class="sn-toggle" aria-label="Note 5"><label for="sn-5" class="sn-ref">5</label><span class="sidenote"><span class="sn-num">5</span>The two codes aren't a fair race. They use different observations and split the signal energy differently, so each one is compared with its own no-background case.</span> But it's still a reader looking at the whole box from outside, and nothing in the plasma was doing any reading.</p>
+
+      <h2 id="test-two-heat-near-a-magnetic-null">Test two: heat near a magnetic null</h2>
+
+      <p>So the second test was local. Near a magnetic null, where the field drops to zero, I heated the plasma in one of two patterns with the same total energy, then pushed on the middle later and watched how the plasma nearby moved.</p>
+
+      <p>I picked a null because one kick is enough to keep it changing for a while. In this setup the field starts in an X shape, with field lines bending away from a point in the middle where the field is zero. A disturbance comes in from outside and collapses that X into a thin sheet of electric current, and the current in the middle then flips sign back and forth as it dies down.<input type="checkbox" id="sn-6" class="sn-toggle" aria-label="Note 6"><label for="sn-6" class="sn-ref">6</label><span class="sidenote"><span class="sn-num">6</span>The setup is informed by work on oscillatory reconnection, for example Karampelas et al. (2022), who found that the period of these oscillations doesn't depend on how strong the initial pulse is. My transport settings were chosen to make a local test tractable, so this isn't a calibrated model of the solar corona. <a href="#ref-karampelas">Reference</a>.</span> That flipping is a small, simple version of a structure that comes back more than once, and a lineage would need something like that, something that returns and could carry a pattern from one round to the next. The plan was to write the pattern before the current flipped and read it after. Nulls like this are usually studied in the corona, the hot thin layer well above the visible surface, so this test had moved up from the surface I started with, and like the first one it's in simulation units.</p>
+
+      <p>The writing was heat. Between <span class="m"><i>t</i> = 2</span> and <span class="m">2.2</span> I added heat in a ring around the null, and the ring was either hotter along the <span class="m"><i>x</i></span> axis or hotter along the <span class="m"><i>y</i></span> axis, with the same total energy either way (<a href="#figure-2">Figure&nbsp;2</a>). I'll call these the cosine patterns, because the heating varies around the ring as <span class="m">cos&thinsp;2<i>θ</i></span>. At its strongest the added heat was about 12% of the internal energy already there in the runs with the incoming disturbance, which had squeezed the plasma in some parts of the ring and thinned it in others by then, and about 10% in the runs without it. A second pair, the sine patterns, did the same thing rotated by 45 degrees. The field doesn't look the same after that turn, though. The sine patterns put their hot spots on the diagonals, which are the two field lines that run through the null, and their readers (below) sat closer to it, so the two pairs aren't exact copies of each other.</p>
+
+      <figure class="fig fig-wide" id="figure-2">
+        <div class="fig-img-86"><img src="/assets/plasma/essay/fig_writer.svg" width="538" height="278" loading="lazy" decoding="async" alt="Two maps of the heat ring around the null, one hotter left and right, the other hotter top and bottom, with the push disk and the reader squares marked."></div>
+        <figcaption><b>Figure 2.</b> The two heat patterns for one orientation, as they were prescribed, before the plasma did anything with them. Both put the same total energy into a ring between radius 1.15 and 1.85 around the null, one hotter along <i>x</i> (<i>M</i>&nbsp;=&nbsp;+1) and one hotter along <i>y</i> (<i>M</i>&nbsp;=&nbsp;−1). The teal disk is where the push acts, the solid squares are the readers used for this orientation and the dashed squares are the ones used for the rotated patterns. Grey curves are the initial X-shaped field lines.</figcaption>
+      </figure>
+
+      <p>Then I waited. The central current flipped at about <span class="m"><i>t</i> = 3.1</span>, and at <span class="m"><i>t</i> = 3.5</span> I gave the plasma a short, small inward push inside a small disk at the centre, lasting 0.1 time units. Four small square readers nearby averaged the velocity of the plasma inside them for the next time unit (<a href="#figure-3">Figure&nbsp;3</a>). Two sat on the <span class="m"><i>x</i></span> and <span class="m"><i>y</i></span> axes, 0.75 from the null, and were read for the cosine patterns. The other two sat on the diagonals, about 0.53 from the null, and were read for the sine patterns.</p>
+
+      <p>The reading needs one more step, because a push makes the plasma move whether or not there's a pattern. For each pattern I ran the simulation twice from the moment before the push, once with the push and once without, and took the difference, which leaves only what the push did. Then I compared that between the two patterns. If the heat pattern changed how the plasma answers the push, this is where it shows up.</p>
+
+      <p>The push is there because of the lineage idea from earlier. A pattern only matters for a lineage if it changes what the plasma does next, and the push response asks whether the heat changed how the plasma moves. Reading the temperature directly would only show that the heat is still there. It is still a reader from outside, though, since I chose the push, when it came and where the readers sat.</p>
+
+      <figure class="fig fig-side fig-timeline" id="figure-3">
+        <img src="/assets/plasma/essay/fig_timeline.svg" width="434" height="127" loading="lazy" decoding="async" alt="Timeline from 0 to 4.5: the disturbance arrives first, heat is written from 2 to 2.2, the current flips sign near 3.1, the push comes at 3.5 and the readers are compared from 3.5 to 4.5.">
+        <figcaption><b>Figure 3.</b> One run of the second test, in simulation time units. The disturbance has already collapsed the null before the heat goes in. The current flips sign at about <i>t</i>&nbsp;=&nbsp;3.1 on the coarser grid and 3.2 on the finer one, before the push. The temperature differences in the text are read at <i>t</i>&nbsp;=&nbsp;4.5 in runs without the push.</figcaption>
+      </figure>
+
+      <p>There were eight cases: two values of the heat conductivity <span class="m"><i>κ</i></span>, 0.2 and 2.6 (the heat flows mainly along the field lines, except near the null where the field is weak), the two orientations of the pattern, and runs with and without the incoming disturbance. The runs without it are a control. The heat can still make the plasma move and the field change on its own there, and I wanted to know how much of any response needed the flipping current.</p>
+
+      <p>There is no read noise in this test, so the coin flip from the definition becomes a question about numerical error. Before running anything I had set a rule that the effect had to be clearly bigger than the numerical noise, five times bigger in the version I wrote down, and if it isn't, this reader can't tell the two patterns apart. Passing that rule was the condition for the big campaign, which meant running the same test with many more disturbances. One part of that noise is easy to measure, so it was the first thing I checked.</p>
+
+      <h2 id="doubling-the-grid">Doubling the grid</h2>
+
+      <p>A simulation chops the plasma into grid cells, and the answer can depend on how small the cells are. The physics doesn't know how many cells you used, so the usual check is to run the same thing again on a finer grid, where a real effect should come out about the same. I ran everything at 160 cells per side and again at 320.</p>
+
+      <p>The heat patterns were mostly still there, but when I doubled the grid resolution the readout changed, and in some cases it flipped sign (<a href="#figure-4">Figure&nbsp;4</a>). A real signal shouldn't change like that when you only change the resolution.</p>
+
+      <figure class="fig fig-wide" id="figure-4">
+        <img src="/assets/plasma/essay/fig_refinement.svg" width="605" height="394" loading="lazy" decoding="async" alt="Four panels of the push response against time on the two grids. The rust and teal curves differ in shape and in some panels in sign.">
+        <figcaption><b>Figure 4.</b> The push response for the four runs with the incoming disturbance, on the coarser grid (rust, 160 cells per side) and the finer one (teal, 320). Each curve is the pushed run minus the unpushed run, compared between the two heat patterns, in millionths of the simulation velocity unit. All four panels share one vertical scale. The shaded strip is the push. <i>D</i> is the size of the difference between the two curves divided by the size of the teal one. If the readout were real the curves would sit on top of each other.</figcaption>
+      </figure>
+
+      <figure class="fig fig-side" id="figure-5">
+        <img src="/assets/plasma/essay/fig_metric.svg" width="423" height="235" loading="lazy" decoding="async" alt="Dot chart of D for the eight cases. Every dot lies between 0.57 and 2.25, well to the right of the 0.2 limit.">
+        <figcaption><b>Figure 5.</b> The refinement check for all eight cases. Each dot is the difference between the coarse and fine response curves divided by the size of the fine one. The rule set before the runs needed it below 0.2, the shaded strip. Rust dots are runs with the incoming disturbance, teal dots are the controls without it.</figcaption>
+      </figure>
+
+      <p>To put a number on it I took the difference between the two grids' response curves and divided it by the size of the fine-grid response, and I call that ratio <span class="m"><i>D</i></span>. For the readout to count, <span class="m"><i>D</i></span> had to be under 0.2. The eight cases came out between 0.57 and 2.25 (<a href="#figure-5">Figure&nbsp;5</a>), so in the best case the grid changed the answer by more than half its own size, and in the worst case the change was more than twice the answer.</p>
+
+      <p>In three of the four runs with the disturbance, the average response over the reading window has opposite signs on the two grids. In one of them the size of the response changed by only 12%, from 1.60 to 1.40 millionths of a velocity unit, while its shape changed completely, so looking at the size alone would have been a little too reassuring. Percentage changes in the text are relative to the coarse-grid value, while <span class="m"><i>D</i></span> divides by the fine-grid one.</p>
+
+      <p>The flip itself moved with the grid too. On the finer grid the current flipped about 0.1 time units later, while the push stayed at <span class="m"><i>t</i> = 3.5</span> (<a href="#figure-3">Figure&nbsp;3</a>). I compared the curves at the same clock times without shifting them to line up, as decided before the runs, so part of the mismatch could come from this timing shift. I didn't check how much.</p>
+
+      <p>The control runs made it harder still. The runs without the incoming disturbance respond to the heat pattern too, and their responses are about 10 to 30 times larger than the ones with it. A response to the heat doesn't need the flipping current at all, then, and comparing the two families doesn't isolate the current as the cause. The grid dependence also means this readout can't be used as evidence that the plasma erased the message, or that it kept it.</p>
+
+      <h2 id="what-did-survive">What did survive</h2>
+
+      <p>The heat patterns themselves were still distinguishable later, and at low conductivity they only changed by 6 to 8% between resolutions. At <span class="m"><i>t</i> = 4.5</span>, which is 2.3 time units after the heating stopped, in the runs with the disturbance and no push, half the temperature difference between the two cosine patterns at the axis reader was 0.003035 on the coarse grid and 0.002787 on the fine one, in units where the starting temperature is 1.</p>
+
+      <p>Higher conductivity spreads heat along the field faster, and there it was worse. The same temperature difference changed by about 47% between grids. I also measured an entropy, <span class="m">ln(<i>p</i>/<i>ρ</i><sup><i>γ</i></sup>)</span> from the pressure <span class="m"><i>p</i></span> and density <span class="m"><i>ρ</i></span>, which unlike temperature doesn't change when a piece of plasma is squeezed without being heated, and its much smaller difference for the rotated pattern flipped sign, from <span class="m">2.0 × 10<sup>−6</sup></span> to <span class="m">−2.9 × 10<sup>−6</sup></span>.</p>
+
+      <p>A written heat pattern does stay around near the null for a couple of time units in this model. That counts for something, but nothing in the simulation reads it. These differences are measured at fixed places in the grid, and the plasma flows through those places, so they don't follow any particular piece of plasma and they don't show anything being carried from one flip of the current to the next. Heat lingering near a null after heating stops has also been studied properly before, by <a href="#ref-johnson">Johnson and colleagues (2024)</a> and <a href="#ref-cargill">Cargill and colleagues (2025)</a> among others, so on its own it wouldn't be new.<input type="checkbox" id="sn-7" class="sn-toggle" aria-label="Note 7"><label for="sn-7" class="sn-ref">7</label><span class="sidenote"><span class="sn-num">7</span>Both are papers in <i>Monthly Notices of the Royal Astronomical Society</i> on heating and cooling at coronal magnetic nulls. References: <a href="#ref-johnson">Johnson 2024</a>, <a href="#ref-cargill">Cargill 2025</a>.</span></p>
+
+      <h2 id="why-i-stopped">Why I stopped</h2>
+
+      <p>So I held off on the big campaign. Running many more copies of a readout that depends on the grid wouldn't have told me anything new.</p>
+
+      <p>Part of the problem was the push itself. At 160 cells per side the push region covered 16 cells and at 320 it covered 76, and the strongest velocity it gave the plasma rose from 0.00306 to 0.00359 even though the push was set to the same strength on both grids. The reader squares were 0.25 wide, two cells across on the coarse grid. The response also wasn't cleanly proportional to the push. Halving the push changed the rescaled response by 13 to 29%, so I couldn't treat it as a gentle probe that just reads what's already there.</p>
+
+      <p>The obvious fix was another doubling, to 640 cells per side. A short timing test at the higher conductivity took 147 seconds to get to <span class="m"><i>t</i> = 0.02</span>, which works out to about nine hours for the reference run from the start to <span class="m"><i>t</i> = 4.5</span> at that conductivity, and I had given each run two hours, which was a little short, by a factor of four and a half. That's just the reference run the written runs start from, before any of the eight cases and their branches, so it wasn't going to happen with this code on my laptop.</p>
+
+      <section class="techbox" aria-labelledby="for-physicists-setup-rule-and-numbers">
+        <h2 id="for-physicists-setup-rule-and-numbers">For physicists: setup, rule and numbers</h2>
+        <p class="box-intro">Everything is in dimensionless simulation units. No stellar location or physical lifetime is inferred from either test.</p>
+
+        <h3 id="test-one-fourier-memory-in-a-periodic-box">Test one: Fourier memory in a periodic box</h3>
+        <p>Incompressible resistive MHD in a periodic cube of side <span class="m">2<i>π</i></span>, <span class="m">24<sup>3</sup></span> grid, viscosity and magnetic diffusivity both 0.1, field in Alfvén-speed units. An unbiased message <span class="m"><i>M</i> = ±1</span> is written as <math><msub><mi>𝐛</mi><mi>bg</mi></msub><mo>+</mo><mi>M</mi><mi>𝐟</mi></math> with carrier <math><mi>𝐟</mi><mo>=</mo><msqrt><mn>2</mn></msqrt><mi>cos</mi><mo>&#x2061;</mo><mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo stretchy="false">)</mo><mspace width="0.17em"></mspace><msub><mover accent="true"><mi>𝐞</mi><mo>^</mo></mover><mi>y</mi></msub></math> (unit mean square). The background excludes the carrier Fourier pair, so the two writes start with matched energy and helicity. Background velocity and magnetic rms are 0.5 each. The reader knows the carrier's position and orientation, projects onto <math><mi>𝐟</mi></math> and adds Gaussian noise of fixed <span class="m"><i>σ</i></span>. With no background the solution is exact, <math><mi>𝐮</mi><mo>=</mo><mn>0</mn></math> and <math><mi>𝐛</mi><mo>=</mo><mi>M</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>η</mi><msup><mi>k</mi><mn>2</mn></msup><mi>t</mi></mrow></msup><mi>𝐟</mi></math>, so the optimal error is <math><mi mathvariant="normal">Φ</mi><mrow><mo>[</mo><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>η</mi><msup><mi>k</mi><mn>2</mn></msup><mi>t</mi></mrow></msup><mo>/</mo><mi>σ</mi><mo>]</mo></mrow></math>. At <span class="m"><i>t</i> = 6</span>, <span class="m"><i>ηk</i><sup>2</sup><i>t</i> = 2.4</span> and diffusion alone leaves <span class="m"><i>e</i><sup>−2.4</sup> ≈ 0.091</span> of the carrier amplitude. The error is the probability of a wrong sign, integrated exactly over read noise for each run and averaged over the 32 background pairs (64 runs). Results at <span class="m"><i>t</i> = 6</span>:</p>
+
+        <div class="tbl"><table>
+          <thead><tr><th><span class="m"><i>σ</i></span></th><th>error (95% interval)</th><th>pure diffusion</th><th class="r">information (bits)</th></tr></thead>
+          <tbody>
+            <tr><td>0.1</td><td>0.3331 (0.3243–0.3419)</td><td>0.1822</td><td class="r">0.08193</td></tr>
+            <tr><td>0.3</td><td>0.4427 (0.4395–0.4459)</td><td>0.3812</td><td class="r">0.00950</td></tr>
+            <tr><td>1.0</td><td>0.4827 (0.4818–0.4837)</td><td>0.4639</td><td class="r">0.00086</td></tr>
+          </tbody>
+        </table></div>
+
+        <p>The information column is the mutual information between <span class="m"><i>M</i></span> and the reader's sign guess, pooled over all runs, which is <span class="m">1 − <i>H</i><sub>2</sub>(<i>p</i>)</span> for error <span class="m"><i>p</i></span> and binary entropy <span class="m"><i>H</i><sub>2</sub></span>. It is not the channel capacity. The internal-reference code writes a <span class="m"><i>k</i> = 1</span> reference and a <span class="m"><i>k</i> = 2</span> target with half the signal energy each and reads the translation-invariant <math><mi>Re</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mn>2</mn></msub><msubsup><mover accent="true"><mi>q</mi><mo>¯</mo></mover><mn>1</mn><mn>2</mn></msubsup><mo stretchy="false">)</mo></math>. At <span class="m"><i>σ</i> = 0.1</span> its error is 0.3737 (0.3680–0.3796) against 0.2901 for its own pure-diffusion reference, with 0.04652 bits. Representative 24 versus 32 grid and half-timestep checks passed an absolute read-error tolerance of 0.001, with the largest grid change about <span class="m">5 × 10<sup>−6</sup></span>.</p>
+
+        <h3 id="test-two-a-local-heat-write-near-an-x-point">Test two: a local heat write near an X-point</h3>
+        <p>Two-dimensional compressible resistive MHD on <span class="m"><i>x</i>, <i>y</i> ∈ [−10, 10]</span>, initial <span class="m"><b>B</b> = (<i>y</i>, <i>x</i>)</span>, <span class="m"><i>ρ</i> = <i>p</i> = 1</span>, <span class="m"><i>γ</i> = 5/3</span>, <span class="m"><i>T</i> = <i>p</i>/<i>ρ</i></span>, magnetic diffusivity <span class="m"><i>η</i> = 0.04</span>, with a divergence-preserving magnetic update. Heat conduction is anisotropic, <math><mi>𝖪</mi><mo>=</mo><mi>κ</mi><mo stretchy="false">(</mo><mi>𝐁</mi><mi>𝐁</mi><mo>+</mo><msubsup><mi>B</mi><mi>iso</mi><mn>2</mn></msubsup><mi>𝖨</mi><mo stretchy="false">)</mo><mo>/</mo><mo stretchy="false">(</mo><msup><mi>B</mi><mn>2</mn></msup><mo>+</mo><msubsup><mi>B</mi><mi>iso</mi><mn>2</mn></msubsup><mo stretchy="false">)</mo></math> with <span class="m"><i>κ</i> = 0.2</span> or 2.6 and <span class="m"><i>B</i><sub>iso</sub> = 0.2</span>, so it becomes isotropic at the null. The disturbance is an initial velocity ring, <span class="m"><b>v</b> = <i>w</i>(<i>r</i>)&thinsp;(<i>x</i>, −<i>y</i>)/<i>r</i><sup>2</sup></span> with <math><mi>w</mi><mo>=</mo><msup><mi>e</mi><mrow><mo>−</mo><msup><mrow><mo stretchy="false">(</mo><mi>r</mi><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>/</mo><mn>0.4</mn></mrow></msup><mo>/</mo><mo stretchy="false">(</mo><mn>0.2</mn><msqrt><mn>2</mn><mi>π</mi></msqrt><mo stretchy="false">)</mo></math>, peak speed about 0.4 near <span class="m"><i>r</i> = 5</span>. Walls are stationary, impermeable and conducting, held at <span class="m"><i>T</i> = 1</span>. To absorb the outgoing wave, the velocity at <span class="m"><i>r</i> ≥ 7</span> is set to zero once at <span class="m"><i>t</i> = 0.6</span> (its kinetic energy is recorded), and after <span class="m"><i>t</i> = 0.6</span> a velocity damping rate <span class="m">1 + tanh(<i>r</i> − 5)</span> and a kinematic viscosity <span class="m">0.1[1 + tanh(<i>r</i> − 5)]</span> act at <span class="m"><i>r</i> ≥ 3</span>, with both zero closer to the null. In the runs with the disturbance the null current is negative at <span class="m"><i>t</i> = 2</span> and first crosses zero at <span class="m"><i>t</i> = 3.06</span> (<span class="m"><i>κ</i> = 0.2</span>) and 3.09 (<span class="m"><i>κ</i> = 2.6</span>) with 160 cells per side, and at 3.16 and 3.20 with 320. The control runs remove the disturbance and still solve full MHD.</p>
+
+        <p>The write acts from <span class="m"><i>t</i> = 2</span> to 2.2 with deposited internal energy density</p>
+        <div class="eq"><div class="eq-parts"><math display="block"><msub><mi>e</mi><mi>dep</mi></msub><mo>=</mo><mn>0.1</mn><mspace width="0.17em"></mspace><mi>H</mi><mo stretchy="false">(</mo><mi>r</mi><mo stretchy="false">)</mo><mspace width="0.17em"></mspace><mrow><mo>[</mo><mn>1</mn><mo>+</mo><mn>0.5</mn><mspace width="0.17em"></mspace><mi>M</mi><mspace width="0.17em"></mspace><mi>cos</mi><mo>&#x2061;</mo><mn>2</mn><mi>θ</mi><mo>]</mo></mrow><mo>,</mo></math><math display="block"><mi>H</mi><mo>=</mo><mi>exp</mi><mo>&#x2061;</mo><mrow><mo>[</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>−</mo><msup><mi>z</mi><mn>2</mn></msup></mrow></mfrac><mo>]</mo></mrow><mo>,</mo><mspace width="1em"></mspace><mi>z</mi><mo>=</mo><mfrac><mrow><mi>r</mi><mo>−</mo><mn>1.5</mn></mrow><mn>0.35</mn></mfrac><mo>,</mo></math></div><span class="eqno">(1)</span></div>
+        <p>zero outside <span class="m">1.15 &lt; <i>r</i> &lt; 1.85</span>, and <span class="m">sin&thinsp;2<i>θ</i></span> for the rotated orientation. Total deposited heat is 0.397375 at <span class="m"><i>N</i> = 160</span> and 0.398179 at <span class="m"><i>N</i> = 320</span> per unit length. The peak is about 12% of the local internal energy just before writing in the disturbance runs and about 10% in the controls, where the internal energy is still close to its initial <span class="m"><i>p</i>/(<i>γ</i> − 1) = 1.5</span>. The probe is an inward radial acceleration supported in <span class="m"><i>r</i> &lt; 0.3</span> from <span class="m"><i>t</i> = 3.5</span> to 3.6 with integrated coefficient <span class="m"><i>A</i> = 0.01</span>. Readers are squares of side 0.25 centred at <span class="m">(0.75, 0)</span> and <span class="m">(0, 0.75)</span> for the axis channel and <span class="m">(±0.375, 0.375)</span> for the diagonal channel, fixed in physical space under refinement. The axis observation <span class="m"><i>Y</i></span> is mean <span class="m"><i>v</i><sub><i>x</i></sub></span> at the <span class="m"><i>x</i></span> reader minus mean <span class="m"><i>v</i><sub><i>y</i></sub></span> at the <span class="m"><i>y</i></span> reader, and the diagonal observation is the difference of the two outward diagonal velocities. Cosine writes use the axis channel and sine writes the diagonal one. The diagonal readers sit at <span class="m"><i>r</i> ≈ 0.53</span> on the initial separatrices <span class="m"><i>y</i> = ±<i>x</i></span> and the axis readers at <span class="m"><i>r</i> = 0.75</span>, so the two orientations are not equivalent under a 45 degree rotation. The measured response contrast (R for response) is</p>
+        <div class="eq"><math display="block"><msub><mi>C</mi><mi>R</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mrow><mo>[</mo><mrow><mo>(</mo><msubsup><mi>Y</mi><mo>+</mo><mi>probe</mi></msubsup><mo>−</mo><msubsup><mi>Y</mi><mo>+</mo><mrow><mi>no</mi><mspace width="0.17em"></mspace><mi>probe</mi></mrow></msubsup><mo>)</mo></mrow><mo>−</mo><mrow><mo>(</mo><msubsup><mi>Y</mi><mo>−</mo><mi>probe</mi></msubsup><mo>−</mo><msubsup><mi>Y</mi><mo>−</mo><mrow><mi>no</mi><mspace width="0.17em"></mspace><mi>probe</mi></mrow></msubsup><mo>)</mo></mrow><mo>]</mo></mrow><mo>,</mo></math><span class="eqno">(2)</span></div>
+        <p>on common times from 3.5 to 4.5, with norm <math><mo fence="true" stretchy="false">‖</mo><mi>C</mi><mo fence="true" stretchy="false">‖</mo><mo>=</mo><msup><mrow><mo>(</mo><msubsup><mo>∫</mo><mn>3.5</mn><mn>4.5</mn></msubsup><msup><mi>C</mi><mn>2</mn></msup><mspace width="0.17em"></mspace><mi>d</mi><mi>t</mi><mo>)</mo></mrow><mrow><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup></math> by the trapezoidal rule and no phase alignment.</p>
+
+        <p>The rule fixed before the written runs required the effect to exceed five times its numerical uncertainty, taken as the largest discrepancy among grid refinement, half timestep, domain size and a zero-write null. The grid discrepancy is one of those, so on its own it already requires</p>
+        <div class="eq"><math display="block"><mi>D</mi><mo>=</mo><mfrac><mrow><mo fence="true" stretchy="false">‖</mo><msub><mi>C</mi><mn>320</mn></msub><mo>−</mo><msub><mi>C</mi><mn>160</mn></msub><mo fence="true" stretchy="false">‖</mo></mrow><mrow><mo fence="true" stretchy="false">‖</mo><msub><mi>C</mi><mn>320</mn></msub><mo fence="true" stretchy="false">‖</mo></mrow></mfrac><mo>&lt;</mo><mn>0.2</mn><mspace width="0.17em"></mspace><mo>.</mo></math><span class="eqno">(3)</span></div>
+
+        <div class="tbl"><table>
+          <thead><tr><th>Runs</th><th><span class="m"><i>κ</i></span></th><th>write</th><th>rms, <span class="m"><i>N</i> = 160</span></th><th>rms, <span class="m"><i>N</i> = 320</span></th><th><span class="m"><i>D</i></span></th><th>mean sign</th></tr></thead>
+          <tbody>
+            <tr><td>disturbance</td><td>0.2</td><td>cosine</td><td><span class="m">1.602 × 10<sup>−6</sup></span></td><td><span class="m">1.403 × 10<sup>−6</sup></span></td><td>1.348</td><td><span class="m">−</span> / <span class="m">+</span></td></tr>
+            <tr><td>disturbance</td><td>0.2</td><td>sine</td><td><span class="m">1.283 × 10<sup>−6</sup></span></td><td><span class="m">8.158 × 10<sup>−7</sup></span></td><td>2.252</td><td><span class="m">+</span> / <span class="m">−</span></td></tr>
+            <tr><td>disturbance</td><td>2.6</td><td>cosine</td><td><span class="m">1.614 × 10<sup>−6</sup></span></td><td><span class="m">1.324 × 10<sup>−6</sup></span></td><td>2.091</td><td><span class="m">−</span> / <span class="m">+</span></td></tr>
+            <tr><td>disturbance</td><td>2.6</td><td>sine</td><td><span class="m">6.628 × 10<sup>−7</sup></span></td><td><span class="m">4.519 × 10<sup>−7</sup></span></td><td>1.503</td><td><span class="m">+</span> / <span class="m">+</span></td></tr>
+            <tr><td>control</td><td>0.2</td><td>cosine</td><td><span class="m">2.293 × 10<sup>−5</sup></span></td><td><span class="m">1.511 × 10<sup>−5</sup></span></td><td>1.180</td><td><span class="m">−</span> / <span class="m">−</span></td></tr>
+            <tr><td>control</td><td>0.2</td><td>sine</td><td><span class="m">1.729 × 10<sup>−5</sup></span></td><td><span class="m">1.215 × 10<sup>−5</sup></span></td><td>1.436</td><td><span class="m">+</span> / <span class="m">+</span></td></tr>
+            <tr><td>control</td><td>2.6</td><td>cosine</td><td><span class="m">1.464 × 10<sup>−5</sup></span></td><td><span class="m">1.419 × 10<sup>−5</sup></span></td><td>0.569</td><td><span class="m">−</span> / <span class="m">−</span></td></tr>
+            <tr><td>control</td><td>2.6</td><td>sine</td><td><span class="m">1.230 × 10<sup>−5</sup></span></td><td><span class="m">1.303 × 10<sup>−5</sup></span></td><td>1.217</td><td><span class="m">+</span> / <span class="m">+</span></td></tr>
+          </tbody>
+        </table></div>
+        <p class="tbl-note">RMS values are in simulation velocity units over the full window. Mean sign is the sign of the time-averaged <span class="m"><i>C</i><sub><i>R</i></sub></span> at <span class="m"><i>N</i> = 160</span> and <span class="m"><i>N</i> = 320</span>.</p>
+
+        <p>All eight cases fail. The probe itself is under-resolved: it has 16 nonzero cell-centre samples at <span class="m"><i>N</i> = 160</span> and 76 at <span class="m"><i>N</i> = 320</span>, and its sampled peak velocity increment rises from 0.003060 to 0.003585 at fixed <span class="m"><i>A</i></span>. On the coarse grid, <span class="m">‖2<i>C</i>(<i>A</i>/2) − <i>C</i>(<i>A</i>)‖/‖<i>C</i>(<i>A</i>)‖</span> is 16.6%, 13.3%, 27.0% and 29.2% for <span class="m"><i>κ</i> = 0.2</span> cosine and sine, then <span class="m"><i>κ</i> = 2.6</span> cosine and sine.</p>
+
+        <p>Thermal states survive better. Half the difference between patterns at <span class="m"><i>t</i> = 4.5</span> in the no-probe disturbance runs, at the <span class="m"><i>x</i></span>-axis reader for cosine and the positive diagonal reader for sine, with temperature averaged cell by cell and the entropy proxy <span class="m">ln(<i>p</i>/<i>ρ</i><sup><i>γ</i></sup>)</span>:</p>
+
+        <div class="tbl"><table>
+          <thead><tr><th><span class="m"><i>κ</i></span>, write</th><th><span class="m"><i>T</i></span>, <span class="m"><i>N</i> = 160</span></th><th><span class="m"><i>T</i></span>, <span class="m"><i>N</i> = 320</span></th><th>entropy proxy, <span class="m"><i>N</i> = 320</span></th></tr></thead>
+          <tbody>
+            <tr><td>0.2, cosine</td><td>0.003035</td><td>0.002787</td><td>0.004149</td></tr>
+            <tr><td>0.2, sine</td><td>0.0007448</td><td>0.0007862</td><td>0.00116</td></tr>
+            <tr><td>2.6, cosine</td><td>0.0005085</td><td>0.0007457</td><td>0.00131</td></tr>
+            <tr><td>2.6, sine</td><td>0.00006091</td><td>0.00006837</td><td>−0.000002921</td></tr>
+          </tbody>
+        </table></div>
+
+        <p>For <span class="m"><i>κ</i> = 2.6</span> sine the entropy proxy at <span class="m"><i>N</i> = 160</span> is <span class="m">+2.00 × 10<sup>−6</sup></span>, so it reverses sign under refinement while the temperature contrast does not. Compression can contribute to a local temperature difference.</p>
+
+        <h3 id="independent-checks-and-cost">Independent checks and cost</h3>
+        <p>An independent Athena++ implementation (<a href="#ref-stone">Stone et al. 2020</a>) passed basic wave checks and no-conduction X-point energy bookkeeping at <span class="m"><i>N</i> = 256</span> and 512, closing to about <span class="m">10<sup>−12</sup></span>. That checks the MHD integration without heat conduction only. It cannot check the thermal experiment, because the anisotropic-conduction routine in the Athena++ version I used is empty. Three separately written analyses of the raw fields and a direct reconstruction give the same eight <span class="m"><i>D</i></span> values to the digits in the table, and two of them match on the eight fine-grid response norms to within <span class="m">9 × 10<sup>−19</sup></span> in velocity units. An isolated <span class="m"><i>N</i> = 640</span>, <span class="m"><i>κ</i> = 2.6</span> timing test completed 180 steps to <span class="m"><i>t</i> = 0.02</span> in 147.39 seconds of solver time. Combined with the explicit thermal timestep limit this gives about nine hours to <span class="m"><i>t</i> = 4.5</span>, an early-time extrapolation, against a cap of two hours per run.</p>
+
+        <h3 id="what-the-numbers-do-not-show">What the numbers do not show</h3>
+        <p>The subtraction uses a matched no-probe history that a reader given one unknown message would not have. Comparing background families does not isolate reconnection as the cause. Thermal persistence at fixed points is not a decoder and does not identify anything carrying the pattern through cycles. None of this sets a universal limit on plasma life or a stellar habitability boundary.</p>
+      </section>
+
+      <h2 id="what-a-better-setup-needs">What a better setup needs</h2>
+
+      <p>Any result, either way, needs a readout that converges first. If a written pattern can be read near a recurring structure and the readout stays the same when the grid is refined, it's worth running in bulk and testing against controls. If it converges and turns out to be fully explained by ordinary heat transport and flow, then this route doesn't work, at least in this form. Right now it's neither, and the next version would need a few things this one didn't have.</p>
+
+      <ul class="needs">
+        <li>One local quantity, read with a protocol written down in advance, that passes the grid and time-step checks before anything gets run in bulk.</li>
+        <li>A reader that works from a single run. My subtraction used a matching unpushed run for each pattern, and a real reader holding one unknown message wouldn't have that, so either the reader manages without it or the calibration becomes part of the setup.</li>
+        <li>A control that changes one thing. Taking out the disturbance changed the heat, the flows and the field history all at once. A better control keeps the same thermal and flow background and switches off only the magnetic process being tested.</li>
+        <li>A faster or different solver. A full reference run at 640 cells per side and the higher conductivity didn't fit the time I had, and the version of the independent code I used as a check had no working anisotropic heat conduction.</li>
+        <li>Further out, a recipient. Something that starts out independent would have to pick up the pattern through the plasma's own fields and still have it after they separate, with the copying coming out of the physics and no copy rule put in by hand.</li>
+      </ul>
+
+      <p>I've stopped working on it for now, but none of this means plasma life is impossible, and I might come back to it with a better setup.<span class="endmark" aria-hidden="true"></span></p>
+
+      <h2 id="references">References</h2>
+      <div class="refs">
+        <p id="ref-cargill">Cargill, P.&#8239;J., Hood, A.&#8239;W., and Johnson, D. 2025, Heating and cooling at a coronal magnetic null, <i>Monthly Notices of the Royal Astronomical Society</i> 542, 3385–3394. <a href="https://doi.org/10.1093/mnras/staf1444">doi:10.1093/mnras/staf1444</a></p>
+        <p id="ref-demoulin">Démoulin, P., Pariat, E., and Berger, M.&#8239;A. 2006, Basic properties of mutual magnetic helicity, <i>Solar Physics</i> 233, 3–27. <a href="https://doi.org/10.1007/s11207-006-0010-z">doi:10.1007/s11207-006-0010-z</a></p>
+        <p id="ref-johnson">Johnson, D., Hood, A.&#8239;W., Cargill, P.&#8239;J., Reid, J., and Johnston, C.&#8239;D. 2024, The thermodynamic response of heating at coronal null points, <i>Monthly Notices of the Royal Astronomical Society</i> 532, 4261–4271. <a href="https://doi.org/10.1093/mnras/stae1760">doi:10.1093/mnras/stae1760</a></p>
+        <p id="ref-karampelas">Karampelas, K., McLaughlin, J.&#8239;A., Botha, G.&#8239;J.&#8239;J., and Régnier, S. 2022, The independence of oscillatory reconnection periodicity from the initial pulse, <i>The Astrophysical Journal</i> 933, 142. <a href="https://doi.org/10.3847/1538-4357/ac746a">doi:10.3847/1538-4357/ac746a</a></p>
+        <p id="ref-scharf">Scharf, C., and Witkowski, O. 2024, Rebuilding the habitable zone from the bottom up with computational zones, <i>Astrobiology</i> 24, 613–627. <a href="https://doi.org/10.1089/ast.2023.0035">doi:10.1089/ast.2023.0035</a></p>
+        <p id="ref-stone">Stone, J.&#8239;M., Tomida, K., White, C.&#8239;J., and Felker, K.&#8239;G. 2020, The Athena++ adaptive mesh refinement framework: design and magnetohydrodynamic solvers, <i>The Astrophysical Journal Supplement Series</i> 249, 4. <a href="https://doi.org/10.3847/1538-4365/ab929b">doi:10.3847/1538-4365/ab929b</a></p>
+        <p id="ref-tsytovich">Tsytovich, V.&#8239;N., Morfill, G.&#8239;E., Fortov, V.&#8239;E., Gusein-Zade, N.&#8239;G., Klumov, B.&#8239;A., and Vladimirov, S.&#8239;V. 2007, From plasma crystals and helical structures towards inorganic living matter, <i>New Journal of Physics</i> 9, 263. <a href="https://doi.org/10.1088/1367-2630/9/8/263">doi:10.1088/1367-2630/9/8/263</a></p>
+        <p id="ref-wedemeyer">Wedemeyer-Böhm, S., and Steffen, M. 2007, Carbon monoxide in the solar atmosphere. II. Radiative cooling by CO lines, <i>Astronomy &amp; Astrophysics</i> 462, L31–L35. <a href="https://doi.org/10.1051/0004-6361:20066173">doi:10.1051/0004-6361:20066173</a></p>
+      </div>
+
+      <p class="colophon">Figures 1, 4 and 5 are redrawn from the saved outputs of the runs. Figure 2 shows the prescribed heat source and Figure 3 is a schematic.</p>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>
