@@ -1,0 +1,7 @@
+(function(){'use strict';var D=window.Doodles=window.Doodles||{};D.scenes=D.scenes||{};D.scenes.research=function(svg){var U=D.util,IDLE=U.IDLE,WAKE=900;var kid=svg.querySelector('.dk-hatch'),cls=svg.classList;var c={},state='awake',hover=false,grace=0,tapT=0,wakeT=0,lookT=0;function glance(){cls.add('is-glance');clearTimeout(lookT);lookT=setTimeout(function(){cls.remove('is-glance');},1500);}
+function setHover(on){if(on===hover)return;hover=on;cls.toggle('is-hover',on);if(on&&state==='awake')glance();}
+c.onPointer=function(p){if(U.hoverMQ.matches){setHover(U.over(svg,p));return;}
+if(p.tap&&U.over(svg,p)){setHover(true);clearTimeout(tapT);tapT=setTimeout(function(){setHover(false);},3000);}};function pose(p,arm,face){if(p)kid.setAttribute('data-pose',p);else kid.removeAttribute('data-pose');kid.setAttribute('data-arm',arm);kid.setAttribute('data-face',face);}
+function sleep(){if(state==='asleep')return;state='asleep';grace=U.now()+1500;clearTimeout(wakeT);cls.remove('is-glance','is-waking');cls.add('is-asleep');pose('slump','fold','shut');}
+function wake(){state='waking';cls.remove('is-asleep');cls.add('is-waking');pose(null,'type','wow');clearTimeout(wakeT);wakeT=setTimeout(function(){state='awake';cls.remove('is-waking');kid.setAttribute('data-face','open');},WAKE);}
+c.sleep=sleep;c.wake=wake;c.drowse=function(){setHover(false);};c.countAt=[374,129];c.onInput=function(){if(state==='asleep'&&U.now()>grace)wake();};c.onIdle=function(ms){if(state==='awake'&&ms>IDLE)sleep();};c.onVisible=function(v){if(!v)setHover(false);};return c;};})();

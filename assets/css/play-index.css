@@ -1,0 +1,41 @@
+/*
+  Play index page (play/index.html). Builds on play.css (page chrome, intro
+  layout, how-to card) and only adds the toy list. Uses the same colour
+  variables, so it follows play.css into dark mode.
+*/
+.toy-list { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.4rem; padding-bottom: clamp(3rem, 6vw, 5rem); }
+.toy-item {
+  display: flex; flex-direction: column; min-width: 0;
+  border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+  background: color-mix(in srgb, var(--paper-deep) 55%, transparent);
+}
+.toy-item .toy-thumb { display: block; background: var(--inst-bg); }
+.toy-item .toy-thumb img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; transition: opacity .15s; }
+.toy-item .toy-thumb:hover img { opacity: .88; }
+.toy-text { display: flex; flex-direction: column; gap: .55rem; padding: 1.1rem 1.25rem 1.3rem; flex: 1 1 auto; }
+.toy-text h2 { margin: 0; font-size: clamp(1.45rem, 2.4vw, 1.9rem); font-weight: 400; letter-spacing: -.025em; line-height: 1.1; }
+.toy-text h2 a { text-decoration: none; }
+.toy-do { margin: 0; font-size: 1.08rem; line-height: 1.55; }
+.toy-from { margin: 0; color: var(--muted); font: 400 .88rem/1.45 var(--sans); }
+.toy-from a { color: var(--teal); }
+.toy-open {
+  align-self: flex-start; margin-top: auto; padding: .55rem .95rem; border-radius: 999px;
+  background: var(--rust); color: var(--paper); text-decoration: none;
+  font: 700 .8rem/1.2 var(--sans); letter-spacing: .03em;
+}
+.toy-open::after { content: " \2192"; }
+.toy-open:hover { color: var(--paper); filter: brightness(1.08); }
+.play-page .toy-open:hover { color: var(--paper); }
+
+/* the flagship spans the row, picture on the left */
+.toy-item--wide { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
+.toy-item--wide .toy-thumb img { height: 100%; }
+.toy-item--wide .toy-text { justify-content: center; padding: 1.6rem 1.8rem; }
+.toy-item--wide .toy-open { margin-top: .5rem; }
+.toy-item--wide .toy-text h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
+
+@media (max-width: 760px) {
+  .toy-list { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  .toy-item--wide { display: flex; }
+  .toy-item--wide .toy-text { padding: 1.1rem 1.25rem 1.3rem; }
+}

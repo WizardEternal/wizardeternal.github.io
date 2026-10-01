@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supermassive black hole binary search | Karan Akbari</title>
+  <meta name="description" content="A cross-band X-ray and optical periodicity search for supermassive black hole binaries in 1,369 AGN. Zero candidates, and the first completeness-corrected limit.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/cross-band-periodicity/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Looking for two black holes orbiting each other">
+  <meta property="og:description" content="A cross-band X-ray and optical periodicity search for supermassive black hole binaries in 1,369 AGN. Zero candidates, and the first completeness-corrected limit.">
+  <meta property="og:url" content="https://karanakbari.com/research/cross-band-periodicity/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Looking for two black holes orbiting each other">
+  <meta name="twitter:description" content="A cross-band X-ray and optical periodicity search for supermassive black hole binaries in 1,369 AGN. Zero candidates, and the first completeness-corrected limit.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Looking for two black holes orbiting each other","description":"A cross-band X-ray and optical periodicity search for supermassive black hole binaries in 1,369 AGN. Zero candidates, and the first completeness-corrected limit.","url":"https://karanakbari.com/research/cross-band-periodicity/","mainEntityOfPage":"https://karanakbari.com/research/cross-band-periodicity/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","image":"https://karanakbari.com/assets/images/og-card.png","about":["supermassive black hole binaries","periodicity search","active galactic nuclei","Swift-BAT","XMM-Newton"],"isBasedOn":{"@type":"ScholarlyArticle","@id":"https://doi.org/10.3847/1538-4357/ae9d7c","url":"https://doi.org/10.3847/1538-4357/ae9d7c","name":"A Cross-Band (X-ray × Optical) Periodicity Search for Supermassive Black Hole Binaries: A Null Result and the First Completeness-Corrected Constraint","datePublished":"2026","isPartOf":{"@type":"PublicationVolume","volumeNumber":"1009","isPartOf":{"@type":"Periodical","name":"The Astrophysical Journal"}},"sameAs":"https://arxiv.org/abs/2608.16787"},"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .top{margin:0}
+    .top img{display:block;width:min(calc(100% - 2.5rem),60rem);height:auto;margin:2rem auto 0;border-radius:4px}
+    .top figcaption{width:min(calc(100% - 2.5rem),60rem);margin:.45rem auto 0}
+    /* keep the title and first lines on the first screen */
+    .top img{width:auto;max-width:min(calc(100% - 2.5rem),60rem);max-height:40vh;height:auto}
+    .top figcaption{text-align:center}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.7;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:2.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <figure class="top">
+      <img src="/assets/images/smbh-close-binary.jpg" width="2400" height="1350" decoding="async" alt="Simulation of two supermassive black holes close together, each with its own glowing disk inside a shared disk of gas.">
+      <figcaption><span class="credit">A simulation of two supermassive black holes about 40 orbits from merging, each with its own disk inside a shared one. This pair goes around every 46 minutes, the ones I was searching for would take hundreds of days. NASA's Goddard Space Flight Center/Scott Noble; simulation data, d'Ascoli et al. 2018. <a href="https://svs.gsfc.nasa.gov/13086">Source</a></span></figcaption>
+    </figure>
+
+    <article class="col">
+      <h1>Looking for two black holes orbiting each other</h1>
+      <p class="meta">Akbari · ApJ 1009, 184 (2026)</p>
+
+      <p>If two supermassive black holes are orbiting each other, the light should go up and down with the orbit. The problem is normal black holes flicker randomly too. Random flickering is really good at faking a period, which made the first batch of candidates a little too exciting.</p>
+      <p>Both bands had to show the same period, within 5%, for me to count it. I searched 1,369 galaxies. Zero candidates. Very efficient.</p>
+      <p>Zero is still a result though, because I checked how many fake signals the search would have caught. In the end, at most about 3% of the Swift-BAT galaxies can have a strong shared period.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/cross-band/joint-recovery-limit.png"><img src="/assets/cross-band/joint-recovery-limit.png" width="1428" height="594" loading="lazy" decoding="async" alt="Two panels against injected fractional amplitude: recovery of injected signals in optical, X-ray and both bands, and the resulting 95 percent upper limit on the co-periodic fraction."></a>
+        <figcaption>Left: how many of the fake signals each band got back, and how many survived in both. Right: the upper limit that gives, which gets tighter as the signal gets stronger.
+          <span class="credit">Akbari (2026), Fig. 5. <a href="https://doi.org/10.3847/1538-4357/ae9d7c">Paper</a></span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>I used 1,194 active galaxies from Swift-BAT and another 175 from 4XMM, with optical light curves from ZTF and ASAS-SN, and looked for periods between about 100 and 900 days.</p>
+          <p>To know what random flickering can do on its own, I simulated light curves that flicker but have no period, with the same gaps as the real data, and ran the exact same search on them.</p>
+          <p>The early candidates fell apart once I checked the noise model fits properly and ran more simulations for the ones still standing.</p>
+          <p>Then I put fake periodic signals into the real light curves and ran the whole search again, to see how many it would find. Most of them got lost on the X-ray side, because there just aren't enough X-ray points to pin a period down.</p>
+          <p>So the limit is only tight for strong signals. At 30% modulation it caps the share of sources with a common period at about 3%, at 20% only at about 15%, and below 15% it says nothing.</p>
+          <p>I also tried denser X-ray monitoring from MAXI and RXTE for the brightest galaxies. It helped the recovery, and it still found nothing.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>For astronomers: data, method, caveats</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Stage 1</dt><dd>1,194 Swift-BAT AGN (1,022 accretion-driven, 172 jet-dominated) with at least one optical band of ≥20 clean epochs. BAT cadence ≈monthly, ≈157 epochs (2004–2017).</dd>
+            <dt>Stage 2</dt><dd>175 4XMM-DR14 sources with ≥20 detections, matched to Milliquas within 5″ and with usable optical coverage; ≈20–75 X-ray epochs.</dd>
+            <dt>Optical</dt><dd>ZTF and ASAS-SN</dd>
+            <dt>Periods</dt><dd>Searched 100–3000 d requiring ≥3 cycles in the baseline; effective window ≈100–900 d. Lomb–Scargle on 750 log-spaced frequencies.</dd>
+            <dt>Noise model</dt><dd>DRW, C(Δt) = σ² exp(−|Δt|/τ), fit by GP marginal likelihood (<code>celerite2</code>)</dd>
+            <dt>Single-band gate</dt><dd>p<sub>MC-DRW</sub> &lt; 10<sup>−3</sup>; 2,000 simulations in the broad pass, 10<sup>5</sup> in refinement. Look-elsewhere corrected over 25 log-frequency bins and up to 4 optical bands. Measured false-positive rate at α = 0.01: 0.011 (BAT), 0.012–0.016 (optical).</dd>
+            <dt>Period match</dt><dd>|P<sub>X</sub> − P<sub>opt</sub>| / P̄ &lt; 0.05; chance coincidence ≈3.7%</dd>
+            <dt>Confirmation</dt><dd>Null-signal template test, DRW-whitened, 1,000 draws: Tier 1 p<sub>NST</sub> &lt; 10<sup>−2</sup>, Tier 2 &lt; 10<sup>−1</sup></dd>
+            <dt>Result</dt><dd>0 both-flagged, 0 period-matched, 0 Tier 1, 0 Tier 2, in both stages</dd>
+            <dt>Recovery</dt><dd>1,800 co-injected sinusoids at common fractional amplitude A = δF/F̄ (300 BAT + best-optical pairs, periods ≈140–800 d), production pipeline rerun. Joint completeness 0.017, 0.09, 0.14 at A = 0.2, 0.3, 0.4.</dd>
+            <dt>Upper limit</dt><dd>Completeness-corrected 95%: f<sub>UL</sub> ≈ 15%, 3%, 2% at A = 0.2, 0.3, 0.4; uninformative below A ≈ 0.15. The ε = 1 floor is 0.25% (Stage 1).</dd>
+            <dt>Dense cadence</dt><dd>60 brightest BAT AGN, 45 gained MAXI and/or RXTE/ASM coverage (NGC 4151: 8,805 daily epochs vs 157). ε<sub>X</sub> = 0.42, 0.58, 0.83 at A = 0.2, 0.3, 0.4. Still 0 candidates.</dd>
+          </dl>
+          <p>For BAT, 89.9% of DRW fits return the clipped method-of-moments seed; after rescaling this drops to 2.2%, and the residual effect biases toward over-flagging. τ is recovered without bias only for baselines ≳10τ, so τ is reliable only below ≈470 d for the ≈4,700 d BAT baseline. The limit is conditional on a sinusoidal common-period signal and DRW noise. Weak, intermittent, or single-band binary signals can escape the selection. The injections do not test the extreme edges of the period window. The 4XMM sample is too sparse for a useful completeness-corrected fraction. X-ray and optical variability can share an accretion origin, so treating the bands as independent is an assumption. Turning the fraction of modulated sources into a fraction of all SMBH binaries would need to know how often a binary produces this kind of signal.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>Paper and code</h2></summary>
+        <div class="inner">
+          <p><strong>Akbari, K.</strong> “A Cross-Band (X-ray × Optical) Periodicity Search for Supermassive Black Hole Binaries: A Null Result and the First Completeness-Corrected Constraint.” <i>The Astrophysical Journal</i> 1009, 184 (2026).</p>
+          <p><a class="text-link" href="https://doi.org/10.3847/1538-4357/ae9d7c">Read the paper (DOI)</a> · <a class="text-link" href="https://arxiv.org/abs/2608.16787">arXiv</a> · <a class="text-link" href="https://doi.org/10.5281/zenodo.21386388">Code and result tables</a></p>
+        </div>
+      </details>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

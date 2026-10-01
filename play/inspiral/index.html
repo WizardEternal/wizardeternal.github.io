@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The chirp, a black hole binary toy | Karan Akbari</title>
+  <meta name="description" content="Pick two supermassive black hole masses and watch them spiral in, in 3D, with sound. A strain plot shows whether pulsar timing arrays or LISA could hear them.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/inspiral/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The chirp">
+  <meta property="og:description" content="Pick two supermassive black hole masses and watch them spiral in, in 3D, with sound. A strain plot shows whether pulsar timing arrays or LISA could hear them.">
+  <meta property="og:url" content="https://karanakbari.com/play/inspiral/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The chirp">
+  <meta name="twitter:description" content="Pick two supermassive black hole masses and watch them spiral in, in 3D, with sound. A strain plot shows whether pulsar timing arrays or LISA could hear them.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The chirp","headline":"The chirp, a black hole binary toy","description":"Pick two supermassive black hole masses and watch them spiral in, in 3D, with sound. A strain plot shows whether pulsar timing arrays or LISA could hear them.","url":"https://karanakbari.com/play/inspiral/","mainEntityOfPage":"https://karanakbari.com/play/inspiral/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-24","image":"https://karanakbari.com/assets/images/og-card.png","about":["supermassive black hole binaries","gravitational waves","pulsar timing arrays","LISA","interactive simulation"],"isBasedOn":"https://github.com/WizardEternal/smbhb-inspiral","learningResourceType":"interactive simulation","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="modulepreload" href="/assets/vendor/three/0.169.0/build/three.module.min.js">
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play <span aria-hidden="true">·</span> gravitational waves</p>
+      <h1>The chirp</h1>
+      <p class="play-lede">Two supermassive black holes in a tight orbit leak energy as gravitational waves, so the orbit shrinks and they go around faster, and that makes them leak energy faster still. For the default pair the first orbits here take 21 years and the last one takes under four days. The clock runs on a log scale, so every second on screen divides the time left by the same factor.</p>
+      <aside class="play-howto" aria-labelledby="howto-h">
+        <h2 id="howto-h">How to play</h2>
+        <p class="play-goal"><strong>Goal:</strong> follow a pair of black holes to the merger and see which detector could hear it.</p>
+        <ol>
+          <li>Press Play on the PTA pair and keep an eye on the dot in the strain plot.</li>
+          <li>A detector can hear the pair while the dot sits above that detector's curve.</li>
+          <li>Then try the gap pair and the LISA pair. One of them merges where nobody can hear it.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="instrument toy-inspiral" id="instrument" aria-label="Black hole binary inspiral simulator">
+      <div class="inst-body">
+
+        <div class="inst-panel inst-stage inst-orbit" id="orbit-panel">
+          <div class="stage-host orbit-stage" id="orbit-stage">
+            <div class="stage-fallback orbit-fallback" id="orbit-fallback" hidden>
+              <p id="orbit-fallback-text">Loading the 3D view.</p>
+            </div>
+          </div>
+          <div class="hud hud-top">
+            <span class="pill" id="band-pill" data-band="pta"><span class="pill-dot" aria-hidden="true"></span><span id="band-text">PTA band</span></span>
+            <span class="hud-hint" id="drag-hint">Drag to turn the view</span>
+          </div>
+          <div class="hud hud-bottom">
+            <div class="clock">
+              <span class="hud-label">Time to merger</span>
+              <span class="clock-value" id="clock-value">10 million years</span>
+            </div>
+            <dl class="stats">
+              <div><dt>GW frequency</dt><dd id="stat-f">3.0 nHz</dd></div>
+              <div><dt>Orbital period</dt><dd id="stat-p">21 years</dd></div>
+              <div><dt>Separation</dt><dd id="stat-a">0.033 pc</dd></div>
+              <div><dt>Relative speed</dt><dd id="stat-v">0.032 c</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="inst-timeline">
+          <div class="timeline-head">
+            <label for="scrub" class="inst-label">Time before merger</label>
+            <span class="timeline-hint">log scale</span>
+          </div>
+          <div class="timeline-track">
+            <div class="timeline-ticks" id="ticks" aria-hidden="true"></div>
+            <input type="range" id="scrub" min="0" max="1000" step="1" value="0" aria-valuetext="10 million years before merger">
+          </div>
+        </div>
+
+        <div class="inst-controls">
+          <div class="transport">
+            <button type="button" class="btn btn-primary" id="btn-play" aria-pressed="false">
+              <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.6v10.8c0 .5.5.8.9.5l8.2-5.4a.6.6 0 0 0 0-1L4.9 2.1c-.4-.3-.9 0-.9.5z" fill="currentColor"/></svg>
+              <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>
+              <span class="btn-text">Play</span>
+            </button>
+            <button type="button" class="btn" id="btn-restart">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 2.4v3.2h3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="btn-text">Restart</span>
+            </button>
+            <button type="button" class="btn is-toggle" id="btn-sound" aria-pressed="false">
+              <svg class="icon-wave" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h2.4L8 3v10L4.4 10H2z" fill="currentColor"/><path d="M10.5 5.6a3.4 3.4 0 0 1 0 4.8M12.4 3.8a6 6 0 0 1 0 8.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="icon-mute" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h2.4L8 3v10L4.4 10H2z" fill="currentColor"/><path d="M10.6 6l3.6 4M14.2 6l-3.6 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span class="btn-text">Listen</span>
+            </button>
+          </div>
+          <div class="presets" role="group" aria-label="Preset systems">
+            <button type="button" class="chip" data-preset="pta" aria-pressed="true">PTA pair</button>
+            <button type="button" class="chip" data-preset="gap" aria-pressed="false">Gap pair</button>
+            <button type="button" class="chip" data-preset="lisa" aria-pressed="false">LISA pair</button>
+          </div>
+          <div class="sliders">
+            <div class="slider">
+              <div class="slider-head"><label for="m1">Black hole 1</label><output id="m1-out" for="m1">5.0 × 10⁸ M☉</output></div>
+              <input type="range" id="m1" min="5" max="10" step="0.01" value="8.699">
+            </div>
+            <div class="slider">
+              <div class="slider-head"><label for="m2">Black hole 2</label><output id="m2-out" for="m2">2.0 × 10⁸ M☉</output></div>
+              <input type="range" id="m2" min="5" max="10" step="0.01" value="8.301">
+            </div>
+            <div class="slider">
+              <div class="slider-head"><label for="dist">Distance</label><output id="dist-out" for="dist">500 Mpc</output></div>
+              <input type="range" id="dist" min="1" max="4" step="0.01" value="2.699">
+            </div>
+          </div>
+          <p class="sound-note" id="sound-note">Sound is off. Pitch follows the real gravitational-wave frequency, squeezed into 60 to 1000 Hz.</p>
+        </div>
+
+        <div class="inst-panel inst-strain">
+          <div class="panel-head">
+            <h2 class="inst-label">Who could hear it</h2>
+            <span class="panel-sub">characteristic strain vs frequency</span>
+          </div>
+          <div class="canvas-wrap strain-wrap">
+            <canvas id="strain" role="img" aria-label="Characteristic strain against gravitational-wave frequency, with the NANOGrav and LISA sensitivity curves and the track of the binary."></canvas>
+          </div>
+          <p class="verdict" id="verdict" aria-live="polite"></p>
+        </div>
+
+        <div class="inst-panel inst-light">
+          <div class="panel-head">
+            <h2 class="inst-label">What a telescope would see</h2>
+            <span class="lc-status" id="lc-status" data-state="slow">too slow</span>
+          </div>
+          <div class="canvas-wrap light-wrap">
+            <canvas id="lightcurve" role="img" aria-label="Ten years of simulated optical brightness: a periodic signal at the orbital period on top of random quasar flickering."></canvas>
+          </div>
+          <p class="lc-note" id="lc-note"></p>
+        </div>
+      </div>
+      <p class="visually-hidden" aria-live="polite" id="announcer"></p>
+    </section>
+
+    <section class="play-notes play-col">
+      <div class="note-block">
+        <h2>What you're seeing</h2>
+        <p>The 3D view is the orbit. Every pair starts 10 million years before it merges. Sizes and speeds are squashed so it fits on a screen, but the order of events is real: the frequency follows Peters (1964) with the first post-Newtonian correction, and the readouts are in real units. The sheet underneath is a cartoon of curved space. Each hole sits over its own dip, and the ripples running outward are the gravitational waves, two crests per orbit, packed tighter as the orbit speeds up. The glow around a hole turns bluer and brighter while that hole is coming toward you. That's Doppler boosting, and you only notice it near the end, when the two holes pass each other at up to 0.41 times the speed of light.</p>
+        <p>The plot is strain against frequency, both on log axes, and the dot is the binary. The shaded columns are where pulsar timing arrays listen (1 to 100 nHz, with NANOGrav's 15-year curve from Agazie et al. 2023) and where LISA would (0.1 to 100 mHz, the Robson, Cornish &amp; Liu 2019 curve for the mission in Amaro-Seoane et al. 2017). A signal has to sit above a curve to be heard. The merger frequency goes as one over the total mass, so merging inside the LISA band needs less than about 4 × 10⁷ M☉ in total. Merging inside the PTA band would need more than 4 × 10¹⁰ M☉, which the sliders don't even reach.</p>
+        <p>The sound is the same frequency sweep squeezed into 60 to 1000 Hz, and it gets louder as the real strain grows. The real waves are far too slow to hear. At 1 nHz a single wave takes 32 years to go past.</p>
+        <p>The bottom strip is what an optical survey might record: a sine at the orbital period from Doppler boosting, sitting on damped-random-walk noise, which is how quasars flicker anyway. I made both amplitudes up. A 10-year survey needs three full cycles and a few visits per cycle, so it can only catch periods of about 100 to 1,200 days, and random flickering is annoyingly good at faking exactly this kind of wiggle.</p>
+      </div>
+      <div class="note-block note-limits">
+        <h2>What this toy leaves out</h2>
+        <p>Orbits are circular and the black holes don't spin. The frequency evolution stops at first post-Newtonian order, which is already unreliable in the last few orbits, and the merger flash is only a drawing. There's no gas and there are no stars around the pair. At wide separations those shrink the orbit faster than gravitational waves do, so the early numbers on the clock are too long. No redshift either.</p>
+        <p>Both sensitivity curves are approximate. The NANOGrav one is 11 points read off Agazie et al. (2023) by hand, and the LISA fit leaves out the foreground from binaries in our own galaxy. The height of the dot also flatters slow PTA pairs. It counts every cycle the binary spends near a frequency, but 15 years of timing only sees about one and a half cycles at 3 nHz, and the NANOGrav curve is meant for a background made by many binaries at once.</p>
+      </div>
+      <div class="note-block note-links">
+        <p class="link-row"><a class="play-link" href="https://github.com/WizardEternal/smbhb-inspiral">The Python code this is ported from</a></p>
+        <p class="link-row"><a class="play-link" href="/research/cross-band-periodicity/">I searched 1,369 galaxies for these</a></p>
+        <h2 class="refs-title">References</h2>
+        <ul class="refs">
+          <li>Agazie, G., et al. 2023, ApJL, 951, L8. The NANOGrav 15 yr data set: evidence for a gravitational-wave background.</li>
+          <li>Amaro-Seoane, P., et al. 2017, arXiv:1702.00786. Laser Interferometer Space Antenna.</li>
+          <li>Peters, P. C. 1964, Phys. Rev., 136, B1224. Gravitational radiation and the motion of two point masses.</li>
+          <li>Robson, T., Cornish, N. J., &amp; Liu, C. 2019, CQG, 36, 105011. The construction and use of LISA sensitivity curves.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="play-col"><p>© 2026 Karan Akbari</p></div></footer>
+
+  <noscript><p class="play-col">This toy needs JavaScript. The notes above still describe what it shows.</p></noscript>
+  <script src="/assets/js/inspiral-physics.js" defer></script>
+  <script src="/assets/js/inspiral.js" defer></script>
+  <script type="module" src="/assets/js/inspiral-3d.js" onerror="window.ChirpViewFailed &amp;&amp; window.ChirpViewFailed('load')"></script>
+</body>
+</html>

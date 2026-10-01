@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play: interactive toys from my papers | Karan Akbari</title>
+  <meta name="description" content="Five 3D toys from Karan Akbari's papers: an X-ray binary explorer, the GRS 1915+105 heartbeat, a binary quasar game, a gain-shift fit and a black hole chirp.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Play: interactive toys from my papers">
+  <meta property="og:description" content="Five 3D toys from Karan Akbari's papers: an X-ray binary explorer, the GRS 1915+105 heartbeat, a binary quasar game, a gain-shift fit and a black hole chirp.">
+  <meta property="og:url" content="https://karanakbari.com/play/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Play: interactive toys from my papers">
+  <meta name="twitter:description" content="Five 3D toys from Karan Akbari's papers: an X-ray binary explorer, the GRS 1915+105 heartbeat, a binary quasar game, a gain-shift fit and a black hole chirp.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Play: interactive toys from my papers","description":"Five 3D toys from Karan Akbari's papers: an X-ray binary explorer, the GRS 1915+105 heartbeat, a binary quasar game, a gain-shift fit and a black hole chirp.","url":"https://karanakbari.com/play/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-29","inLanguage":"en","hasPart":[{"@type":"WebPage","name":"Inside an X-ray binary","url":"https://karanakbari.com/play/xrb/"},{"@type":"WebPage","name":"Take its pulse","url":"https://karanakbari.com/play/grs-pulse/"},{"@type":"WebPage","name":"Spot the binary","url":"https://karanakbari.com/play/fake-a-period/"},{"@type":"WebPage","name":"The fit that can't tell","url":"https://karanakbari.com/play/gain-shift/"},{"@type":"WebPage","name":"The chirp","url":"https://karanakbari.com/play/inspiral/"}]}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="stylesheet" href="/assets/css/play-index.css">
+  <link rel="stylesheet" href="/assets/doodles/doodles.css">
+  <link rel="stylesheet" href="/assets/doodles/scenes/play.css">
+  <style>
+    /* the doodle sits above the "Before you start" card: right column on wide screens, after the intro text on phones */
+    .play-intro > .play-side { margin-top: 1.5rem; min-width: 0; }
+    .play-side svg.doodle { max-width: 26rem; margin-bottom: .3rem; }
+    @media (min-width: 900px) {
+      .play-intro > .play-side { grid-column: 2; grid-row: 1 / -1; align-self: center; margin-top: 0; }
+    }
+  </style>
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/" aria-current="page">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play</p>
+      <h1>Toys from my papers</h1>
+      <p class="play-lede">These are interactive toys built from my papers and code. Each one runs in your browser, and each has notes underneath on what it leaves out and where the numbers come from.</p>
+      <div class="play-side">
+<!-- doodle:play -->
+<svg class="doodle" data-scene="play" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doodle of two kids launching a cardboard box rocket">
+<g class="dk-draw" filter="url(#dk-boil)">
+<g class="dk-sky a" stroke-width="2">
+<g data-part="moon" transform="translate(64 62)"/>
+<g data-part="star" transform="translate(356 52)"/><g data-part="star-s" transform="translate(150 36)"/>
+<g data-part="spark" transform="translate(458 58)"/><g data-part="spark-s" transform="translate(292 30)"/>
+<g data-part="spark-s" transform="translate(28 140)"/><g data-part="dot" transform="translate(206 60)"/>
+<g data-part="dot" transform="translate(410 70)"/><g data-part="dot" transform="translate(120 96)"/>
+<g data-part="dot" transform="translate(318 104)"/>
+</g>
+<path d="M4 238Q12 236 26 236H440Q454 236 462 238"/>
+<g data-part="grass" transform="translate(160 236)"/><g data-part="grass" transform="translate(186 236)"/><g data-part="grass" transform="translate(452 236)"/>
+<path d="M66 258q10-4 20 0M300 262q12-4 22 0M180 270q8-3 16 0M420 256q8-3 16 0" stroke-width="1.6" opacity=".6"/>
+<g class="pl-smoke" transform="translate(222 236)"><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/></g>
+<g class="pl-lever" transform="translate(124 236)">
+<g class="pl-stick" transform="rotate(25 0 -12)"><path d="M0-12V-44" stroke-width="3.4"/><circle class="af" cy="-45" r="3.8"/></g>
+<path class="f" d="M-11 0V-12H11V0Z"/><path d="M-7-6.5h6M3-6.5h3" stroke-width="1.4"/>
+</g>
+<g class="pl-rocket" transform="translate(222 236)"><g class="pl-fly"><g class="pl-wob">
+<path class="pl-flame a am" stroke-width="1.8" d="M-15 0L-10 11L-5 5L0 17L5 5L10 11L15 0"/>
+<path class="f" d="M-25-60L-37-71L-25-76L-11-60ZM25-60L37-71L25-76L11-60Z"/>
+<path class="f" d="M-25-60H25V0H-25Z"/>
+<path d="M-18-53h9M8-54q5 1 9-1M-22-26l3-2M18-31l3 2" stroke-width="1.3"/>
+<path class="f" d="M25-26L37-6V0H25ZM-25-26L-37-6V0H-25Z"/>
+<path class="a" d="M22-20h6M-28-20h6" stroke-width="1.6"/>
+<circle class="f" cy="-38" r="10"/><path d="M-6-40q1-5 6-5" stroke-width="1.4"/><circle cy="-38" r="13" stroke-width="1.1" stroke-dasharray="2 3"/>
+<g class="a" stroke-width="1.7" transform="translate(-21.5 -8) rotate(-4)">
+<path d="M0 0V-9H3.5Q6.5-9 6.5-6.6Q6.5-4.3 3.5-4.3H0M3.5-4.3L6.5 0"/>
+<path d="M10.8-9C7-9 7 0 10.8 0C14.6 0 14.6-9 10.8-9Z"/>
+<path d="M22-7.6C20.4-9.6 16.2-9.4 16.2-4.5C16.2 0 20.4.6 22-1.2"/>
+<path d="M24.3 0V-9M30-9L24.3-3.6M26.2-5.3L30 0"/>
+<path d="M37.4-9H31.8V0H37.4M31.8-4.6H36"/>
+<path d="M39.2-9H45M42.1-9V0"/>
+</g>
+<path class="f" d="M-22-60Q-11-73 0-89Q11-73 22-60Q0-56-22-60Z"/>
+<path d="M-7-79Q3-71 13-63" stroke-width="1.4"/>
+<rect class="pl-hit" x="-38" y="-91" width="76" height="92" fill="transparent" stroke="none"/>
+</g></g></g>
+<g data-kid="hatch" transform="translate(90 236)"/>
+<g data-kid="bobble" transform="translate(412 236)"/>
+<g data-part="sheep" data-fence="right" transform="translate(16 236) scale(.9)"/>
+<g class="pl-dust"><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/><path class="f" d="M-8 3Q-11-3-5-4Q-4-10 1-9Q6-11 8-5Q12-3 9 3Z"/></g>
+<g class="a" stroke-width="2.4">
+<g class="pl-n" transform="translate(166 122)"><path d="M-4-6q3-5 7-2q3 3-2 6q6 1 3 6q-3 3-8 0"/></g>
+<g class="pl-n" transform="translate(166 122)"><path d="M-4-5q2-5 7-2q3 3-1 7l-6 5h8"/></g>
+<g class="pl-n" transform="translate(166 122)"><path d="M-2-5l3-3V9"/></g>
+<g class="dk-z" stroke-width="1.8"><path d="M98 139h6l-6 6h6"/><path d="M109 130h5l-5 5h5"/><path d="M439 112h6l-6 6h6"/></g>
+<g class="dk-bang"><path d="M122 140v-11M122 146v.2"/><path d="M445 120v-11M445 126v.2"/></g>
+<g class="pl-bang"><path d="M434 116v-11M434 122v.2"/><path d="M150 132v-11M150 138v.2"/></g>
+<g class="pl-ha" stroke-width="1.9"><path d="M428 115v-11M428 109q3-3 6 0v6"/><circle cx="440.6" cy="111.6" r="3.2"/><path d="M444 107.6v7.4"/><path d="M450 132v-11M450 126q3-3 6 0v6"/><circle cx="462.6" cy="128.6" r="3.2"/><path d="M466 124.6v7.4"/></g>
+</g>
+</g>
+</svg>
+<!-- /doodle -->
+        <aside class="play-howto" aria-labelledby="before-h">
+          <h2 id="before-h">Before you start</h2>
+          <p class="play-goal">Each toy has its own <strong>How to play</strong> box with a goal at the top.</p>
+          <ol>
+            <li>Drag any 3D view to turn it.</li>
+            <li>The 3D scenes use WebGL, so they work best on a laptop or desktop.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="play-col toy-list" aria-label="The toys">
+      <article class="toy-item toy-item--wide">
+        <a class="toy-thumb" href="/play/xrb/" tabindex="-1" aria-hidden="true"><img src="/assets/img/play/xrb.webp" width="800" height="500" decoding="async" alt="3D view of an accretion disc seen nearly edge-on around a black hole shadow, with the far side of the disc bent up over the shadow and under it."></a>
+        <div class="toy-text">
+          <h2><a href="/play/xrb/">Inside an X-ray binary</a></h2>
+          <p class="toy-do">Zoom from the whole binary to the black hole, and find the signals we'd actually see from Earth.</p>
+          <p class="toy-from">From: the QPO and heartbeat models in a ray tracer I wrote in Python (not public yet).</p>
+          <a class="toy-open" href="/play/xrb/">Open it</a>
+        </div>
+      </article>
+
+      <article class="toy-item">
+        <a class="toy-thumb" href="/play/grs-pulse/" tabindex="-1" aria-hidden="true"><img src="/assets/img/play/grs-pulse.webp" width="800" height="500" loading="lazy" decoding="async" alt="3D black hole with a disc coloured by fitted temperature and a hazy corona above it, with labels."></a>
+        <div class="toy-text">
+          <h2><a href="/play/grs-pulse/">Take its pulse</a></h2>
+          <p class="toy-do">Find out if the disc really heats up and cools down every beat.</p>
+          <p class="toy-from">From: <a href="/research/grs-1915-heartbeat/">the GRS 1915+105 heartbeat paper</a>, ApJ 1007, 64 (2026).</p>
+          <a class="toy-open" href="/play/grs-pulse/">Open it</a>
+        </div>
+      </article>
+
+      <article class="toy-item">
+        <a class="toy-thumb" href="/play/fake-a-period/" tabindex="-1" aria-hidden="true"><img src="/assets/img/play/fake-a-period.webp" width="800" height="500" loading="lazy" decoding="async" alt="3D quasar: a black hole shadow inside a glowing, dusty orange disc."></a>
+        <div class="toy-text">
+          <h2><a href="/play/fake-a-period/">Spot the binary</a></h2>
+          <p class="toy-do">Find the quasars that hide a real pair of black holes, without falling for the fakes.</p>
+          <p class="toy-from">From: <a href="/research/cross-band-periodicity/">the cross-band periodicity paper</a>, ApJ 1009, 184 (2026).</p>
+          <a class="toy-open" href="/play/fake-a-period/">Open it</a>
+        </div>
+      </article>
+
+      <article class="toy-item">
+        <a class="toy-thumb" href="/play/gain-shift/" tabindex="-1" aria-hidden="true"><img src="/assets/img/play/gain-shift.webp" width="800" height="500" loading="lazy" decoding="async" alt="3D fit landscape over photon index and normalisation, with a teal valley, contour lines and a marker for the true value."></a>
+        <div class="toy-text">
+          <h2><a href="/play/gain-shift/">The fit that can't tell</a></h2>
+          <p class="toy-do">Put a small error in a simulated X-ray detector's energy scale and watch the spectral fit absorb it.</p>
+          <p class="toy-from">From: <a href="/research/xray-inference/">the X-ray inference preprint</a>, arXiv:2606.17098.</p>
+          <a class="toy-open" href="/play/gain-shift/">Open it</a>
+        </div>
+      </article>
+
+      <article class="toy-item">
+        <a class="toy-thumb" href="/play/inspiral/" tabindex="-1" aria-hidden="true"><img src="/assets/img/play/inspiral.webp" width="800" height="500" loading="lazy" decoding="async" alt="Two black holes orbiting on a warped grid that stands for spacetime, with ripples spreading out."></a>
+        <div class="toy-text">
+          <h2><a href="/play/inspiral/">The chirp</a></h2>
+          <p class="toy-do">Follow a pair of black holes to the merger and see which detector could hear it.</p>
+          <p class="toy-from">From: my <a href="https://github.com/WizardEternal/smbhb-inspiral">smbhb-inspiral</a> repo, a post-Newtonian inspiral simulator.</p>
+          <a class="toy-open" href="/play/inspiral/">Open it</a>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="shell"><p>© 2026 Karan Akbari</p></div></footer>
+  <script src="/assets/doodles/doodles.js" defer></script>
+  <script src="/assets/doodles/scenes/play.js" defer></script>
+</body>
+</html>

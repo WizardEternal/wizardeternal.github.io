@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Things I learned doing research | Karan Akbari</title>
+  <meta name="description" content="Three things Karan Akbari learned doing research: check what your inputs mean, a null result is still a result, and a good fit can be the wrong answer.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/notes/things-i-learned-doing-research/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Things I learned doing research">
+  <meta property="og:description" content="Three things Karan Akbari learned doing research: check what your inputs mean, a null result is still a result, and a good fit can be the wrong answer.">
+  <meta property="og:url" content="https://karanakbari.com/notes/things-i-learned-doing-research/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Things I learned doing research">
+  <meta name="twitter:description" content="Three things Karan Akbari learned doing research: check what your inputs mean, a null result is still a result, and a good fit can be the wrong answer.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Things I learned doing research","description":"Three things Karan Akbari learned doing research: check what your inputs mean, a null result is still a result, and a good fit can be the wrong answer.","url":"https://karanakbari.com/notes/things-i-learned-doing-research/","mainEntityOfPage":"https://karanakbari.com/notes/things-i-learned-doing-research/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .note{width:min(calc(100% - 2.5rem),76rem);margin-inline:auto;padding-block:3.5rem 5rem}
+    .note .kicker{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rust);margin:0 0 .8rem}
+    .note h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:0 0 2rem}
+    .note h2{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:400;letter-spacing:-.02em;line-height:1.15;margin:2.4rem 0 .7rem}
+    .note p{font-size:1.2rem;line-height:1.72;margin:0 0 1.1rem}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="note">
+      <p class="kicker">Notes</p>
+      <h1>Things I learned doing research</h1>
+
+      <h2>Check what a number means before you use it</h2>
+      <p>In the Gaia paper I took a published 2% calibration error as 2% of a star's total light, when it meant 2% of the light at each blue wavelength. For cool stars that turned a 2% error into a median 55% one, 27 times too big. The code ran fine the whole time. Now I read the source for the units and the definition of every input before running anything. The full story is in <a href="/notes/the-2-percent-that-was-55/">The 2% that was actually 55%</a>.</p>
+
+      <h2>Zero is a result, if you know what you could have found</h2>
+      <p>My <a href="/research/cross-band-periodicity/">cross-band search</a> went through 1,369 galaxies and found no source with the same period in X-rays and optical light. On its own that doesn't say how many there could be. So I put fake periodic signals into the real light curves and ran the whole search again, 1,800 times. That's what turned zero into a limit: at most about 3% of the Swift-BAT galaxies can have a shared period with a hard X-ray modulation of 30% or more.</p>
+
+      <h2>A fit can look good and still be wrong</h2>
+      <p>In the <a href="/research/xray-inference/">X-ray inference paper</a>, shifting the detector's energy scale by up to 3% got past all three checks I tried, because the fit moves the source parameters to make up for the shift. The spectrum still fits and only the answer changes. So when a fit looks good, I still test it on simulations where I already know the right answer.</p>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="shell"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can a fast X-ray fit tell when it's wrong? | Karan Akbari</title>
+  <meta name="description" content="Can a neural network X-ray spectral fit tell when its model is wrong? A benchmark on XMM-Newton spectra where a 3% gain shift gets past three checks.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/xray-inference/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Can a fast X-ray fit tell when it's wrong?">
+  <meta property="og:description" content="Can a neural network X-ray spectral fit tell when its model is wrong? A benchmark on XMM-Newton spectra where a 3% gain shift gets past three checks.">
+  <meta property="og:url" content="https://karanakbari.com/research/xray-inference/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Can a fast X-ray fit tell when it's wrong?">
+  <meta name="twitter:description" content="Can a neural network X-ray spectral fit tell when its model is wrong? A benchmark on XMM-Newton spectra where a 3% gain shift gets past three checks.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Can a fast X-ray fit tell when it's wrong?","description":"Can a neural network X-ray spectral fit tell when its model is wrong? A benchmark on XMM-Newton spectra where a 3% gain shift gets past three checks.","url":"https://karanakbari.com/research/xray-inference/","mainEntityOfPage":"https://karanakbari.com/research/xray-inference/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","image":"https://karanakbari.com/assets/images/og-card.png","about":["X-ray spectral fitting","simulation-based inference","neural posterior estimation","model misspecification","XMM-Newton"],"isBasedOn":{"@type":"ScholarlyArticle","@id":"https://arxiv.org/abs/2606.17098","url":"https://arxiv.org/abs/2606.17098","name":"Misspecification in amortized X-ray spectral inference: a detection benchmark, a gain shift three schemes cannot see, and marginalizing it out","datePublished":"2026-06"},"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .top{margin:0}
+    .top img{display:block;width:min(calc(100% - 2.5rem),60rem);height:auto;margin:2rem auto 0;border-radius:4px}
+    .top figcaption{width:min(calc(100% - 2.5rem),60rem);margin:.45rem auto 0}
+    /* keep the title and first lines on the first screen */
+    .top img{width:auto;max-width:min(calc(100% - 2.5rem),60rem);max-height:40vh;height:auto}
+    .top figcaption{text-align:center}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.7;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:2.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+    .side{margin:1.5rem 0}
+    .side img{display:block;width:100%;max-width:560px;border-radius:3px}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <figure class="top">
+      <img src="/assets/images/xmm-newton-spacecraft-1200.jpg" width="1200" height="889" decoding="async" fetchpriority="high" alt="Artist's illustration of ESA's XMM-Newton X-ray observatory in orbit.">
+      <figcaption><span class="credit">XMM-Newton. ESA - D. Ducros. <a href="https://www.esa.int/ESA_Multimedia/Images/2003/06/XMM-Newton_spacecraft">Source</a></span></figcaption>
+    </figure>
+
+    <article class="col">
+      <h1>Can a fast X-ray fit tell when it's wrong?</h1>
+      <p class="meta">Akbari · Preprint · arXiv:2606.17098</p>
+
+      <p>Neural networks can fit an X-ray spectrum in milliseconds, which is great, as long as the data looks like what they trained on.</p>
+      <p>I simulated X-ray spectra with problems added in, like an extra emission line or a shifted detector energy scale, to see which ones the network would notice. The extra line was easy to spot. The shifted energy scale wasn't, because the fit just adjusts the source parameters to make up for it.</p>
+      <p>The energy scale shift got past all three checks, which is a little inconvenient for a method whose whole point is that you can trust it.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/xray-inference/detection-benchmark.png"><img src="/assets/xray-inference/detection-benchmark.png" width="2722" height="863" loading="lazy" decoding="async" alt="Grid of detection scores for different injected problems at faint, medium and bright count levels. The gain shift column stays near chance."></a>
+        <figcaption>Each column is a different problem added to the spectra, and each panel is a brightness level. Redder means easier to catch. B4 is the gain shift, and it stays near chance at every brightness. The bottom row (D3) is a population test that needs a whole labelled set of clean and broken spectra, so it can't be run on one spectrum, and the per-spectrum numbers further down leave it out.
+          <span class="credit">Akbari (2026), Fig. 1. <a href="https://arxiv.org/abs/2606.17098">Preprint</a></span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>The spectra are simulated, but they go through the real response files of XMM-Newton and NICER, so the detector side is as realistic as I could make it. And since I made the spectra, I know the right answer for every one of them.</p>
+          <p>I added four kinds of problems. An extra emission line, some absorbing gas partly covering the source, a different continuum shape, and a gain shift, which is when the detector's energy scale is slightly off.</p>
+          <p>An extra line is easy to catch because the model has no way to make a pile of extra counts at one energy. A gain shift stretches the whole spectrum a bit, and the fit handles that by moving the source parameters. So the fit still looks good and only the answer changes.</p>
+          <p>More photons made the line easier to catch and left the gain shift near chance at every count level.</p>
+          <p>I also checked whether the network's error bars were honest. If it says 68%, the true value should land inside that range 68% of the time. One of the trained networks was overconfident, its 90% intervals only caught the truth 76% of the time. Recalibrating brought that up to 88%, though that doesn't fix a wrong model.</p>
+          <p>Then I retrained it with the gain included as something it has to account for. That only helps when the spectrum actually carries information about the gain. When it doesn't, the gain just stays wherever the prior put it and the bias stays too. It's a small bias, 0.03 to 0.11 sigma, but it doesn't go away.</p>
+          <p>On a few brighter spectra, a slower exact method (nested sampling with the gain marginalized) pulled out gain information that the network mostly missed. So some of the problem is the data and some of it is the network.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>For astronomers: setup, metrics, results</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Simulation</dt><dd><code>jaxspec</code> through an XMM-Newton EPIC-pn response (102 grouped channels) and a NICER XTI response (969 channels, 0.3–10 keV). Source model <code>tbabs×(powerlaw+blackbody)</code>, 5 free parameters. No background component.</dd>
+            <dt>Estimator</dt><dd>One neural spline flow per count level (<code>sbi</code>), 50,000 simulations, CNN embedding to 20 summaries, 5 spline transforms</dd>
+            <dt>Count levels</dt><dd>Median total counts ≈100, 1,000, 10,000</dd>
+            <dt>Injected errors</dt><dd>B1: 6.4 keV line (σ = 0.05 keV), 5×10<sup>−6</sup> to 3×10<sup>−4</sup> ph cm<sup>−2</sup> s<sup>−1</sup>. B2: partial covering, fraction 0.9 to 0.3. B3: bremsstrahlung continuum, kT = 10 to 1.5 keV. B4: gain shift 0.5–3%, slope only.</dd>
+            <dt>Detection</dt><dd>AUC (0.5 = chance). B1: 0.76, 0.97, 0.97 at faint, medium, bright. Best per-spectrum check (D1 or D2): B2 up to 0.84, B3 up to 0.66. The population test D3 reaches 0.96 and 0.81 on those two, but it is not a per-spectrum score (Table 1). B4 over all 36 cells: 0.43–0.58, mean 0.50 (NICER mean 0.49). ESS stays null-consistent from 0.1 to 10% gain.</dd>
+            <dt>Evidence</dt><dd>Nested sampling, paired gain test at medium counts (n = 12): Δln Z = +0.33 ± 1.37 nats (p = 0.81). Line at medium counts: −67 nats [−90, −44].</dd>
+            <dt>Calibration</dt><dd>Bright EPIC-pn flow coverage deviation 0.114 (faint 0.014, medium 0.018), SBC KS p &lt; 10<sup>−13</sup>. Split-conformal recalibration to 0.031; 90% intervals cover 0.76 → 0.88. Converged NICER flow: deviation 0.011, fails SBC on all 5 parameters.</dd>
+            <dt>Gain marginalized</dt><dd>g ~ U[0.95, 1.05]. Medium-count bias +0.018 ± 0.006 (fixed-gain flow) vs +0.020 ± 0.006 (marginalized), 0.03–0.08σ. Bright: +0.019, 0.05–0.11σ. Flow gain posterior 88–90% of the prior width. Exact gain-marginalized nested sampling on bright spectra shrinks the gain to 0.73–0.86 of the prior; the flow recovers 0.04–0.16 of that shrinkage.</dd>
+          </dl>
+          <p>Everything is simulation-based and no observed spectrum is fit. The gain error is injected as a slope only, with no offset. All results use one five-parameter source model, and the sub-percent gain sweep covers medium counts on EPIC-pn only.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>Paper and code</h2></summary>
+        <div class="inner">
+          <p><strong>Akbari, K.</strong> “Misspecification in amortized X-ray spectral inference: a detection benchmark, a gain shift three schemes cannot see, and marginalizing it out.” Preprint, arXiv:2606.17098.</p>
+          <p><a class="text-link" href="https://arxiv.org/abs/2606.17098">Read the preprint</a> · <a class="text-link" href="https://github.com/WizardEternal/sbi-xray-calibration">Code and benchmark records</a></p>
+        </div>
+      </details>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

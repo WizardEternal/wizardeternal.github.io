@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inside an X-ray binary, a 3D explorer | Karan Akbari</title>
+  <meta name="description" content="Zoom from a black hole eating a star to a few tens of kilometres from the hole, in live 3D, with eclipses, bent light, QPOs, the heartbeat and a light curve.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/xrb/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Inside an X-ray binary">
+  <meta property="og:description" content="Zoom from a black hole eating a star to a few tens of kilometres from the hole, in live 3D, with eclipses, bent light, QPOs, the heartbeat and a light curve.">
+  <meta property="og:url" content="https://karanakbari.com/play/xrb/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Inside an X-ray binary">
+  <meta name="twitter:description" content="Zoom from a black hole eating a star to a few tens of kilometres from the hole, in live 3D, with eclipses, bent light, QPOs, the heartbeat and a light curve.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Inside an X-ray binary","headline":"Inside an X-ray binary, a 3D explorer","description":"Zoom from a black hole eating a star to a few tens of kilometres from the hole, in live 3D, with eclipses, bent light, QPOs, the heartbeat and a light curve.","url":"https://karanakbari.com/play/xrb/","mainEntityOfPage":"https://karanakbari.com/play/xrb/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-24","image":"https://karanakbari.com/assets/images/og-card.png","about":["black hole X-ray binaries","accretion discs","quasi-periodic oscillations","GRS 1915+105","gravitational lensing","interactive simulation"],"learningResourceType":"interactive simulation","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="stylesheet" href="/assets/css/xrb.css">
+  <link rel="modulepreload" href="/assets/js/xrb/app.js">
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play <span aria-hidden="true">·</span> X-ray binaries</p>
+      <h1>Inside an X-ray binary</h1>
+      <p class="play-lede">This is a black hole eating a star, in 3D, and you can zoom from the whole binary down to a few tens of kilometres from the hole. The star gets pulled into a teardrop, its gas spills over the tip and piles up into a disc, and the disc gets hotter the closer it is to the hole. The last few hundred kilometres shine in X-rays. Down there I've put the flickering I work on, using the same models as a ray tracer I wrote in Python (not public yet), so you can watch a power spectrum find it.</p>
+      <aside class="play-howto" aria-labelledby="howto-h">
+        <h2 id="howto-h">How to play</h2>
+        <p class="play-goal"><strong>Goal:</strong> zoom from the whole binary to the black hole, and find the signals we'd actually see from Earth.</p>
+        <ol>
+          <li><span>Drag to turn the view. To zoom, click the picture and use the wheel, or pinch. The orange button on the picture always suggests a next step.</span></li>
+          <li><span><strong>Look from Earth</strong> turns you to face the system the way we see it. At the default 84° the star passes in front of the hole once an orbit and the blue X-ray line drops to zero.</span></li>
+          <li><span>Zoom to the black hole, then try <strong>Edge-on view</strong> and <strong>Star behind the hole</strong>. That's where light bends.</span></li>
+          <li><span>Pick a <strong>QPO mode</strong> and watch a peak grow out of the noise in the power spectrum.</span></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="instrument toy-xrb" id="instrument" aria-label="Interactive 3D X-ray binary explorer">
+      <div class="xrb-stage" id="xrb-stage">
+        <canvas id="xrb-canvas" tabindex="0" role="img" aria-label="A teardrop-shaped star feeding a stream of gas into a glowing accretion disc around a black hole."></canvas>
+        <div class="xrb-labels" id="xrb-labels" aria-hidden="true"></div>
+        <button type="button" class="xrb-bh" id="xrb-bh" hidden><span class="xrb-bh-ring" aria-hidden="true"></span><span class="xrb-bh-note" id="xrb-bh-note">Black hole. Click to zoom in.</span></button>
+        <div class="xrb-earth" id="xrb-earth" aria-hidden="true">To Earth</div>
+        <div class="hud hud-top xrb-hud">
+          <div class="xrb-scale">
+            <span class="hud-label" id="xrb-scale-name">Whole binary</span>
+            <span class="xrb-bar-wrap"><span class="xrb-bar" id="xrb-bar"></span><span class="xrb-bar-label" id="xrb-bar-label"></span></span>
+          </div>
+          <span class="pill xrb-clock"><span class="pill-dot" aria-hidden="true"></span><span id="xrb-clock">Real time</span></span>
+        </div>
+        <div class="xrb-gauge" id="xrb-gauge" hidden>
+          <span class="xrb-gauge-label">inner disc<br>fill (model)<br><em>white line:<br>critical</em></span>
+          <span class="xrb-gauge-tube"><span class="xrb-gauge-crit"></span><span class="xrb-gauge-fill" id="xrb-gauge-fill"></span></span>
+        </div>
+        <p class="xrb-tnote" id="xrb-tnote" hidden>A telescope gets one point of light from an X-ray binary. Everything above had to be worked out from how that point brightens and fades.</p>
+        <p class="xrb-wheelhint" id="xrb-wheelhint" aria-hidden="true">Click the picture first to zoom with the wheel,<br>or hold <span id="xrb-wheelkey">Ctrl</span> and scroll.</p>
+        <button type="button" class="xrb-prompt" id="xrb-prompt">Zoom in to the black hole</button>
+        <div class="xrb-fallback" id="xrb-fallback" hidden>
+          <p>This needs WebGL2, and your browser didn't give me a WebGL2 context. The light curves below still work, and the notes describe what the 3D view shows.</p>
+        </div>
+      </div>
+
+      <div class="inst-controls xrb-controls">
+        <div class="xrb-row">
+          <div class="presets" role="group" aria-label="Zoom to a scale">
+            <button type="button" class="chip" data-scale="binary" aria-pressed="true">Whole binary</button>
+            <button type="button" class="chip" data-scale="disc" aria-pressed="false">Disc</button>
+            <button type="button" class="chip" data-scale="inner" aria-pressed="false">Inner disc</button>
+            <button type="button" class="chip" data-scale="horizon" aria-pressed="false">Black hole</button>
+          </div>
+          <div class="transport">
+            <button type="button" class="btn" id="xrb-play">Pause</button>
+          </div>
+        </div>
+        <div class="xrb-row">
+          <div class="presets xrb-views" role="group" aria-label="Views">
+            <button type="button" class="chip" id="xrb-earthview" aria-pressed="false">Look from Earth</button>
+            <button type="button" class="chip" id="xrb-edgeview" aria-pressed="false">Edge-on view</button>
+            <button type="button" class="chip" id="xrb-behindview" aria-pressed="false">Star behind the hole</button>
+            <button type="button" class="chip" id="xrb-telescope" aria-pressed="false">Telescope view</button>
+          </div>
+        </div>
+        <div class="xrb-row">
+          <div class="presets xrb-modes" role="group" aria-label="What happens in the inner disc">
+            <button type="button" class="chip" data-mode="quiet" aria-pressed="true">Plain disc</button>
+            <button type="button" class="chip" data-mode="typec" aria-pressed="false">Type-C QPO</button>
+            <button type="button" class="chip" data-mode="rpm" aria-pressed="false">High-frequency QPO</button>
+            <button type="button" class="chip" data-mode="heart" aria-pressed="false">Heartbeat</button>
+          </div>
+          <div class="transport xrb-toggles">
+            <button type="button" class="chip xrb-toggle" id="xrb-jet" aria-pressed="false">Jet</button>
+            <button type="button" class="chip xrb-toggle" id="xrb-heat" aria-pressed="true">X-ray heating</button>
+            <button type="button" class="chip xrb-toggle" id="xrb-labels-btn" aria-pressed="true">Labels</button>
+          </div>
+        </div>
+        <div class="sliders xrb-sliders">
+          <div class="slider xrb-incl">
+            <div class="slider-head"><label for="xrb-incl">Earth's view (inclination, 0° is face-on)</label><output id="xrb-incl-out" for="xrb-incl">84°</output></div>
+            <input type="range" id="xrb-incl" min="0" max="90" step="1" value="84">
+          </div>
+          <div class="slider xrb-brightness">
+            <div class="slider-head"><label for="xrb-bright">Display brightness</label><output id="xrb-bright-out" for="xrb-bright">1×</output></div>
+            <input type="range" id="xrb-bright" min="-1.5" max="1.5" step="0.05" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="xrb-caption">
+        <p class="verdict xrb-live" id="xrb-live" aria-live="polite"></p>
+        <div class="xrb-caption-body" id="xrb-caption-body"></div>
+      </div>
+
+      <div class="xrb-charts">
+        <div class="inst-panel">
+          <div class="panel-head"><h2 class="inst-label" id="xrb-lc-title">Light curve seen from Earth</h2></div>
+          <div class="canvas-wrap xrb-chart"><canvas id="xrb-lc" role="img" aria-label="Light curve: brightness against orbital phase or time."></canvas></div>
+        </div>
+        <div class="inst-panel">
+          <div class="panel-head"><h2 class="inst-label" id="xrb-psd-title">Where the optical light comes from</h2><button type="button" class="xrb-reset" id="xrb-psd-reset" hidden>Start again</button></div>
+          <div class="canvas-wrap xrb-chart"><canvas id="xrb-psd" role="img" aria-label="Second chart: the optical light split by source at binary scale, or the power spectrum of the X-ray light curve at the inner disc."></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="play-notes play-col">
+      <div class="note-block">
+        <h2>What you're seeing</h2>
+        <p>The binary is made up but built from textbook pieces: a 10 M☉ black hole and a 1 M☉, 1 R☉ star that just fills its Roche lobe. Eggleton's (1983) formula for the lobe and Kepler's third law then set the separation at <span id="xrb-fact-a">4.8</span> R☉ and the orbit at <span id="xrb-fact-period">8.9</span> hours. The star's surface is the Roche equipotential through L1, ray traced on the GPU, with gravity darkening, limb darkening and heating from the X-rays on the side facing the hole. The stream is a ballistic orbit from L1 in the rotating frame, so it lands on the disc edge where the maths puts it. The disc's outer edge is at 70% of the black hole's own Roche lobe, outside the circularisation radius at <span id="xrb-fact-rcirc">0.31</span> of the separation (the faint ring on the disc).</p>
+        <p>Temperature shows as colour and, more weakly, as brightness. The disc goes roughly as r<sup>−3/4</sup> (Shakura &amp; Sunyaev 1973), from about 6,300 K at the rim to 5 million K next to the hole, far too much range to show directly, so both colour and brightness are squashed and re-scaled for each zoom level. Cool is deep orange, hotter is yellow and white, hottest is blue-white.</p>
+        <p>The light curves come from the same geometry, seen from Earth's inclination only (the camera can go anywhere, Earth can't). For every orbital phase I add up the star, the disc and the bright spot at 550 nm, hiding whatever the star or the disc rim covers. From about 80° up, the star covers the hole once per orbit and the X-rays go out in a sharp eclipse. The thick part of the rim where the stream lands dims them just before, and above 88° the rim hides the centre all the time and only a faint corona gets through.</p>
+        <p>Zoom in far enough and the rays stop going straight. Inside 360 GM/c² of the hole every pixel's ray is bent along a photon orbit around a non-spinning black hole, so the lensed far side of the disc, the shadow and the thin ring around it are real 3D effects you can look at from any side, and the companion star gets bent into a ring when it sits behind the hole. From far away none of this shows: the hole is smaller than a pixel, and its Einstein radius out at the star is about 50 times smaller than the star.</p>
+        <p>The three inner modes run the models from my own QPO code with its default numbers. Type-C: a tilted hot flow precessing at the Ingram, Done &amp; Fragile (2009) rate, <span id="xrb-fact-nuprec">0.28</span> Hz. High-frequency QPO: a blob on the relativistic precession model orbit (Stella &amp; Vietri 1998), at 440, 296 and 17.5 Hz. Heartbeat: a one-zone version of the radiation-pressure instability (Lightman &amp; Eardley 1974) as a limit cycle. Each one feeds a simulated X-ray light curve with band-limited noise on top (flat at low frequency, falling as 1/f² above a break). The QPO phases drift at random, so the peaks have widths like real ones, quality factors of 6 to 10 instead of spikes. The power spectrum averages the light curve segment by segment, which is how you'd find these in real data too.</p>
+      </div>
+      <div class="note-block note-limits">
+        <h2>What this toy leaves out</h2>
+        <p>The light bending is for a non-spinning black hole. Spin only moves the disc's inner edge (Bardeen, Press &amp; Teukolsky 1972) and changes how fast the gas goes, so for the heartbeat's spin of 0.98 the shadow has the wrong shape and size. That spin puts the inner edge at 1.6 GM/c², inside the non-spinning photon sphere, so in the heartbeat mode the disc is drawn from 3 GM/c² out. My Python ray tracer follows real Kerr photon orbits. This doesn't. The photon ring is drawn about a pixel wide, and the real one is much thinner.</p>
+        <p>There's no radiative transfer. Colour and brightness are squashed temperature scales picked by eye (the Doppler boost is the one thing drawn at full strength, the fourth power of the Doppler factor, before the display's tone curve), and the hot flow and blob are glowing fog, not Comptonisation. The star has its own colour scale, stretched so the heated face and the darker nose show, and close to the hole it's dimmed by a fixed amount, because at its real brightness it would be invisible there.</p>
+        <p>Time is bent too. The orbit is sped up about 1,300 times, the disc spins on its own slowed-down clock that isn't the QPO clock, and the power spectrum isn't on the picture's clock either. For the plain disc and the Type-C mode it takes in the simulated light curve 16 times faster than the picture plays, for the heartbeat 10 times faster, and in the high-frequency mode the picture is slowed 500 times while the spectrum runs in real time. There's no counting noise from a detector, which in real data buries the high-frequency peaks unless you have hours of it.</p>
+        <p>The QPO modes borrow their black holes from three real sources (H 1743-322, GRO J1655-40 and GRS 1915+105), so the inner disc isn't quite the same black hole as the 10 M☉ one in the binary, and the km on the scale bar assume 10 M☉. The Type-C tilt is exaggerated to 20°. The spin the relativistic precession model gives for GRO J1655-40, 0.29, doesn't agree with other ways of measuring it. And the heartbeat is one zone with random cycle-to-cycle jitter, not a full disc simulation, so it says nothing about whether this is what really drives GRS 1915+105.</p>
+      </div>
+      <div class="note-block note-links">
+        <p class="link-row"><a class="play-link" href="/research/grs-1915-heartbeat/">What the real heartbeat looks like in my data</a></p>
+        <p class="link-row"><a class="play-link" href="/software/">My public code</a></p>
+        <h2 class="refs-title">References</h2>
+        <ul class="refs">
+          <li>Bardeen, J. M., Press, W. H., &amp; Teukolsky, S. A. 1972, ApJ, 178, 347. Rotating black holes: locally nonrotating frames, energy extraction, and scalar synchrotron radiation.</li>
+          <li>Eggleton, P. P. 1983, ApJ, 268, 368. Approximations to the radii of Roche lobes.</li>
+          <li>Ingram, A., Done, C., &amp; Fragile, P. C. 2009, MNRAS, 397, L101. Low-frequency quasi-periodic oscillations spectra and Lense-Thirring precession.</li>
+          <li>Lightman, A. P., &amp; Eardley, D. M. 1974, ApJ, 187, L1. Black holes in binary systems: instability of disk accretion.</li>
+          <li>Shakura, N. I., &amp; Sunyaev, R. A. 1973, A&amp;A, 24, 337. Black holes in binary systems. Observational appearance.</li>
+          <li>Stella, L., &amp; Vietri, M. 1998, ApJ, 492, L59. Lense-Thirring precession and quasi-periodic oscillations in low-mass X-ray binaries.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="play-col"><p>© 2026 Karan Akbari</p></div></footer>
+
+  <noscript><p class="play-col">This explorer needs JavaScript and WebGL2. The notes above still describe what it shows.</p></noscript>
+  <script type="module" src="/assets/js/xrb/app.js"></script>
+</body>
+</html>

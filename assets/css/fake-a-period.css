@@ -1,0 +1,191 @@
+/* Spot the binary (/play/fake-a-period/). Built on play.css: the page chrome,
+   .instrument, .panel-head, .hud, .pill, .stats, .btn, .chip, .verdict and the
+   notes come from there. Everything here is scoped under .toy-fap. */
+
+.toy-fap {
+  /* aliases into the shared palette in play.css; fake-a-period.js reads these */
+  --fap-opt: var(--inst-teal);
+  --fap-xray: var(--inst-violet);
+  --fap-none: var(--inst-slate);
+  --fap-fool: var(--inst-gold);
+  --fap-fake: var(--inst-red);
+  --fap-ok: var(--inst-green);
+  --fap-panel: var(--inst-bg);
+  --fap-grid: var(--inst-line);
+  --fap-axis: var(--inst-muted);
+  --fap-mask: var(--inst-line-faint);
+  --fap-thr: var(--inst-text);
+  --fap-rule: var(--inst-line-strong);
+  --fap-ink: var(--inst-text);
+}
+.fap .play-eyebrow a { color: inherit; }
+
+/* ---------- game bar (an .inst-bar) ---------- */
+.fap-gamebar { display: grid; gap: .8rem 1.4rem; align-items: center; grid-template-columns: minmax(0, 1fr); }
+.fap-round-pill { justify-self: start; }
+.fap-round-pill .pill-dot { background: var(--inst-amber); box-shadow: 0 0 10px var(--inst-amber); }
+.fap-prompt { margin: 0; font: 400 1.08rem/1.45 var(--serif); color: var(--inst-text); }
+.fap-prompt strong { font-weight: 600; color: #fff; }
+.fap-prompt .p-good { color: var(--fap-ok); }
+.fap-prompt .p-bad { color: var(--fap-fake); }
+.fap-score { grid-template-columns: repeat(2, auto); justify-content: start; }
+.fap-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.fap-actions .btn-primary { min-width: 10rem; }
+@media (min-width: 900px) {
+  .fap-gamebar { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "pill score act" "prompt prompt prompt"; }
+  .fap-round-pill { grid-area: pill; }
+  .fap-score { grid-area: score; justify-self: end; }
+  .fap-actions { grid-area: act; }
+  .fap-prompt { grid-area: prompt; max-width: 62rem; }
+}
+
+/* ---------- body: deck on the left, close-up on the right ---------- */
+.fap-body { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 980px) {
+  .fap-body { grid-template-columns: minmax(0, .92fr) minmax(0, 1.25fr); }
+  .fap-deck { border-right: 1px solid var(--inst-line); }
+}
+.fap-deck { padding-bottom: 1.15rem; }
+
+.fap-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; padding: 0 var(--inst-pad); }
+@media (min-width: 640px) and (max-width: 979px) { .fap-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fap-tile {
+  position: relative; display: flex; flex-direction: column; min-width: 0;
+  border: 1px solid rgba(255, 255, 255, .1); border-radius: 12px; background: rgba(255, 255, 255, .025);
+  transition: border-color .2s, box-shadow .2s, background-color .2s;
+}
+.fap-tile-look {
+  display: flex; flex-direction: column; gap: .35rem; width: 100%; padding: .55rem .6rem .45rem; margin: 0;
+  border: 0; background: none; color: inherit; text-align: left; cursor: pointer; font: inherit; border-radius: 12px 12px 0 0;
+}
+.fap-tile-top { display: flex; align-items: baseline; justify-content: space-between; gap: .4rem; }
+.fap-tile-id { font: 400 1.25rem/1 var(--serif); color: var(--inst-text); }
+.fap-tile-truth { font: 700 .62rem/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--inst-faint); text-align: right; }
+.fap-tile canvas { display: block; width: 100%; height: 86px; }
+.fap-tile-facts { min-height: 2.5em; color: var(--inst-muted); font: 500 .72rem/1.3 var(--sans); }
+.fap-tile-facts b { color: var(--inst-text); font-weight: 600; }
+.fap-tile-pick {
+  margin: 0 .6rem .6rem; min-height: 36px; border-radius: 999px; cursor: pointer;
+  border: 1px dashed rgba(255, 255, 255, .22); background: transparent; color: var(--inst-muted);
+  font: 700 .72rem/1 var(--sans); letter-spacing: .06em; text-transform: uppercase;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.fap-tile-pick:hover { color: var(--inst-text); border-color: rgba(255, 255, 255, .4); }
+.fap-tile-pick[aria-pressed="true"] { border-style: solid; border-color: var(--inst-amber); background: color-mix(in srgb, var(--inst-amber) 16%, transparent); color: color-mix(in srgb, var(--inst-amber) 45%, #fff); }
+.fap-tile-pick[disabled] { cursor: default; }
+.fap-tile.is-focus { border-color: rgba(255, 255, 255, .45); background: rgba(255, 255, 255, .055); }
+.fap-tile.is-picked { border-color: color-mix(in srgb, var(--inst-amber) 70%, transparent); }
+.fap-tile.r-hit { border-color: var(--fap-ok); box-shadow: 0 0 0 1px var(--fap-ok), 0 0 22px color-mix(in srgb, var(--fap-ok) 18%, transparent); }
+.fap-tile.r-fake { border-color: var(--fap-fake); box-shadow: 0 0 0 1px var(--fap-fake); }
+.fap-tile.r-miss { border-color: var(--fap-ok); border-style: dashed; }
+.fap-tile.r-hit .fap-tile-truth, .fap-tile.r-miss .fap-tile-truth { color: var(--fap-ok); }
+.fap-tile.r-fake .fap-tile-truth { color: var(--fap-fake); }
+.fap-tile-look:focus-visible, .fap-tile-pick:focus-visible { outline: 2px solid var(--inst-amber); outline-offset: 2px; }
+
+.fap-tiles[hidden], .fap-final[hidden], .fap-mark[hidden] { display: none; }
+.fap-final { padding: 0 var(--inst-pad); }
+.fap-final h3 { margin: .2rem 0 .7rem; font: 400 1.6rem/1.1 var(--serif); letter-spacing: -.02em; color: var(--inst-text); }
+.fap-final p { margin: 0 0 .9rem; color: var(--inst-soft); font: 400 1rem/1.55 var(--serif); }
+.fap-final table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font: 500 .8rem/1.35 var(--sans); color: var(--inst-text); }
+.fap-final th, .fap-final td { padding: .45rem .4rem .45rem 0; border-bottom: 1px solid var(--inst-line); text-align: left; vertical-align: top; font-variant-numeric: tabular-nums; }
+.fap-final thead th { color: var(--inst-muted); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+.fap-final .fap-actions { margin-top: .4rem; }
+.fap-final a { color: var(--inst-teal); }
+
+/* ---------- close-up ---------- */
+.fap-detail { display: flex; flex-direction: column; min-width: 0; }
+.fap-scene { aspect-ratio: 16 / 10; min-height: 250px; max-height: 520px; }
+.fap-scene .hud-top { flex-direction: column; align-items: flex-start; gap: .35rem; }
+.fap-scene .hud-bottom .stats dd { min-width: 6.5rem; }
+.fap-play { position: absolute; top: .85rem; right: .9rem; z-index: 3; min-height: 36px; background: rgba(10, 14, 16, .6); }
+.fap-note-flat { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; margin: 0; padding: .4rem .7rem; border-radius: 6px; background: rgba(0, 0, 0, .55); color: #ddd; font: .74rem/1.3 var(--sans); }
+.fap-tags { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.fap-tag {
+  position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: .35rem; max-width: 15rem;
+  white-space: normal; opacity: 0; transition: opacity .35s ease; will-change: transform;
+}
+.fap-tag::before { content: ""; flex: none; width: .5rem; height: .5rem; border-radius: 50%; background: #bbb; }
+.fap-tag.is-on { opacity: 1; }
+.fap-tag.t-disc::before { background: var(--inst-flame); box-shadow: 0 0 6px var(--inst-flame); }
+.fap-tag.t-cor::before { background: var(--fap-xray); box-shadow: 0 0 8px var(--fap-xray); }
+.fap-tag.t-sec::before { background: #000; border: 1.5px solid var(--inst-sky); box-shadow: 0 0 6px var(--inst-sky); }
+.fap-tag.t-bh::before { background: #000; border: 1.5px solid var(--inst-glow); }
+.fap-tag.t-sec { border-color: color-mix(in srgb, var(--inst-sky) 55%, transparent); color: color-mix(in srgb, var(--inst-sky) 35%, #fff); }
+.fap-tag.t-cor { border-color: color-mix(in srgb, var(--fap-xray) 50%, transparent); }
+
+.fap-lc-wrap { height: 170px; }
+.fap-pg-wrap { height: 190px; }
+.is-two .fap-lc-wrap { height: 220px; }
+.is-two .fap-pg-wrap { height: 250px; }
+.fap-detail .panel-head { padding-top: .85rem; }
+.fap-detail .canvas-wrap { margin: 0 .6rem; }
+
+.fap-calib {
+  position: absolute; left: .6rem; right: .6rem; bottom: .5rem; display: flex; align-items: center; gap: .7rem;
+  padding: .45rem .6rem; border-radius: 6px; background: rgba(20, 27, 31, .92); color: var(--inst-muted); font: 600 .72rem/1.3 var(--sans);
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.fap-calib.is-on { opacity: 1; }
+.fap-calib-bar { flex: 1; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.fap-calib-bar span { display: block; height: 100%; width: 0; background: var(--inst-amber); }
+
+.fap-markbar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; padding: .9rem var(--inst-pad) .9rem; }
+.fap-markbar-note { color: var(--inst-muted); font: 500 .76rem/1.4 var(--sans); }
+.fap-caption { border-top: 0; padding-top: 0; }
+
+/* ---------- free play ---------- */
+.fap-lab { border-top: 1px solid var(--inst-line); }
+.fap-lab > summary {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .8rem; padding: 1rem var(--inst-pad); cursor: pointer; list-style: none;
+  color: var(--inst-muted); font: 500 .86rem/1.4 var(--sans);
+}
+.fap-lab > summary::-webkit-details-marker { display: none; }
+.fap-lab > summary::before { content: "+"; color: var(--inst-amber); font: 700 1rem/1 var(--sans); }
+.fap-lab[open] > summary::before { content: "−"; }
+.fap-lab > summary:focus-visible { outline: 2px solid var(--inst-amber); outline-offset: -2px; }
+.fap-lab-controls { padding-top: 0; }
+@media (min-width: 640px) { .fap-lab-controls { grid-template-columns: auto auto auto; justify-content: start; align-items: center; } }
+.fap-lab-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem 2.2rem; padding: 0 var(--inst-pad) 1.3rem; }
+@media (min-width: 900px) { .fap-lab-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.fap-knobs { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+@media (min-width: 640px) { .fap-knobs { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.6rem; } .fap-knobs .sound-note { grid-column: 1 / -1; } }
+.fap-shape { margin-top: .3rem; }
+.fap-big { display: flex; align-items: baseline; gap: .55rem; margin: 0; }
+.fap-big strong { font: 400 2.6rem/1 var(--serif); letter-spacing: -.03em; color: var(--inst-text); font-variant-numeric: tabular-nums; }
+.fap-big span { color: var(--inst-muted); font: 600 .8rem/1.3 var(--sans); }
+.fap-big-label { margin: .2rem 0 .8rem; color: var(--inst-text); font: 600 .84rem/1.35 var(--sans); }
+.fap-rows { list-style: none; margin: 0 0 .9rem; padding: 0; display: grid; gap: .5rem; }
+.fap-rows li[hidden] { display: none; }
+.fap-row-top { display: flex; justify-content: space-between; gap: .6rem; color: var(--inst-muted); font: 600 .74rem/1.3 var(--sans); }
+.fap-row-top b { color: var(--inst-text); font-variant-numeric: tabular-nums; }
+.fap-meter { height: 5px; margin-top: .3rem; border-radius: 3px; background: rgba(255, 255, 255, .07); overflow: hidden; }
+.fap-meter span { display: block; height: 100%; width: 0; border-radius: 3px; transition: width .35s ease; }
+.fap-meter .m-opt { background: var(--fap-opt); }
+.fap-meter .m-xray { background: var(--fap-xray); }
+.fap-meter .m-both { background: var(--fap-fake); }
+#cv-jar { display: block; width: 100%; height: 7.5rem; }
+.fap-legend { margin-top: .6rem; }
+.fap-legend .d-none { background: var(--fap-none); }
+.fap-legend .d-fool { background: var(--fap-fool); }
+.fap-legend .d-fake { background: var(--fap-fake); }
+.fap-legend .d-ok { background: var(--fap-ok); }
+.fap-note { margin: .7rem 0 .7rem; color: var(--inst-muted); font: .76rem/1.45 var(--sans); }
+.fap-note:empty { display: none; }
+.fap-empty { min-height: 34px; font-size: .74rem; }
+
+@media (max-width: 520px) {
+  .fap-tiles { gap: .5rem; }
+  .fap-tile canvas { height: 74px; }
+  .fap-scene { aspect-ratio: 4 / 3.4; min-height: 0; }
+  .fap-scene .hud-bottom .stats dd { min-width: 0; }
+  .fap-tag { max-width: 10.5rem; }
+  .fap-lc-wrap { height: 150px; }
+  .fap-pg-wrap { height: 170px; }
+  .is-two .fap-lc-wrap { height: 200px; }
+  .is-two .fap-pg-wrap { height: 230px; }
+  .fap-detail .canvas-wrap { margin: 0 .3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fap-tile, .fap-tag, .fap-meter span, .fap-calib { transition: none; }
+}

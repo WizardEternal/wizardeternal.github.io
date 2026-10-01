@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spot the binary, a period-search game | Karan Akbari</title>
+  <meta name="description" content="A game from my cross-band periodicity paper: 8 quasars per round, some hide a real black hole pair and the rest are random flicker. Find the real ones.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/fake-a-period/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Spot the binary">
+  <meta property="og:description" content="8 quasars per round. Some hide a real pair of black holes, the rest are random flicker. Find the real ones without falling for the fakes.">
+  <meta property="og:url" content="https://karanakbari.com/play/fake-a-period/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spot the binary">
+  <meta name="twitter:description" content="8 quasars per round. Some hide a real pair of black holes, the rest are random flicker. Find the real ones without falling for the fakes.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Spot the binary","headline":"Spot the binary","description":"A game from my cross-band periodicity paper: 8 quasars per round, some hide a real black hole pair and the rest are random flicker. Find the real ones.","url":"https://karanakbari.com/play/fake-a-period/","mainEntityOfPage":"https://karanakbari.com/play/fake-a-period/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-24","image":"https://karanakbari.com/assets/images/og-card.png","about":["supermassive black hole binaries","periodicity search","red noise","damped random walk","Lomb-Scargle periodogram"],"isBasedOn":"https://doi.org/10.3847/1538-4357/ae9d7c","learningResourceType":"game","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="stylesheet" href="/assets/css/fake-a-period.css">
+  <link rel="modulepreload" href="/assets/js/fake-a-period.js">
+  <script type="importmap">{"imports":{"three":"/assets/vendor/three/0.169.0/build/three.module.min.js","three/addons/":"/assets/vendor/three/0.169.0/examples/jsm/"}}</script>
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#toy">Skip to the game</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main" class="fap">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play <span aria-hidden="true">·</span> from <a href="/research/cross-band-periodicity/">the cross-band paper</a></p>
+      <h1>Spot the binary</h1>
+      <p class="play-lede">If two supermassive black holes orbit each other, the quasar around them should brighten and fade once per orbit. The catch is that every quasar also flickers randomly, and random flicker is good at faking a period. I searched 1,369 real ones for this. Here you get 8 at a time.</p>
+      <aside class="play-howto" aria-labelledby="howto-h">
+        <h2 id="howto-h">How to play</h2>
+        <p class="play-goal"><strong>Goal:</strong> find the quasars that hide a real pair of black holes, without falling for the fakes.</p>
+        <ol>
+          <li>Each round deals 8 quasars. 1 to 3 of them have a real binary in them and the rest are only flicker.</li>
+          <li>Tap a quasar to see it up close, then mark the ones you think are real.</li>
+          <li>Press Check. Round 2 adds an X-ray light curve and round 3 uses the red-noise test from the paper.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="instrument toy-fap" id="toy" aria-label="Spot the binary game">
+      <div class="inst-bar fap-gamebar">
+        <span class="pill fap-round-pill"><span class="pill-dot" aria-hidden="true"></span><span id="round-name">Round 1 of 3</span></span>
+        <p class="fap-prompt" id="prompt">Dealing the quasars.</p>
+        <dl class="stats fap-score" aria-label="Score so far">
+          <div><dt>Found so far, all rounds</dt><dd id="sc-found">0 of 0</dd></div>
+          <div><dt>Fakes so far</dt><dd id="sc-fake">0</dd></div>
+        </dl>
+        <div class="fap-actions">
+          <button type="button" class="btn btn-primary" id="btn-check" disabled>Check my picks</button>
+        </div>
+      </div>
+
+      <div class="inst-body fap-body">
+        <div class="inst-panel fap-deck">
+          <div class="panel-head">
+            <h2 class="inst-label" id="deck-h">This round's quasars</h2>
+            <span class="panel-sub" id="deck-sub">tap one to look closer</span>
+          </div>
+          <div class="fap-tiles" id="tiles" role="list" aria-labelledby="deck-h"></div>
+          <div class="fap-final" id="final" hidden></div>
+        </div>
+
+        <div class="inst-panel fap-detail">
+          <div class="inst-stage fap-scene" id="scene">
+            <div class="stage-host fap-scene-host" id="scene-host" aria-hidden="true"></div>
+            <div class="fap-tags" id="tags" aria-hidden="true">
+              <span class="scene-tag fap-tag t-bh" id="tag-bh">black hole</span>
+              <span class="scene-tag fap-tag t-disc" id="tag-disc">accretion disc: its glow is the optical light curve</span>
+              <span class="scene-tag fap-tag t-cor" id="tag-cor">X-ray hot spot: its glow is the X-ray light curve</span>
+              <span class="scene-tag fap-tag t-sec" id="tag-sec">second black hole</span>
+            </div>
+            <div class="hud hud-top">
+              <span class="pill" id="scene-pill"><span class="pill-dot" aria-hidden="true"></span><span id="scene-name">Quasar A</span></span>
+              <span class="hud-hint">Drag to turn it</span>
+            </div>
+            <div class="hud hud-bottom">
+              <div class="clock">
+                <span class="hud-label">Light curve date</span>
+                <span class="clock-value" id="scene-year">2012.2</span>
+              </div>
+              <dl class="stats">
+                <div><dt>Optical</dt><dd id="st-opt">+0.00 mag</dd></div>
+                <div><dt>X-ray</dt><dd id="st-xray">not measured</dd></div>
+              </dl>
+            </div>
+            <button type="button" class="btn fap-play" id="btn-play" aria-pressed="true"><span id="play-label">Pause</span></button>
+          </div>
+
+          <div class="panel-head">
+            <h2 class="inst-label">Light curve</h2>
+            <span class="panel-sub">dots: what a telescope caught · thin line: what the quasar did</span>
+          </div>
+          <div class="canvas-wrap fap-lc-wrap"><canvas id="cv-lc" role="img" aria-label="Light curve"></canvas></div>
+
+          <div class="panel-head">
+            <h2 class="inst-label">Periodogram: how well a repeating wave fits at each period</h2>
+            <span class="panel-sub" id="pg-note">dashed: textbook false-alarm line</span>
+          </div>
+          <div class="canvas-wrap fap-pg-wrap"><canvas id="cv-pg" role="img" aria-label="Periodogram"></canvas>
+            <div class="fap-calib" id="calib" role="status"><span id="calib-text">Setting the false-alarm lines</span><span class="fap-calib-bar"><span id="calib-bar"></span></span></div>
+          </div>
+
+          <div class="fap-markbar">
+            <button type="button" class="btn is-toggle fap-mark" id="btn-mark" aria-pressed="false">Mark as a binary</button>
+            <span class="fap-markbar-note" id="mark-note"></span>
+          </div>
+          <div class="inst-caption fap-caption"><p class="verdict" id="caption" aria-live="polite">Setting up.</p></div>
+        </div>
+      </div>
+
+      <details class="fap-lab" id="lab">
+        <summary><span class="inst-label">Free play</span> run hundreds of quasars at once and count how often the search is fooled</summary>
+        <div class="fap-lab-body">
+          <div class="inst-controls fap-lab-controls">
+            <div class="transport">
+              <button type="button" class="btn btn-primary" id="btn-new">New quasar</button>
+              <button type="button" class="btn" id="btn-batch">Run 100</button>
+            </div>
+            <div class="presets" role="group" aria-label="Bands">
+              <button type="button" class="chip" data-two="0" aria-pressed="true">Optical only</button>
+              <button type="button" class="chip" data-two="1" aria-pressed="false">Optical + X-ray</button>
+            </div>
+            <div class="presets" role="group" aria-label="False-alarm line">
+              <button type="button" class="chip" data-line="white" aria-pressed="true">Textbook line</button>
+              <button type="button" class="chip" data-line="red" aria-pressed="false">Red-noise line</button>
+            </div>
+          </div>
+          <div class="fap-lab-grid">
+            <div class="fap-jar-card">
+              <p class="fap-big"><strong id="big-num">0</strong><span id="big-den">of 0 quasars</span></p>
+              <p class="fap-big-label" id="big-label">counted as having a period</p>
+              <ul class="fap-rows">
+                <li id="row-opt"><div class="fap-row-top"><span id="row-opt-label">Optical went over the line</span><b id="row-opt-val">0</b></div><div class="fap-meter"><span class="m-opt" id="m-opt"></span></div></li>
+                <li id="row-xray" hidden><div class="fap-row-top"><span id="row-xray-label">X-ray went over the line</span><b id="row-xray-val">0</b></div><div class="fap-meter"><span class="m-xray" id="m-xray"></span></div></li>
+                <li id="row-both"><div class="fap-row-top"><span id="row-both-label">Counted as a period</span><b id="row-both-val">0</b></div><div class="fap-meter"><span class="m-both" id="m-both"></span></div></li>
+              </ul>
+              <canvas id="cv-jar" role="img" aria-label="One dot per quasar"></canvas>
+              <ul class="inst-key fap-legend">
+                <li><i class="d-none"></i>nothing over the line</li>
+                <li id="lg-fool" hidden><i class="d-fool"></i>fooled one band, rejected</li>
+                <li id="lg-fake"><i class="d-fake"></i>counted, and it's fake</li>
+                <li id="lg-ok" hidden><i class="d-ok"></i>counted, and it's real</li>
+              </ul>
+              <p class="fap-note" id="tally-note"></p>
+              <button type="button" class="btn fap-empty" id="btn-empty">Empty the jar</button>
+            </div>
+            <div class="sliders fap-knobs">
+              <div class="slider">
+                <div class="slider-head"><label for="k-tau">Flicker timescale τ</label><output id="o-tau" for="k-tau">500 d</output></div>
+                <input type="range" id="k-tau" min="0" max="1000" step="1" value="699">
+              </div>
+              <div class="slider">
+                <div class="slider-head"><label for="k-sig">Flicker size σ</label><output id="o-sig" for="k-sig">0.13 mag</output></div>
+                <input type="range" id="k-sig" min="0.02" max="0.40" step="0.002" value="0.126">
+              </div>
+              <div class="slider">
+                <div class="slider-head"><label for="k-xerr">X-ray noise per point</label><output id="o-xerr" for="k-xerr">0.08 mag</output></div>
+                <input type="range" id="k-xerr" min="0.02" max="0.5" step="0.01" value="0.08">
+              </div>
+              <div class="slider">
+                <div class="slider-head"><span class="ctrl-label">Binary signal</span></div>
+                <div class="presets fap-shape" role="group" aria-label="Binary signal shape">
+                  <button type="button" class="chip" data-shape="none" aria-pressed="true">None</button>
+                  <button type="button" class="chip" data-shape="sine" aria-pressed="false">Sine</button>
+                  <button type="button" class="chip" data-shape="saw" aria-pressed="false">Sawtooth</button>
+                </div>
+              </div>
+              <div class="slider">
+                <div class="slider-head"><label for="k-amp">Signal amplitude</label><output id="o-amp" for="k-amp">0.20 mag</output></div>
+                <input type="range" id="k-amp" min="0" max="0.5" step="0.01" value="0.2" disabled>
+              </div>
+              <div class="slider">
+                <div class="slider-head"><label for="k-per">Signal period</label><output id="o-per" for="k-per">400 d</output></div>
+                <input type="range" id="k-per" min="100" max="900" step="5" value="400" disabled>
+              </div>
+              <p class="sound-note" id="lab-note">Changing a knob empties the jar, since the odds change with it. Real Swift-BAT points are mostly noise, so push the X-ray noise above σ to get closer to them.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+      <p class="visually-hidden" aria-live="polite" id="announcer"></p>
+    </section>
+
+    <section class="play-notes play-col">
+      <div class="note-block">
+        <h2>What you're seeing</h2>
+        <p>Every quasar in the game is simulated. The random flicker is a damped random walk, which is the usual model for how quasars vary (Kelly et al. 2009; MacLeod et al. 2010): the brightness wanders and slowly forgets where it was, over about 500 days here. Vaughan et al. (2016) argue that most periods claimed from single light curves are this kind of noise. A real binary adds a sine wave with a period somewhere between 150 and 750 days, 0.10 to 0.20 mag high, which is about the size of the flicker itself. You never see the answer until you press Check.</p>
+        <p>The 3D quasar is drawn from the same numbers as the plots. The disc's glow follows the optical light curve and the blue-violet hot spot above the black hole follows the X-ray one, so when the disc brightens, the moving dot in the light curve goes up. After Check, a real binary shows its second black hole going round at the injected period. The optical dots are spaced like ASAS-SN, <span data-fill="opt-n">about 390</span> points from 2012 to 2023 with a gap every year when the Sun is in the way. The X-ray dots are spaced like Swift-BAT, 157 monthly points from late 2004 to 2017.</p>
+        <p>The periodogram (Lomb 1976; Scargle 1982) fits a sine wave at every period from 100 days up to a third of the light curve and shows how much of the wiggle each one explains. The dashed line is a false-alarm line, set so only 1 in 100 noise-only curves goes above it anywhere. The textbook line assumes white noise, where every point is independent of the last. Quasar flicker wanders slowly instead, and slow wandering piles up power at long periods, which is where a binary would show up too. The red-noise line in round 3 is set by simulating that wandering, 1,000 curves per band. The grey stripes near 180 and 365 days are skipped, because the yearly gaps in the data make fake peaks there.</p>
+        <p>The real version ran on 1,369 active galaxies: 1,194 hard X-ray AGN from Swift-BAT and 175 from 4XMM-DR14, against optical light curves from ZTF and ASAS-SN. Both bands had to pass a red-noise line at 1 in 1,000 and agree on the period within 5%. None did. Noise alone predicted about 0.015 fake candidates across the BAT sample, and I got 0. Putting fake signals into the real light curves and running everything again says at most about 3% of the BAT galaxies can have a shared period between 100 and 900 days with a hard X-ray modulation of 30% or more (95% confidence). Below about 15% the limit says nothing, because monthly X-ray points can't pull out a signal that small.</p>
+      </div>
+      <div class="note-block note-limits">
+        <h2>What this toy leaves out</h2>
+        <p>The false-alarm line here is 1 in 100, from 1,000 simulated curves and the tallest peak anywhere. The paper used 1 in 1,000, a statistic over 25 period bins and 2,000 simulations per light curve, with 100,000 for anything flagged in both bands. So the toy's line is 10 times looser and more fakes get over it.</p>
+        <p>The toy knows the true flicker timescale and size, because it made them. The paper had to fit them to every light curve, and for BAT that was messy: 89.9% of the raw fits fell back to a default value until the count rates were rescaled. The toy's X-ray points are also cleaner than real BAT data (0.08 mag of noise each by default). In the paper BAT got back at most about 18% of injected signals even at the largest amplitude, so if the toy's X-ray band finds a binary easily, the real one probably wouldn't have.</p>
+        <p>There's one optical band here. The paper used up to four (ZTF g and r, ASAS-SN V and g), kept the best and corrected for picking the best, and then ran a model-independent test (Robnik et al. 2024) on anything that got through. Nothing did. Both bands flicker independently here by construction, and for real AGN that's an assumption. Signal sizes are in magnitudes and the same in both bands, where the paper uses fractional flux amplitude (A = 0.3 is about 0.33 mag). The 3D quasar is an illustration: nothing is to scale and the orbit is sped up to match the playback.</p>
+      </div>
+      <div class="note-block note-links">
+        <p class="link-row"><a class="play-link" href="/research/cross-band-periodicity/">The paper this game comes from</a></p>
+        <p class="link-row"><a class="play-link" href="/play/inspiral/">How a pair like this ends: the chirp</a></p>
+        <h2 class="refs-title">References</h2>
+        <ul class="refs">
+          <li>Akbari, K. 2026, ApJ, 1009, 184, doi:10.3847/1538-4357/ae9d7c, arXiv:2608.16787. A cross-band (X-ray × optical) periodicity search for supermassive black hole binaries: a null result and the first completeness-corrected constraint.</li>
+          <li>Kelly, B. C., Bechtold, J., &amp; Siemiginowska, A. 2009, ApJ, 698, 895.</li>
+          <li>Lomb, N. R. 1976, Ap&amp;SS, 39, 447.</li>
+          <li>MacLeod, C. L., et al. 2010, ApJ, 721, 1014.</li>
+          <li>Robnik, J., et al. 2024, MNRAS, 534, 1609.</li>
+          <li>Scargle, J. D. 1982, ApJ, 263, 835.</li>
+          <li>Vaughan, S., et al. 2016, MNRAS, 461, 3145.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="play-col"><p>© 2026 Karan Akbari</p></div></footer>
+  <noscript><p class="play-col">This game needs JavaScript. The notes above still describe what it shows.</p></noscript>
+  <script type="module" src="/assets/js/fake-a-period.js"></script>
+</body>
+</html>

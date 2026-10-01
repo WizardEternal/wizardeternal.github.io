@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One star or two? Gaia white dwarf binaries | Karan Akbari</title>
+  <meta name="description" content="Can Gaia's BP-band calibration residual make a single star look like a white dwarf binary? An injection-recovery audit of a 30,131-source Gaia XP catalog.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/gaia-calibration/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="One star or two?">
+  <meta property="og:description" content="Can Gaia's BP-band calibration residual make a single star look like a white dwarf binary? An injection-recovery audit of a 30,131-source Gaia XP catalog.">
+  <meta property="og:url" content="https://karanakbari.com/research/gaia-calibration/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="One star or two?">
+  <meta name="twitter:description" content="Can Gaia's BP-band calibration residual make a single star look like a white dwarf binary? An injection-recovery audit of a 30,131-source Gaia XP catalog.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"One star or two?","description":"Can Gaia's BP-band calibration residual make a single star look like a white dwarf binary? An injection-recovery audit of a 30,131-source Gaia XP catalog.","url":"https://karanakbari.com/research/gaia-calibration/","mainEntityOfPage":"https://karanakbari.com/research/gaia-calibration/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","image":"https://karanakbari.com/assets/images/og-card.png","about":["Gaia","white dwarf main-sequence binaries","XP spectra","calibration"],"isBasedOn":{"@type":"ScholarlyArticle","@id":"https://arxiv.org/abs/2607.08856","url":"https://arxiv.org/abs/2607.08856","name":"A Calibration Audit of a Gaia XP White-Dwarf Main-Sequence Binary Catalog: How Much the BP-Band Residual Contaminates at Its Bound and Above","datePublished":"2026-07"},"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .top{margin:0;padding-block:1.5rem 0}
+    .top img{display:block;width:min(calc(100% - 2.5rem),60rem);height:auto;margin:0 auto;mix-blend-mode:multiply}
+    .top figcaption{width:min(calc(100% - 2.5rem),42rem);margin:0 auto;padding-block:.45rem}
+    /* keep the title and first lines on the first screen */
+    .top img{width:auto;max-width:min(calc(100% - 2.5rem),60rem);max-height:40vh;height:auto}
+    /* dark mode: multiply on a dark page blacks the map out, so drop the blend and cut away the white corners around the sky ellipse instead */
+    @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .top img{mix-blend-mode:normal;clip-path:ellipse(calc(50% - 2px) calc(50% - 2px) at 50% 50%)}}
+    :root[data-theme="dark"] .top img{mix-blend-mode:normal;clip-path:ellipse(calc(50% - 2px) calc(50% - 2px) at 50% 50%)}
+    .top figcaption{text-align:center}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.75;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:2.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+    .side{margin:1.5rem 0}
+    .side img{display:block;width:100%;max-width:520px;border-radius:3px}
+    .side figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <figure class="top">
+      <img src="/assets/images/gaia-allsky-map-1200.jpg" width="1200" height="600" decoding="async" fetchpriority="high" alt="Gaia's all-sky map of nearly 1.7 billion stars, with the Milky Way as a bright band across the middle.">
+      <figcaption><span class="credit">The whole sky as Gaia sees it, about 1.7 billion stars. ESA/Gaia/DPAC. <a href="https://www.esa.int/ESA_Multimedia/Images/2018/04/Gaia_s_sky_in_colour2">Source</a> (CC BY-SA 3.0 IGO)</span></figcaption>
+    </figure>
+
+    <article class="col">
+      <h1>One star or two?</h1>
+      <p class="meta">Akbari · Preprint · arXiv:2607.08856</p>
+
+      <p>A white dwarf next to a normal star adds some extra blue light to the spectrum, so you can find these pairs in Gaia data. But Gaia's spectra aren't perfect in the blue either. Even after Huang et al.'s correction, they only agree with reference spectra to within about 2% there.</p>
+      <p>So the question was whether that 2% could make a single star look like it has a white dwarf next to it. At 2% it nudges it a bit, from about 5% of single stars getting picked as binaries to about 9%. At a 5% error it's 20%, and by 15% more than half of them get picked.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/gaia-calibration/blue-residual-sweep.png"><img src="/assets/gaia-calibration/blue-residual-sweep.png" width="1320" height="1440" loading="lazy" decoding="async" alt="Spurious binary selection and posterior coverage plotted against local blue excess. Selection barely moves near the published bound and rises at much larger excesses."></a>
+        <figcaption>Top: how often a single star gets picked as a binary as the blue error grows. Near the published 2% bound it rises a little, and it climbs fast once the local error passes 10 to 15%. Bottom: a separate test of how honest the error bars are.
+          <span class="credit">Akbari (2026), Fig. 1. <a href="https://arxiv.org/abs/2607.08856">Preprint</a></span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>The 2% comes from Huang et al., who corrected Gaia's spectra. It's a local number: after their correction the blue part can be off by up to about 2% and the redder part by about 1%. That's 2% of the light at those wavelengths, and it's easy to accidentally read it as 2% of all the star's light.</p>
+          <p>That difference matters most for cooler stars, because they give off little blue light. Put 2% of their total light into the blue and you get a median local error of 55%, 27 times bigger than the bound Huang et al. actually measured.</p>
+          <p>I couldn't rerun the classifier that built the catalog, so I used a stand-in. I took real Gaia spectra of single stars, added the blue error, and checked whether a binary fit beat a single-star fit.</p>
+          <p>There's a catch in that. If the comparison spectra have the same calibration error as the star, most of it cancels. Nobody has measured how much of the error the real catalog stars share, so my numbers are a stress test of the method and shouldn't be read as the catalog's contamination rate.</p>
+          <figure class="side">
+            <img src="/assets/images/southern-ring-nebula-white-dwarf-1200.jpg" width="1200" height="1118" loading="lazy" decoding="async" alt="Webb near-infrared image of the Southern Ring Nebula, shells of gas around a pair of stars at the centre.">
+            <figcaption>The Southern Ring Nebula, the gas a dying star threw off. What's left at the centre is a white dwarf.
+              <span class="credit">NASA, ESA, CSA, STScI. <a href="https://science.nasa.gov/asset/webb/southern-ring-nebula-nircam-image/">Source</a></span></figcaption>
+          </figure>
+          <p>As an outside check I used GALEX ultraviolet data, since hot white dwarfs are bright in the ultraviolet. Higher-scoring candidates were detected more often. The groups had different sky coverage though, so that pattern on its own doesn't prove which ones are real.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>For astronomers: setup, rates, caveats</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Catalog</dt><dd>Li et al. (2025) Gaia XP WD+MS candidates: 30,131 rows, all prob_binary &gt; 0.8 (post-cut FaintQC)</dd>
+            <dt>Residual bound</dt><dd>Huang et al. (2024): corrected XP consistent to better than 2% at 336–400 nm and 1% at redder wavelengths. Local, per wavelength.</dd>
+            <dt>Units check</dt><dd>2% of total flux placed in the blue is a median 55% local excess across the MS templates, 27× the local bound</dd>
+            <dt>Templates</dt><dd>120 single MS stars and 120 single WDs; fits on a 50 + 50 subsample, leave-one-out. A Δχ² threshold stands in for the classifier, which is not rerun.</dd>
+            <dt>At the bound</dt><dd>Clipped blue taper: spurious rate 0.09 ± 0.02 over 20 seeds vs a 0.053 baseline (19 of 20 above), ≈1.7× baseline. Unclipped 2% taper: 0.11 ± 0.03.</dd>
+            <dt>Above the bound</dt><dd>Spurious rate 0.20, 0.36, 0.54, 0.68, 0.84 at 5, 10, 15, 20, 30% local excess, 0.96 near 50%. Bulk failure only above 10–15%.</dd>
+            <dt>Noise model</dt><dd>Per-pixel errors vs flat SNR 30: mean difference +0.032 ± 0.007, positive in 15 of 20 seeds</dd>
+            <dt>Coverage</dt><dd>Clean 90% coverage 0.873–0.889 (discrete-rank null 0.882). With the unclipped 2% taper 0.85, then 0.80, 0.70, 0.60, 0.33 at 5, 10, 20, ≈50%. Companion-fraction coverage 0.79 at 2%, 0.47 at 5%.</dd>
+            <dt>BIC gate</dt><dd>AUC ≈ 0.93 at 20% local excess for bright WD shares; near chance (AUC 0.43) at the catalog's median WD flux share of ≈0.01</dd>
+            <dt>GALEX FUV</dt><dd>Detection fraction 0.28 → 0.59 from lowest to highest prob_binary tercile (GALEX coverage 8.1%, 11.6%, 16.9%). Off-sequence WD fits 19% vs on-sequence 50%. 127 spectroscopically confirmed WD+MS: 91%.</dd>
+          </dl>
+          <p>The released classifier is never run. The residual is unmeasured outside Huang et al.'s colour–magnitude box, which excludes about 40% of the catalog, and the caution at the bound depends on whether the residual reaches 10–15% there. Coverage numbers describe amortized methods, not the released catalog. Single-star truth sources are selected by RUWE, non_single_star and CMD position without spectroscopy, so the measured elevation is a lower bound.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>Paper and code</h2></summary>
+        <div class="inner">
+          <p><strong>Akbari, K.</strong> “A Calibration Audit of a Gaia XP White-Dwarf Main-Sequence Binary Catalog: How Much the BP-Band Residual Contaminates at Its Bound and Above.” Preprint, arXiv:2607.08856.</p>
+          <p><a class="text-link" href="https://arxiv.org/abs/2607.08856">Read the preprint</a> · <a class="text-link" href="https://github.com/WizardEternal/wdms-xp-calibration">Code and audit records</a></p>
+          <p>Inputs: <a href="https://doi.org/10.3847/1538-4365/ad18b1">Huang et al. (2024), the XP flux correction</a> · <a href="https://doi.org/10.3847/1538-4365/addf3a">Li et al. (2025), the candidate catalog</a></p>
+        </div>
+      </details>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

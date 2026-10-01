@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The fit that can't tell: X-ray gain shift | Karan Akbari</title>
+  <meta name="description" content="Put a small error in a simulated X-ray detector's energy scale and watch the spectral fit absorb it. Three checks stay green while the photon index drifts.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/gain-shift/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The fit that can't tell">
+  <meta property="og:description" content="Put a small error in a simulated X-ray detector's energy scale and watch the spectral fit absorb it. Three checks stay green while the photon index drifts.">
+  <meta property="og:url" content="https://karanakbari.com/play/gain-shift/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The fit that can't tell">
+  <meta name="twitter:description" content="Put a small error in a simulated X-ray detector's energy scale and watch the spectral fit absorb it. Three checks stay green while the photon index drifts.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The fit that can't tell","headline":"The fit that can't tell: X-ray gain shift","description":"Put a small error in a simulated X-ray detector's energy scale and watch the spectral fit absorb it. Three checks stay green while the photon index drifts.","url":"https://karanakbari.com/play/gain-shift/","mainEntityOfPage":"https://karanakbari.com/play/gain-shift/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-24","image":"https://karanakbari.com/assets/images/og-card.png","about":["X-ray spectral fitting","detector gain calibration","model misspecification","simulation-based inference","XMM-Newton","interactive simulation"],"isBasedOn":"https://arxiv.org/abs/2606.17098","learningResourceType":"interactive simulation","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="stylesheet" href="/assets/css/gain-shift.css">
+  <script type="importmap">{"imports":{"three":"/assets/vendor/three/0.169.0/build/three.module.min.js","three/addons/":"/assets/vendor/three/0.169.0/examples/jsm/"}}</script>
+  <link rel="modulepreload" href="/assets/vendor/three/0.169.0/build/three.module.min.js">
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play <span aria-hidden="true">·</span> X-ray spectra</p>
+      <h1>The fit that can't&nbsp;tell</h1>
+      <p class="play-lede">A neural network can fit an X-ray spectrum in milliseconds, so in my preprint I tried to catch one being wrong. A strong extra emission line got caught. A 3% error in the detector's energy scale got past all three checks I had, because the fit moves the source parameters to cover for it and the spectrum still looks fine. This toy does the same thing to one simulated source, live, with a plain likelihood fit standing in for the network.</p>
+      <aside class="play-howto gs-howto" aria-labelledby="howto-title">
+        <h2 id="howto-title">How to play</h2>
+        <p class="play-goal"><strong>Goal:</strong> watch a 3% gain error get past all three checks, then find where it does show.</p>
+        <ol id="howto">
+          <li data-step="1"><span><strong>Drag the gain error to 3%.</strong> Everything still looks fine. The checks stay green and the residuals stay flat, but the fitted photon index has moved (the close-up on the terrain shows by how much).</span></li>
+          <li data-step="2"><span><strong>Set the iron line to strong.</strong> This is what a caught error looks like.</span></li>
+          <li data-step="3"><span><strong>Line back to none, then switch on Marginalise over gain.</strong> The error bar barely changes and the push stays.</span></li>
+          <li data-step="4" class="is-climax"><span><strong>Fit 1,000 sources at 3%.</strong> Each shift hides inside its own error bar, but across 1,000 sources they lean the same way, so the average doesn't go to zero.</span></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="instrument toy-gain" id="instrument" aria-label="Detector gain-shift fitting toy">
+
+      <div class="inst-bar gs-bar" id="gs-bar">
+        <div class="gs-gain">
+          <div class="slider-head">
+            <label for="gain">Detector gain error</label>
+            <output id="gain-out" for="gain">0.0%</output>
+          </div>
+          <div class="gs-track">
+            <div class="gs-ticks" aria-hidden="true">
+              <span class="gs-real" style="left:1%;width:2%" title="0.1 to 0.3%, the realistic EPIC-pn range quoted in the preprint"></span>
+              <span class="gs-tick" style="left:0%">0</span>
+              <span class="gs-tick is-key" style="left:30%">3%</span>
+              <span class="gs-tick" style="left:50%">5%</span>
+              <span class="gs-tick" style="left:100%">10%</span>
+            </div>
+            <input type="range" id="gain" min="0" max="100" step="1" value="0" aria-valuetext="0.0 percent gain error" aria-describedby="gain-help">
+          </div>
+          <p class="gs-help" id="gain-help">How far off the detector's energy scale is. 3% is the paper's test, past 5% the truth is outside the gain prior, and the shaded band <span class="gs-real-key"></span> marks 0.1 to 0.3%, the realistic range for EPIC-pn.</p>
+        </div>
+        <dl class="gs-read" aria-live="off">
+          <div><dt>Fitted Γ</dt><dd id="r-fit">…</dd></div>
+          <div><dt>True Γ</dt><dd id="r-true">…</dd></div>
+          <div class="gs-drift"><dt>Moved by the gain</dt><dd id="r-drift">…</dd></div>
+          <div class="gs-margread" id="r-marg" hidden><dt>Gain marginalised</dt><dd><span id="r-marg-v">…</span> <small id="r-marg-x"></small></dd></div>
+        </dl>
+        <div class="gs-minilights" aria-hidden="true">
+          <span class="gs-mini-label">checks</span>
+          <span class="mini-light" data-light="ppc" title="Replay test"></span><span class="mini-light" data-light="ess" title="Reweighting test"></span><span class="mini-light" data-light="ev" title="Evidence test"></span>
+        </div>
+      </div>
+
+      <div class="inst-caption gs-caption-wrap">
+        <p class="gs-help gs-help-mobile" aria-hidden="true">How far off the detector's energy scale is. 3% is the paper's test, past 5% the truth is outside the gain prior, and the shaded band <span class="gs-real-key"></span> marks 0.1 to 0.3%, the realistic range for EPIC-pn.</p>
+        <p class="verdict gs-caption" id="caption">Loading the detector response and fitting the first spectrum.</p>
+        <p class="inst-caption-next gs-next" id="next"></p>
+      </div>
+
+      <div class="gs-controls">
+        <div class="ctrl-group gs-group">
+          <span class="ctrl-label gs-glabel" id="lbl-level">Photons</span>
+          <div class="presets" role="group" aria-labelledby="lbl-level">
+            <button type="button" class="chip" data-level="medium" aria-pressed="false">~1,000</button>
+            <button type="button" class="chip" data-level="bright" aria-pressed="true">~10,000</button>
+          </div>
+        </div>
+        <div class="ctrl-group gs-group">
+          <span class="ctrl-label gs-glabel" id="lbl-noise">Photon noise</span>
+          <div class="presets" role="group" aria-labelledby="lbl-noise">
+            <button type="button" class="chip" data-noise="0" aria-pressed="false">off</button>
+            <button type="button" class="chip" data-noise="1" aria-pressed="true">on</button>
+          </div>
+        </div>
+        <div class="ctrl-group gs-group">
+          <span class="ctrl-label gs-glabel" id="lbl-line">Iron line at 6.4 keV</span>
+          <div class="presets" role="group" aria-labelledby="lbl-line">
+            <button type="button" class="chip" data-line="0" aria-pressed="true">none</button>
+            <button type="button" class="chip" data-line="2e-5" aria-pressed="false" title="2 × 10⁻⁵ photons cm⁻² s⁻¹">weak</button>
+            <button type="button" class="chip" data-line="8e-5" aria-pressed="false" title="8 × 10⁻⁵ photons cm⁻² s⁻¹">medium</button>
+            <button type="button" class="chip" data-line="3e-4" aria-pressed="false" title="3 × 10⁻⁴ photons cm⁻² s⁻¹">strong</button>
+          </div>
+        </div>
+        <div class="ctrl-group gs-group gs-actions">
+          <button type="button" class="switch gs-switch" id="marg" role="switch" aria-checked="false">
+            <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+            <span>Marginalise over gain</span>
+          </button>
+          <button type="button" class="btn" id="btn-noise">New noise</button>
+          <button type="button" class="btn" id="btn-source">New source</button>
+        </div>
+      </div>
+
+      <div class="gs-3d">
+        <div class="inst-panel gs-view" id="land-panel">
+          <div class="panel-head">
+            <h2 class="inst-label">Fit terrain</h2>
+            <span class="panel-sub">how much worse the fit gets, over photon index and power-law norm</span>
+          </div>
+          <div class="inst-stage gs-stage" id="land-stage" tabindex="0" role="img" aria-label="3D terrain of the fit statistic over photon index and power-law normalisation. A ball marks the best fit, a pin marks the true values.">
+            <div class="gs-fallback" id="land-fallback" hidden><canvas id="land-2d"></canvas></div>
+            <div class="hud hud-bottom gs-legend">
+              <ul class="inst-key">
+                <li><i class="k-ball"></i>best fit</li>
+                <li><i class="k-pin"></i>truth</li>
+                <li><i class="k-ring"></i>best fit with no gain error</li>
+                <li><i class="k-push"></i>the gain's push</li>
+                <li><i class="k-path"></i>path as the gain moved</li>
+              </ul>
+              <span class="gs-note" id="land-note">height is √ΔC, so each contour is about 1σ</span>
+            </div>
+            <span class="hud hud-top hud-hint gs-hint" id="land-hint">Drag to turn</span>
+            <canvas class="gs-inset" id="inset" role="img" aria-label="Close-up of photon index against power-law norm around the fit: the truth, the zero-gain fit, the current fit and its path as the gain moves."></canvas>
+          </div>
+        </div>
+        <div class="inst-panel gs-view" id="cloud-panel">
+          <div class="panel-head">
+            <h2 class="inst-label">Posterior cloud</h2>
+            <span class="panel-sub">1,400 draws over Γ, norm and N<sub>H</sub>, Gaussian approximation</span>
+          </div>
+          <div class="inst-stage gs-stage" id="cloud-stage" tabindex="0" role="img" aria-label="3D point cloud of posterior draws over photon index, power-law normalisation and absorbing column, with the true values marked.">
+            <div class="gs-fallback" id="cloud-fallback" hidden><canvas id="cloud-2d"></canvas></div>
+            <div class="hud hud-bottom gs-legend">
+              <ul class="inst-key">
+                <li><i class="k-now"></i>now</li>
+                <li><i class="k-ghost"></i>no gain error</li>
+                <li><i class="k-pin"></i>truth</li>
+                <li><i class="k-centre"></i>cloud centre</li>
+                <li class="k-marg-item" hidden><i class="k-marg"></i>gain marginalised</li>
+              </ul>
+              <div class="gs-gpost" id="gpost" hidden>
+                <span class="hud-label">Gain posterior vs prior</span>
+                <canvas id="gpost-canvas" width="180" height="46" role="img" aria-label="Posterior on the gain compared with its flat prior from 0.95 to 1.05."></canvas>
+                <span class="gs-note" id="gpost-note"></span>
+              </div>
+            </div>
+            <span class="hud hud-top hud-hint gs-hint" id="cloud-hint">Drag to turn</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gs-2d">
+        <div class="inst-panel gs-spec">
+          <div class="panel-head">
+            <h2 class="inst-label">Detector counts</h2>
+            <span class="panel-sub" id="spec-sub">XMM-Newton EPIC-pn channels</span>
+          </div>
+          <div class="canvas-wrap gs-spec-wrap">
+            <canvas id="spec" role="img" aria-label="Simulated counts per keV against energy, with the fitted model drawn over the data."></canvas>
+          </div>
+          <div class="canvas-wrap gs-resid-wrap">
+            <canvas id="resid" role="img" aria-label="Residuals, data minus fit divided by the square root of the fit, against energy."></canvas>
+          </div>
+        </div>
+        <div class="inst-panel gs-checks" id="checks">
+          <div class="panel-head">
+            <h2 class="inst-label">The three checks</h2>
+            <span class="panel-sub" id="checks-sub">amber at p &lt; 0.05, red at p &lt; 0.01</span>
+          </div>
+          <ul class="gs-lights">
+            <li class="gs-light" data-light="ppc" data-state="wait">
+              <span class="lamp" aria-hidden="true"></span>
+              <div>
+                <h3>Replay test</h3>
+                <p>Simulate 400 spectra from the fit. Does the real one look like them?</p>
+                <span class="val" id="v-ppc">…</span>
+              </div>
+            </li>
+            <li class="gs-light" data-light="ess" data-state="wait">
+              <span class="lamp" aria-hidden="true"></span>
+              <div>
+                <h3>Reweighting test</h3>
+                <p>Score a rough first guess against the exact likelihood. If only a few draws survive, something is off.</p>
+                <span class="val" id="v-ess">…</span>
+              </div>
+            </li>
+            <li class="gs-light" data-light="ev" data-state="wait">
+              <span class="lamp" aria-hidden="true"></span>
+              <div>
+                <h3>Evidence test</h3>
+                <p>Could any setting of the model have made this spectrum?</p>
+                <span class="val" id="v-ev">…</span>
+              </div>
+            </li>
+          </ul>
+          <p class="gs-checks-foot" id="checks-foot"></p>
+        </div>
+      </div>
+
+      <div class="inst-panel gs-cat">
+        <div class="panel-head">
+          <h2 class="inst-label">A catalogue of 1,000</h2>
+          <span class="panel-sub">random sources from the paper's prior, each fitted with and without the gain error, same photons</span>
+        </div>
+        <div class="gs-cat-body">
+          <div class="gs-cat-side">
+            <button type="button" class="btn btn-primary" id="btn-cat">Fit 1,000 sources at 3.0%</button>
+            <p class="gs-cat-stats" id="cat-stats" aria-live="polite">Each source gets its own photons, fitted twice: once as recorded and once with the gain error. The histogram is the shift in fitted Γ. It takes up to half a minute.</p>
+          </div>
+          <div class="canvas-wrap gs-cat-wrap">
+            <canvas id="cat" role="img" aria-label="Histogram of the shift in fitted photon index caused by the gain error, one entry per simulated source."></canvas>
+          </div>
+        </div>
+      </div>
+
+      <p class="visually-hidden" aria-live="polite" id="announcer"></p>
+    </section>
+
+    <section class="play-notes play-col">
+      <div class="note-block">
+        <h2>What you're seeing</h2>
+        <p>The spectrum goes through the real XMM-Newton EPIC-pn response I used in the paper, with the paper's source model: an absorbed power law plus a blackbody, five free parameters and no background. The gain slider stretches the energy scale the source is read on, so at 3% every feature lands 3% lower in energy than it should. The fit assumes the detector is fine and gets redone from scratch every time you move anything. Each channel gets Poisson counts, and the same random numbers are kept as you move the slider, so the only thing that changes is the gain. Switch photon noise off and the data become the exact expected counts. The fit then sits on the truth at zero gain, but the checks have nothing to judge, so they stand down.</p>
+        <p>It hides because a power law looks exactly the same after you stretch the energy axis, only its normalisation changes, and a stretched blackbody is just a slightly cooler blackbody. Nearly all of the gain error gets soaked up by the source parameters. What's left sits in the absorption edges, which don't move with the source, and that's where the photon index gets pushed. The terrain shows this: at every point it is the best fit you can get with Γ and the power-law norm pinned there, and the height is √ΔC, so each glowing contour is about one more sigma. As the gain grows the valley keeps its depth and the ball slides along it, far less than one contour at 3%, which is why the close-up in the corner exists. A strong iron line does the opposite: the whole fit gets worse, and the terrain turns red. For the default source at 10,000 counts, even a 10% gain error makes the best fit worse by about 1 in the Cash statistic, which noise does on its own.</p>
+        <p>The three lights are simplified versions of the three schemes in the paper. The replay test is the posterior-predictive check, a chi-square and a cumulative-counts comparison against 400 replayed spectra. The reweighting test follows the importance-sampling check, which reweights the network's posterior against the exact Poisson likelihood. The toy has no network, so its rough first guess is a fit to the spectrum squeezed into 20 broad bands (the network also squeezes each spectrum into 20 numbers), and the light compares how many draws survive with 100 clean spectra of the same source. The evidence test stands in for nested sampling's evidence, compared with clean spectra at the same counts. Here it's the best-fit Cash statistic against what a clean spectrum with those counts should give. On 150 clean noisy spectra of the default source each light went red 0 to 2% of the time, and the 3% gain didn't change that.</p>
+        <p>For one source the push is a small slice of the error bar, which is why nothing complains. The catalogue shows the other half. In the paper the network's photon index came out biased by +0.018 ± 0.006 at 3% and about 1,000 counts, and +0.019 at 10,000 counts, which is only 0.03 to 0.11σ per source but goes the same way for the whole sample.</p>
+        <p>The marginalise switch refits with the gain as a sixth unknown, flat between 0.95 and 1.05, like the retrained network in the paper. In the toy the gain usually comes back nearly as wide as its prior, the error on Γ barely moves and the push stays. The paper saw the same thing: the retrained network gave the prior back on the gain, its σ(Γ) changed by a factor of 0.989 to 0.996, and the bias was +0.020 ± 0.006. Exact nested sampling did get some gain information out of three bright spectra, and the network caught at most 0.163 of it. So marginalising doesn't remove the bias. It's still the defence the paper ends on, because it costs nothing when you fit and none of the checks warns you anyway. Past 5% the true gain is outside that prior, and marginalising has no way of knowing.</p>
+      </div>
+      <div class="note-block note-limits">
+        <h2>What this toy leaves out</h2>
+        <p>The network. Every fit here is maximum likelihood on the Poisson statistic, so the toy behaves more like the paper's exact reference than like the network, and the shift it reports is the shift of the best fit, where the paper reports the shift of the network's posterior mean. The cloud is a Gaussian approximation around that fit, cut to the prior box. It's not the network's posterior either.</p>
+        <p>The response is thinned to keep the page small: pairs of input energy bins merged and the smallest matrix entries dropped. It matches the paper's simulator (jaxspec) to within 2% per channel, and 3% in the channel holding the iron line.</p>
+        <p>The terrain is computed on a 15 by 15 grid and smoothed in between, and its axes widen when the fit would otherwise leave the map. The default noise pattern is one I picked because its zero-gain fit lands just above the truth (Γ = 2.002), so the gain visibly pushes it further away, and its shift at 3% (+0.015) sits inside the range the catalogue gives; press New noise for others. The checks are cut-down versions, one source is fitted at a time, and the gain is a slope with no offset, same as in the paper.</p>
+        <p>With the noise taken out, the toy's shift at 3% doesn't depend on exposure at all. Over 1,000 random sources from the prior its median is +0.021 and 93% of sources move the positive way. The mean is only +0.011 ± 0.002, because about 3% of sources, mostly ones where the blackbody outshines the power law so Γ is barely pinned down, get shoved by 0.1 or more, nearly all of them negative. So the number the catalogue reports weights each source by 1/σ² of its fitted Γ, the precision weighting the paper also uses for its second bias test, and those loose sources count for little. With noise, ten catalogues of 1,000 gave weighted means of +0.014 to +0.018 at about 1,000 counts and +0.014 to +0.016 at 10,000, each at least 8σ from zero. The unweighted means spread wider, +0.010 to +0.025 and +0.013 to +0.021, but all ten were still more than 2σ above zero at both levels. Both sit a little under the paper's +0.018 and +0.019. It doesn't have to match, since one is a best fit and the other a network's posterior mean.</p>
+      </div>
+      <div class="note-block note-links">
+        <p class="link-row"><a class="play-link" href="/research/xray-inference/">The longer write-up of the paper</a></p>
+        <p class="link-row"><a class="play-link" href="https://arxiv.org/abs/2606.17098">The preprint, arXiv:2606.17098</a></p>
+        <p class="link-row"><a class="play-link" href="https://github.com/WizardEternal/sbi-xray-calibration">Code and benchmark records</a></p>
+        <h2 class="refs-title">References</h2>
+        <ul class="refs">
+          <li>Akbari, K. 2026, arXiv:2606.17098 (preprint). Misspecification in amortized X-ray spectral inference: a detection benchmark, a gain shift three schemes cannot see, and marginalizing it out.</li>
+          <li>Barret, D., &amp; Dupourqué, S. 2024, A&amp;A, 686, A133. Simulation-based inference with neural posterior estimation applied to X-ray spectral fitting (source of the priors).</li>
+          <li>Cash, W. 1979, ApJ, 228, 939. Parameter estimation in astronomy through application of the likelihood ratio.</li>
+          <li>Dupourqué, S., Barret, D., Diez, C. M., Guillot, S., &amp; Quintin, E. 2024, A&amp;A, 690, A317. jaxspec: a fast and robust Python library for X-ray spectral fitting (the simulator the response comes from).</li>
+          <li>Wilms, J., Allen, A., &amp; McCray, R. 2000, ApJ, 542, 914. On the absorption of X-rays in the interstellar medium (the tbabs cross-sections).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="play-col"><p>© 2026 Karan Akbari</p></div></footer>
+
+  <noscript><p class="play-col">This toy needs JavaScript. The notes above still describe what it shows.</p></noscript>
+  <script type="module" src="/assets/js/gain-shift.js"></script>
+</body>
+</html>

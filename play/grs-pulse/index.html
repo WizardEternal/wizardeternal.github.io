@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Take its pulse: the GRS 1915+105 heartbeat | Karan Akbari</title>
+  <meta name="description" content="Play real Swift data of the black hole GRS 1915+105 beating every 50 seconds, and watch the fits drive a 3D disc and corona. Then add AstroSat, which reaches 30 keV.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/play/grs-pulse/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Take its pulse">
+  <meta property="og:description" content="Real Swift data of a black hole that flares every 50 seconds, driving a 3D disc and corona from the phase-resolved fits. Add AstroSat, up to 30 keV, and see what the disc does.">
+  <meta property="og:url" content="https://karanakbari.com/play/grs-pulse/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Take its pulse">
+  <meta name="twitter:description" content="Real Swift data of a black hole that flares every 50 seconds, driving a 3D disc and corona from the phase-resolved fits. Add AstroSat, up to 30 keV, and see what the disc does.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Take its pulse","headline":"Take its pulse","description":"Play real Swift data of the black hole GRS 1915+105 beating every 50 seconds, and watch the fits drive a 3D disc and corona. Then add AstroSat, which reaches 30 keV.","url":"https://karanakbari.com/play/grs-pulse/","mainEntityOfPage":"https://karanakbari.com/play/grs-pulse/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-24","image":"https://karanakbari.com/assets/images/og-card.png","about":["GRS 1915+105","black hole X-ray binary","heartbeat oscillations","accretion disc","corona"],"isBasedOn":"https://doi.org/10.3847/1538-4357/ae877d","learningResourceType":"interactive simulation","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/play.css">
+  <link rel="stylesheet" href="/assets/css/grs-pulse.css">
+  <link rel="preload" href="/assets/data/grs-pulse.json" as="fetch" crossorigin>
+  <script type="importmap">{"imports":{"three":"/assets/vendor/three/0.169.0/build/three.module.min.js","three/addons/":"/assets/vendor/three/0.169.0/examples/jsm/"}}</script>
+</head>
+<body class="play-page">
+  <a class="skip-link" href="#toy">Skip to the toy</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main" class="pulse">
+    <section class="play-intro play-col">
+      <p class="play-eyebrow">Play <span aria-hidden="true">·</span> from <a href="/research/grs-1915-heartbeat/">the GRS 1915+105 heartbeat paper</a></p>
+      <h1>Take its pulse</h1>
+      <p class="play-lede">In this Swift observation the black hole GRS 1915+105 beat 21 times in about 17 minutes. The trace below is that real count rate, cut into the five phases from the paper. Each phase has its own spectral fit, and those fits drive the 3D disc and corona. So you can watch one beat from the inside, and then check how much of it holds up once the hard X-rays come in.</p>
+      <aside class="play-howto" aria-labelledby="howto-h">
+        <h2 id="howto-h">How to play</h2>
+        <p class="play-goal"><strong>Goal:</strong> find out if the disc really heats up and cools down every beat.</p>
+        <ol>
+          <li><span><b>Watch the trace.</b> It's real Swift data, the observation in the paper's Fig. 3, playing 8 times faster than it happened. Three colours on the way up, two on the way down.</span></li>
+          <li><span><b>Watch the disc colour.</b> With Swift's soft X-rays alone, the fits have it heating up and cooling down every beat.</span></li>
+          <li><span><b>Flip to Add AstroSat</b> at the top of the toy. The disc temperature locks to one value and the corona starts pulsing.</span></li>
+          <li><span><b>Drag the 3D view</b> to turn it, or drag the slider under the trace to stop on any phase.</span></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="instrument pulse-inst" id="toy" aria-label="GRS 1915+105 heartbeat toy">
+      <div class="inst-bar mode-bar">
+        <p class="ctrl-label mode-q" id="mode-q">Fits from</p>
+        <div class="mode-switch" id="mode-switch" data-mode="soft" role="group" aria-labelledby="mode-q">
+          <button type="button" class="mode-btn" data-mode="soft" aria-pressed="true"><b>Swift alone</b><small>soft X-rays, 1–10 keV</small></button>
+          <button type="button" class="mode-btn" data-mode="broad" aria-pressed="false"><b>Add AstroSat</b><small>SXT + LAXPC, 0.8–30 keV</small></button>
+        </div>
+        <span class="mode-nudge" id="mode-nudge" aria-hidden="true">Now add AstroSat</span>
+      </div>
+
+      <div class="pulse-main">
+        <div class="inst-stage pulse-scene" id="scene">
+          <div class="stage-host scene-host" id="scene-host"></div>
+          <div class="scene-labels" id="scene-labels" aria-hidden="true">
+            <span class="scene-tag tag" id="tag-bh" data-anchor="below"><b>Black hole</b><i></i></span>
+            <span class="scene-tag tag" id="tag-disc" data-anchor="above"><b>Accretion disc</b><small>colour = fitted temperature</small><i></i></span>
+            <span class="scene-tag tag" id="tag-glow" data-anchor="above"><b>Bright inner zone</b><small>size = apparent emitting area</small><i></i></span>
+            <span class="scene-tag tag tag-corona" id="tag-corona" data-anchor="below"><b>Corona</b><small id="tag-corona-sub">hot gas, not pinned down by 1–10 keV</small><i></i></span>
+          </div>
+          <div class="stage-fallback scene-fallback" id="scene-fallback" hidden><p id="scene-fallback-text">Loading the 3D view.</p></div>
+          <div class="hud hud-top scene-hud">
+            <span class="pill phase-pill" id="phase-pill"><span class="pill-dot" id="phase-dot" aria-hidden="true"></span><span id="phase-text">Phase 1 · rising</span></span>
+            <span class="hud-hint" id="scene-hint">Drag to turn · scroll or pinch to zoom</span>
+          </div>
+          <div class="hud hud-bottom scene-hud">
+            <div class="legend">
+              <span class="hud-label">Disc temperature T<sub>in</sub></span>
+              <div class="tbar" aria-hidden="true"><span class="tbar-mark" id="tbar-mark"></span></div>
+              <div class="tbar-ticks" aria-hidden="true"><span style="left:0%">1.2</span><span style="left:25%">1.4</span><span style="left:50%">1.6</span><span style="left:75%">1.8</span><span style="left:100%">2.0 keV</span></div>
+            </div>
+            <p class="inst-note legend-note" id="legend-note">Between the five phases the scene blends smoothly from one fitted value to the next.</p>
+          </div>
+          <div class="flip-toast" id="flip-toast" role="status" aria-live="polite"></div>
+        </div>
+
+        <aside class="pulse-side" aria-label="Fit results per phase">
+          <section class="readout" id="ro-t">
+            <div class="readout-head"><h3 class="inst-label">Disc temperature, keV</h3><span class="readout-now" id="now-t">1.69</span></div>
+            <canvas id="cv-t" role="img" aria-label="Fitted inner disc temperature in each of the five phases, with 90 per cent error bars."></canvas>
+            <p class="readout-note" id="note-t"></p>
+          </section>
+          <section class="readout" id="ro-r">
+            <div class="readout-head"><h3 class="inst-label">Apparent inner radius, km</h3><span class="readout-now" id="now-r">22.4</span></div>
+            <canvas id="cv-r" role="img" aria-label="Apparent inner disc radius from the fit in each phase, with 90 per cent error bars."></canvas>
+            <p class="readout-note" id="note-r"></p>
+          </section>
+          <section class="readout" id="ro-k">
+            <div class="readout-head"><h3 class="inst-label">Corona temperature, keV</h3><span class="readout-now" id="now-k">n/a</span></div>
+            <canvas id="cv-k" role="img" aria-label="Coronal electron temperature in each phase from the AstroSat fit with the disc temperature tied, with 90 per cent error bars."></canvas>
+            <p class="readout-note" id="note-k"></p>
+          </section>
+        </aside>
+      </div>
+
+      <div class="inst-caption pulse-caption-row">
+        <p class="verdict pulse-caption" id="caption" aria-live="polite">Loading the light curve.</p>
+      </div>
+
+      <div class="pulse-ecg">
+        <div class="panel-head">
+          <h2 class="inst-label">Swift XRT count rate, counts per second</h2>
+          <span class="panel-sub">OBSID 00030333057, 1 August 2014, 0.2 to 10 keV, 1 s bins</span>
+        </div>
+        <div class="ecg-wrap"><canvas id="cv-ecg" role="img" aria-label="Scrolling light curve of GRS 1915+105, coloured by heartbeat phase."></canvas></div>
+        <ul class="inst-key phase-key" aria-label="Phase colours">
+          <li><i style="background:var(--ph1)"></i>1 rise, first third</li>
+          <li><i style="background:var(--ph2)"></i>2 rise, middle</li>
+          <li><i style="background:var(--ph3)"></i>3 rise, last third</li>
+          <li><i style="background:var(--ph4)"></i>4 fall, first half</li>
+          <li><i style="background:var(--ph5)"></i>5 fall, second half</li>
+        </ul>
+      </div>
+
+      <div class="pulse-transport">
+        <div class="transport">
+          <button type="button" class="btn btn-primary" id="btn-play" aria-pressed="false">
+            <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.6v10.8c0 .5.5.8.9.5l8.2-5.4a.6.6 0 0 0 0-1L4.9 2.1c-.4-.3-.9 0-.9.5z" fill="currentColor"/></svg>
+            <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>
+            <span class="btn-text">Play</span>
+          </button>
+          <div class="presets" role="group" aria-label="Playback speed">
+            <button type="button" class="chip" data-speed="2" aria-pressed="false">2×</button>
+            <button type="button" class="chip" data-speed="8" aria-pressed="true">8×</button>
+            <button type="button" class="chip" data-speed="20" aria-pressed="false">20×</button>
+          </div>
+        </div>
+        <div class="scrub-wrap">
+          <label for="scrub" class="visually-hidden">Position in the observation</label>
+          <canvas id="cv-mini" aria-hidden="true"></canvas>
+          <input type="range" id="scrub" min="0" max="1000" step="1" value="0">
+          <div class="scrub-labels" aria-hidden="true"><span>0 s</span><span id="scrub-now">0 s</span><span id="scrub-end">1054 s</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="play-notes play-col">
+      <div class="note-block">
+        <h2>What you're seeing</h2>
+        <p>The trace is the Swift XRT count rate from OBSID 00030333057, taken on 1 August 2014, the observation plotted in Fig. 3 of the paper. It comes from my own reduction: Windowed Timing mode, a 40 arcsec circle around the source, everything from 0.2 to 10 keV, 1 s bins, and no background subtracted. The colours are the paper's phases. Each climb from a trough to a peak is cut into three equal pieces (phases 1 to 3) and each drop back down into two (4 and 5), and matching pieces from all the cycles were stacked before fitting.</p>
+        <p>The 3D view only knows five numbers per quantity, one per phase, because that's all the fits give. In between I blend smoothly from one phase's value to the next, so every in-between state is my interpolation. The disc colour is the fitted inner disc temperature on one fixed scale from 1.2 to 2.0 keV. The bright zone on the inner disc grows and shrinks with the apparent inner radius from the fit. The corona gets brighter with the normalisation of the Comptonisation component and bluer with its electron temperature. The whole scene also glows a little brighter when the count rate goes up.</p>
+        <p>Swift sees 1 to 10 keV. With that alone the disc swings from 1.53 keV in phase 3 to 1.91 keV in phase 4, and its apparent radius from 37.6 km down to 23.4 km (Table 2). AstroSat's two instruments cover 0.8 to 30 keV together. Fitting all five AstroSat phases at once with a single disc temperature gives 1.275 ± 0.020 keV, and it costs Δχ² = +4.3 for 4 extra constraints, so the data are fine with it. Holding the disc's apparent area fixed as well costs Δχ² = +175.9 and is rejected, so something about the disc still changes, about 20% in apparent radius. The corona carries the rest. In that tied-temperature fit its electron temperature climbs from 6.5 keV in phase 1 to 13.8 keV in phase 5 (Table 3). Fitting each phase on its own gives 6.2 keV in phase 1, rising to 14.5 keV in phase 4 (Table 2).</p>
+      </div>
+      <div class="note-block note-limits">
+        <h2>What this toy leaves out</h2>
+        <p>The two modes are two telescopes on different days. Swift's 24 observations run from May 2014 to April 2015 (Table 1), AstroSat's two are from 14 and 15 April 2017, and the fit models differ too, so the trace is always the Swift one and in AstroSat mode it only tells the scene which phase it's in. The paper puts the bigger Swift swings down to the narrow band, where the corona can't be pinned down and the disc numbers soak up its changes. Both modes share one colour scale, so the AstroSat disc also looks cooler overall. Compare the swing inside a mode more than the level between them.</p>
+        <p>The apparent area is a fit number. It depends on the distance, the angle we see the disc at and a colour correction, so the bright zone growing here doesn't mean the inner edge of the disc moves, and in the scene the edge stays put. The paper leans towards a changing colour correction for that last 20% (as in Zoghbi et al. 2016) but doesn't settle it.</p>
+        <p>Nothing here tells you what starts each beat. The phases are bins and the source keeps changing inside each one. Sizes are not to scale, and the corona's shape is made up, since a spectral fit has no shape in it.</p>
+      </div>
+      <div class="note-block note-links">
+        <p class="link-row"><a class="play-link" href="/research/grs-1915-heartbeat/">The paper page, in plain words</a></p>
+        <p class="link-row"><a class="play-link" href="https://doi.org/10.3847/1538-4357/ae877d">Read the paper (ApJ, DOI)</a></p>
+        <h2 class="refs-title">References</h2>
+        <ul class="refs">
+          <li>Akbari, K., Patel, C., Bhattacharya, S., Bhattacharyya, S., &amp; Choudhury, M. 2026, ApJ, 1007, 64. Probing heartbeat oscillations from the black hole X-ray binary GRS 1915+105 using spectral-timing analysis. Tables 2 and 3, Fig. 3.</li>
+          <li>Zoghbi, A., et al. 2016, ApJ, 833, 165. Disk–wind connection during the heartbeats of GRS 1915+105.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="play-col"><p>© 2026 Karan Akbari</p></div></footer>
+
+  <noscript><p class="play-col">This toy needs JavaScript. The notes above still describe what it shows, and the <a href="/research/grs-1915-heartbeat/">paper page</a> has the results.</p></noscript>
+  <script type="module" src="/assets/js/grs-pulse.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+/*
+  Take its pulse (GRS 1915+105 heartbeat toy). Loaded after site.css and play.css.
+  The frame, HUD, pill, labels, tags, caption, key, buttons and chips all come from
+  play.css. This file only adds the pieces this toy has on its own: the five phase
+  colours, the Swift / AstroSat switch, the temperature legend, the per-phase
+  readouts and the trace. Everything is scoped under .pulse.
+*/
+
+.pulse {
+  /* aliases into the shared palette in play.css; grs-pulse.js reads --ph1..5 */
+  --ph1: var(--inst-ph1);
+  --ph2: var(--inst-ph2);
+  --ph3: var(--inst-ph3);
+  --ph4: var(--inst-ph4);
+  --ph5: var(--inst-ph5);
+  --soft: var(--inst-amber);
+  --hard: var(--inst-blue);
+}
+
+.play-howto b { font-weight: 600; }
+
+/* ---------- the Swift / AstroSat switch (a two-line segmented control) ---------- */
+.pulse-inst .mode-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; }
+.mode-switch {
+  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .07); flex: 1 1 26rem; max-width: 40rem;
+}
+.mode-switch::before {
+  content: ""; position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
+  border-radius: 999px; background: color-mix(in srgb, var(--soft) 15%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--soft) 55%, transparent);
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1), background .45s ease, box-shadow .45s ease;
+}
+.mode-switch[data-mode="broad"]::before {
+  transform: translateX(100%);
+  background: color-mix(in srgb, var(--hard) 15%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hard) 60%, transparent);
+}
+.mode-btn {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: .18rem;
+  min-height: 50px; padding: .45rem 1.1rem; border: 0; border-radius: 999px; background: transparent;
+  color: var(--inst-muted); text-align: left; cursor: pointer; font-family: var(--sans);
+  transition: color .3s ease;
+}
+.mode-btn b { font: 600 .86rem/1.15 var(--sans); letter-spacing: .02em; }
+.mode-btn small { font: 500 .7rem/1.2 var(--sans); color: var(--inst-faint); letter-spacing: .02em; transition: color .3s ease; }
+.mode-btn[aria-pressed="true"] { color: var(--inst-text); }
+.mode-btn[aria-pressed="true"] small { color: var(--inst-muted); }
+.mode-btn[data-mode="soft"][aria-pressed="true"] b { color: var(--soft); }
+.mode-btn[data-mode="broad"][aria-pressed="true"] b { color: var(--hard); }
+.mode-btn:hover { color: var(--inst-text); }
+.mode-nudge {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .75rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--hard) 14%, transparent); border: 1px solid color-mix(in srgb, var(--hard) 45%, transparent); color: color-mix(in srgb, var(--hard) 30%, #fff);
+  font: 600 .76rem/1.2 var(--sans); letter-spacing: .02em;
+  opacity: 0; transform: translateX(-6px); transition: opacity .5s ease, transform .5s ease; pointer-events: none;
+}
+.mode-nudge.is-on { opacity: 1; transform: none; animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hard) 35%, transparent); } 50% { box-shadow: 0 0 0 8px transparent; } }
+
+/* ---------- the 3D view ---------- */
+.pulse-main { display: grid; grid-template-columns: minmax(0, 1fr); }
+.pulse-scene { aspect-ratio: 1 / .92; min-height: 330px; }
+
+/* tags pinned to the 3D objects; the look comes from .scene-tag */
+.scene-labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.tag {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: flex-start; gap: .08rem; white-space: nowrap;
+  transition: opacity .4s ease;
+}
+.tag i { position: absolute; width: 1px; background: rgba(255, 255, 255, .35); left: 50%; }
+.tag[data-anchor="below"] i { top: 100%; }
+.tag[data-anchor="above"] i { bottom: 100%; }
+.tag.is-dim { opacity: .55; }
+.tag-corona b { color: color-mix(in srgb, var(--hard) 50%, #fff); }
+
+.pulse-scene .hud { z-index: 3; }
+.pulse-scene .hud-top { align-items: flex-start; }
+.phase-pill .pill-dot { background: var(--ph1); box-shadow: 0 0 10px currentColor; }
+.pulse-scene .hud-bottom { gap: .6rem 1.2rem; padding-top: 2.6rem; }
+.legend { display: grid; gap: .3rem; min-width: 0; }
+.tbar { position: relative; width: min(15rem, 52vw); height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, #ff3d12, #ff7a1a 22%, #ffb347 45%, #ffe2b0 60%, #a9c4ff 78%, #6f8fff); }
+.tbar-mark { position: absolute; top: -4px; width: 3px; height: 16px; margin-left: -1.5px; border-radius: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .6), 0 0 8px rgba(255, 255, 255, .8); }
+.tbar-ticks { position: relative; width: min(15rem, 52vw); height: .9rem; color: var(--inst-faint); font: 500 .62rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+.tbar-ticks span { position: absolute; transform: translateX(-50%); top: 0; }
+.legend-note { color: var(--inst-muted); max-width: 17rem; }
+
+/* flash on the mode flip */
+.flip-toast {
+  position: absolute; left: 50%; bottom: 5.4rem; z-index: 4; transform: translate(-50%, -8px); width: max-content; max-width: calc(100% - 2rem);
+  padding: .7rem 1rem; border-radius: 8px; text-align: center;
+  background: rgba(10, 16, 30, .82); border: 1px solid color-mix(in srgb, var(--hard) 50%, transparent); color: color-mix(in srgb, var(--hard) 25%, #fff);
+  font: 600 .86rem/1.4 var(--sans); box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+  opacity: 0; pointer-events: none; transition: opacity .45s ease, transform .45s ease;
+}
+.flip-toast small { display: block; color: #aab7d8; font-weight: 500; font-size: .74rem; margin-top: .15rem; }
+.flip-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.flip-toast[data-mode="soft"] { background: rgba(30, 20, 10, .82); border-color: color-mix(in srgb, var(--soft) 55%, transparent); color: color-mix(in srgb, var(--soft) 25%, #fff); }
+.flip-toast[data-mode="soft"] small { color: #d8bb99; }
+
+/* ---------- side readouts, one per fitted quantity ---------- */
+.pulse-side { min-width: 0; border-top: 1px solid var(--inst-line); display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
+.readout { padding: .8rem var(--inst-pad) .6rem; border-bottom: 1px solid var(--inst-line); }
+.readout:last-of-type { border-bottom: 0; }
+.readout-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .1rem .6rem; margin-bottom: .3rem; }
+.readout-now { font: 500 .88rem/1.2 var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--inst-text); }
+.readout-now sup, .readout-now sub { font-size: .66em; color: var(--inst-muted); }
+.readout canvas { display: block; width: 100%; height: 108px; }
+.readout-note { margin: .25rem 0 0; color: var(--inst-faint); font: 500 .72rem/1.4 var(--sans); min-height: 1.95em; }
+.readout-note b { color: var(--inst-muted); font-weight: 600; }
+.readout.is-locked .readout-now { color: var(--hard); }
+
+/* ---------- live caption: .inst-caption + .verdict from play.css ---------- */
+.pulse-caption .c-ph { font-weight: 600; }
+.pulse-caption .c-soft { color: var(--soft); }
+.pulse-caption .c-hard { color: var(--hard); }
+
+/* ---------- the trace ---------- */
+.pulse-ecg { border-top: 1px solid var(--inst-line); }
+.pulse-ecg .panel-head { padding-bottom: .35rem; }
+.ecg-wrap { position: relative; height: 190px; }
+.ecg-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.phase-key { padding: .45rem var(--inst-pad) .2rem; }
+.phase-key i { border-radius: 2px; }
+
+.pulse-transport { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem 1.2rem; padding: .7rem var(--inst-pad) 1.1rem; align-items: center; }
+.pulse-transport .transport { gap: .5rem; }
+.scrub-wrap { position: relative; }
+.scrub-wrap canvas { position: absolute; left: 9px; right: 9px; top: 0; height: 30px; width: calc(100% - 18px); pointer-events: none; opacity: .75; }
+.scrub-wrap input[type="range"] { position: relative; }
+#scrub { --fill: transparent; }
+.scrub-labels { display: flex; justify-content: space-between; color: var(--inst-faint); font: 500 .66rem/1.2 var(--sans); font-variant-numeric: tabular-nums; margin-top: .1rem; }
+
+@media (min-width: 700px) {
+  .pulse-transport { grid-template-columns: auto minmax(0, 1fr); }
+}
+
+/* below 900 px: keep the 3D view, the caption and the trace together, charts after */
+@media (max-width: 899px) {
+  .pulse-inst { display: flex; flex-direction: column; }
+  .pulse-main { display: contents; }
+  .pulse-inst .mode-bar { order: 0; }
+  .pulse-scene { order: 1; }
+  .pulse-caption-row { order: 2; }
+  .pulse-ecg { order: 3; }
+  .pulse-transport { order: 4; }
+  .pulse-side { order: 5; }
+  .mode-nudge:not(.is-on) { display: none; }
+}
+
+@media (min-width: 900px) {
+  .pulse-main { grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 1fr); }
+  .pulse-scene { aspect-ratio: auto; min-height: 500px; }
+  .pulse-side { border-top: 0; border-left: 1px solid var(--inst-line); }
+  .readout canvas { height: 104px; }
+}
+@media (min-width: 1200px) {
+  .pulse-scene { min-height: 560px; }
+  .readout canvas { height: 118px; }
+}
+
+@media (max-width: 520px) {
+  .mode-btn { padding: .42rem .8rem; min-height: 48px; }
+  .mode-btn b { font-size: .82rem; }
+  .mode-btn small { font-size: .64rem; }
+  .mode-nudge { font-size: .7rem; }
+  .legend-note { display: none; }
+  .ecg-wrap { height: 160px; }
+  .flip-toast { bottom: 4.6rem; font-size: .78rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-switch::before, .flip-toast, .mode-nudge, .tag { transition: none; }
+  .mode-nudge.is-on { animation: none; }
+}

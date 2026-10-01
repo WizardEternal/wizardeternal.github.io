@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The 2% that was actually 55% | Karan Akbari</title>
+  <meta name="description" content="A dead end from Karan Akbari's Gaia paper: the 2% residual that was actually 55%, and how an unchecked input nearly shipped a 27x error.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/notes/the-2-percent-that-was-55/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The 2% that was actually 55%">
+  <meta property="og:description" content="A dead end from Karan Akbari's Gaia paper: the 2% residual that was actually 55%, and how an unchecked input nearly shipped a 27x error.">
+  <meta property="og:url" content="https://karanakbari.com/notes/the-2-percent-that-was-55/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The 2% that was actually 55%">
+  <meta name="twitter:description" content="A dead end from Karan Akbari's Gaia paper: the 2% residual that was actually 55%, and how an unchecked input nearly shipped a 27x error.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The 2% that was actually 55%","description":"A dead end from Karan Akbari's Gaia paper: the 2% residual that was actually 55%, and how an unchecked input nearly shipped a 27x error.","url":"https://karanakbari.com/notes/the-2-percent-that-was-55/","mainEntityOfPage":"https://karanakbari.com/notes/the-2-percent-that-was-55/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .note{width:min(calc(100% - 2.5rem),76rem);margin-inline:auto;padding-block:3.5rem 5rem}
+    .note .kicker{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rust);margin:0 0 .8rem}
+    .note h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:0 0 1.8rem}
+    .note p{font-size:1.2rem;line-height:1.72;margin:0 0 1.2rem}
+    .note .sources{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted);margin-top:2.2rem;padding-top:1rem;border-top:1px solid var(--rule)}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="note">
+      <p class="kicker">Notes · a dead end</p>
+      <h1>The 2% that was actually 55%</h1>
+
+      <p>For the <a href="/research/gaia-calibration/">Gaia white dwarf paper</a> I needed to know how big Gaia's leftover calibration error is in the blue. Huang et al. had already measured it: after their correction, Gaia's spectra agree with reference spectra to better than 2% between 336 and 400 nm, and to 1% at redder wavelengths.</p>
+      <p>So I added a 2% error to the blue end of real single-star spectra and checked how often a fit then called them binaries. The question is which 2%. I had taken it as 2% of the star's total light, and put all of that into the blue.</p>
+      <p>The result looked off. I wanted it to be a result so badly, but it took multiple tests before I was sure it was an error and not something real. In the end the answer was in what Huang et al. actually wrote. Their 2% is local. At each blue wavelength the spectrum can be off by up to 2% of the light at that wavelength. Cooler stars have little blue light, so 2% of their total light pushed into the blue is a big error there. Across my templates it came out to a median of 55% at those wavelengths, 27 times bigger than the bound I was supposed to be testing.</p>
+      <p>With the error set to the real local bound, the spurious binary rate went from a baseline of 0.053 to 0.09 ± 0.02. So the residual does contaminate the selection, but modestly, and it only breaks the selection in bulk once the local error passes 10 to 15%.</p>
+      <p>Every step of the wrong version ran fine, and the numbers were consistent with each other. The problem was only in what the input meant, and the fix was reading the source again. Now I check the units and the definition of every number that goes into a simulation before I run it.</p>
+
+      <p class="sources">Sources: <a href="https://doi.org/10.3847/1538-4365/ad18b1">Huang et al. (2024)</a>, the XP flux correction · <a href="https://arxiv.org/abs/2607.08856">Akbari (2026), arXiv:2607.08856</a></p>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="shell"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

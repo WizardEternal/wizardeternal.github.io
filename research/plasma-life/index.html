@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Could something alive be made of plasma? | Karan Akbari</title>
+  <meta name="description" content="Could something alive be made of plasma? Exploratory simulations of writing a pattern into plasma and reading it back, and what changed at higher resolution.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/plasma-life/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Could something alive be made of plasma?">
+  <meta property="og:description" content="Could something alive be made of plasma? Exploratory simulations of writing a pattern into plasma and reading it back, and what changed at higher resolution.">
+  <meta property="og:url" content="https://karanakbari.com/research/plasma-life/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Could something alive be made of plasma?">
+  <meta name="twitter:description" content="Could something alive be made of plasma? Exploratory simulations of writing a pattern into plasma and reading it back, and what changed at higher resolution.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Could something alive be made of plasma?","description":"Could something alive be made of plasma? Exploratory simulations of writing a pattern into plasma and reading it back, and what changed at higher resolution.","url":"https://karanakbari.com/research/plasma-life/","mainEntityOfPage":"https://karanakbari.com/research/plasma-life/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","image":"https://karanakbari.com/assets/images/og-card.png","about":["plasma physics","astrobiology","simulation"],"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .top{margin:0;background:#000;padding-block:1.5rem}
+    .top img{display:block;width:min(calc(100% - 2.5rem),560px);margin:0 auto}
+    .top figcaption{width:min(calc(100% - 2.5rem),42rem);margin:.5rem auto 0;color:#cfc8bb}
+    /* keep the title and first lines on the first screen */
+    .top img{width:auto;max-width:min(calc(100% - 2.5rem),560px);max-height:40vh;height:auto}
+    .top figcaption{text-align:center}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.75;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:2.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <figure class="top">
+      <img src="/assets/images/sdo-prominence.jpg" width="720" height="720" decoding="async" alt="Extreme-ultraviolet image of a large plasma prominence erupting from the edge of the Sun.">
+      <figcaption><span class="credit">Plasma erupting off the Sun, 13 October 2015. NASA/GSFC/Solar Dynamics Observatory. <a href="https://science.nasa.gov/photojournal/hefty-prominence-eruption/">Source</a></span></figcaption>
+    </figure>
+
+    <article class="col">
+      <h1>Could something alive be made of plasma?</h1>
+      <p class="meta">Exploratory · stopped, might come back · simulations</p>
+
+      <p>In Project Hail Mary there are these cells called Astrophage, and they come from the surface of the Sun. So, lifeforms living on the surface of the Sun. I stopped watching as soon as they said that and went off with my own idea, before the movie even got to showing that the cells were made of carbon, hydrogen and oxygen. But if something actually wanted to survive on the surface of the Sun, it would probably have to be made of the stellar plasma too.</p>
+      <p>Plasma life on its own isn't a new idea. <a href="https://doi.org/10.1088/1367-2630/9/8/263">Tsytovich and others</a> suggested back in 2007 that helical structures of charged dust grains in cold, dusty plasma could behave a bit like living matter. Dust grains wouldn't survive on the surface of a star, so I was asking about the hot magnetized plasma itself.</p>
+      <p>That's way too big a question to simulate, so I asked a smaller one: if you write a pattern into plasma, can you read it back later?</p>
+      <p>The first thing was working out what life actually needs once you take away water and carbon. Water and carbon are parochial requirements, which means they're just how life happens to work on Earth. Pattern is different. If something has no structure you can tell apart from its surroundings, you can't even say it's there, never mind alive. The reason pattern matters is lineage: a parent has to pass something on to whatever comes after it, and that something is a pattern. For us that's DNA and RNA, where the order of the bases is what gets copied. A plasma lifeform would need its own version of that.</p>
+      <p>So the question turned into one about information: can a plasma hold a pattern for long enough, and can you read it back later?</p>
+      <p>I tested that in simulations by writing heat patterns near a magnetic null and then pushing on the plasma later to read them. The heat patterns were mostly still there, but when I doubled the grid resolution the readout changed, and in some cases it flipped sign. A real signal shouldn't change like that when you only change the resolution.</p>
+      <p>I've stopped working on it for now, but none of this means plasma life is impossible, and I might come back to it with a better setup.</p>
+      <p>The long version, with the numbers, is <a href="/assets/plasma/could-something-alive-be-made-of-plasma.pdf">a PDF (13 pages)</a>.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/plasma/refinement-response.png"><img src="/assets/plasma/refinement-response.png" width="1748" height="1102" loading="lazy" decoding="async" alt="Four panels of written-state probe response over time at two grid resolutions, orange N = 160 and blue N = 320, which differ in shape and sign."></a>
+        <figcaption>The same experiment at two grid resolutions, orange with 160 points per side and blue with 320. If the readout were real, the two curves would sit on top of each other. In some panels they even have opposite signs.
+          <span class="credit">From my report <i>Written information near a magnetic null</i> (2026), p. 3.</span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>Every time I tried to argue that plasma life was impossible, the argument turned into a question about some quantity I could actually calculate. So I wrote it all down.</p>
+          <p>A good chunk of that first document didn't survive checking. I had claimed chemistry fails completely in the Sun's photosphere, but molecules like CO do form there. A couple of other arguments, like a hard limit on how many magnetic structures could exist side by side, needed assumptions I hadn't justified.</p>
+          <p>The part that held up was the framing. Life needs a lineage, a lineage needs a pattern that gets passed on, so the question is how long a turbulent magnetized plasma can remember a pattern and whether anything can read it back.</p>
+          <p>The first test wrote magnetic patterns into a simplified plasma simulation, as one of two signs of a chosen wave pattern, and checked whether a reader could still tell which sign it was later. With the right reader, some of it stayed readable.</p>
+          <p>That reader was generous though. It knew exactly where the pattern was supposed to be, and it got to look at the whole simulation at once.</p>
+          <p>So the second test was local. Near a magnetic null, where the field drops to zero, I heated the plasma in one of two patterns with the same total energy, then pushed on the middle later and watched how the plasma nearby moved.</p>
+          <p>The heat patterns themselves were still distinguishable later, and at low conductivity they only changed by 6 to 8% between resolutions. The push response was the problem. Before running anything I had set a rule that the effect had to be clearly bigger than the numerical noise, and all eight test cases failed it.</p>
+          <p>So I held off on the big campaign. Running many more copies of a readout that depends on the grid wouldn't have told me anything new.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>For physicists: setup, rule, results</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Prior work</dt><dd>Helical structures of charged microparticles in cold dusty plasma proposed as a route to “inorganic living matter”: Tsytovich et al. 2007, <i>New J. Phys.</i> 9, 263 (<a href="https://doi.org/10.1088/1367-2630/9/8/263">DOI</a>). These are electrostatic dust structures; their grain-survival conditions do not carry over to stellar-surface MHD.</dd>
+            <dt>Model</dt><dd>2D compressible resistive MHD, domain x, y ∈ [−10, 10], initial X-point field B = (y, x), γ = 5/3, η = 0.04, anisotropic thermal conduction κ = 0.2 or 2.6. Dimensionless units.</dd>
+            <dt>Write</dt><dd>Two equal-energy heat deposits with cosine or sine angular modulation in 1.15 &lt; r &lt; 1.85 over t = 2–2.2, peaking at ≈12% of the local internal energy</dd>
+            <dt>Probe</dt><dd>Inward radial acceleration for r &lt; 0.3 over t = 3.5–3.6, amplitude A = 0.01. Four square readers of side 0.25 average the velocity. Response is the probed branch minus its matched no-probe branch.</dd>
+            <dt>Cases</dt><dd>2 conductivities × 2 write patterns × 2 background families, each at N = 160 and N = 320</dd>
+            <dt>Refinement rule</dt><dd>Predeclared: the effect must exceed 5× its numerical comparison envelope (metric &lt; 0.2). Measured 0.569–2.252; all 8 cases fail. In the lower-conductivity recurrent cases both signed time means reverse under refinement.</dd>
+            <dt>Thermal states</dt><dd>No-probe temperature contrast at t = 4.5, κ = 0.2, cosine write: 0.003035 (N = 160) vs 0.002787 (N = 320). At κ = 2.6 the sine entropy-proxy contrast changes sign (2.0×10<sup>−6</sup> at N = 160 → −2.9×10<sup>−6</sup> at N = 320).</dd>
+            <dt>Probe linearity</dt><dd>Halving A changes the rescaled response by 13.3–29.2%, so a clean weak-probe interpretation is unsupported</dd>
+            <dt>Decision</dt><dd>Hold the large campaign. Numerically inconclusive; no information-erasure verdict.</dd>
+          </dl>
+          <p>The subtraction uses a matched no-probe history that a reader given one unknown message would not have. Comparing background families does not isolate reconnection as the cause. Thermal persistence at fixed points is not a decoder and does not identify anything carrying the pattern through cycles. None of this sets a universal limit on plasma life or a stellar habitability boundary.</p>
+        </div>
+      </details>
+
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

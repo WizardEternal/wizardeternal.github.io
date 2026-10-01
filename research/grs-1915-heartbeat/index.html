@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GRS 1915+105, a black hole with a heartbeat | Karan Akbari</title>
+  <meta name="description" content="GRS 1915+105 flares every 50 to 100 seconds. Phase-resolved Swift and AstroSat spectral-timing fits of the heartbeat, published in ApJ 1007, 64 (2026).">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/grs-1915-heartbeat/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GRS 1915+105, a black hole with a heartbeat">
+  <meta property="og:description" content="GRS 1915+105 flares every 50 to 100 seconds. Phase-resolved Swift and AstroSat spectral-timing fits of the heartbeat, published in ApJ 1007, 64 (2026).">
+  <meta property="og:url" content="https://karanakbari.com/research/grs-1915-heartbeat/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GRS 1915+105, a black hole with a heartbeat">
+  <meta name="twitter:description" content="GRS 1915+105 flares every 50 to 100 seconds. Phase-resolved Swift and AstroSat spectral-timing fits of the heartbeat, published in ApJ 1007, 64 (2026).">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GRS 1915+105, a black hole with a heartbeat","description":"GRS 1915+105 flares every 50 to 100 seconds. Phase-resolved Swift and AstroSat spectral-timing fits of the heartbeat, published in ApJ 1007, 64 (2026).","url":"https://karanakbari.com/research/grs-1915-heartbeat/","mainEntityOfPage":"https://karanakbari.com/research/grs-1915-heartbeat/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-09-15","image":"https://karanakbari.com/assets/images/og-card.png","about":["GRS 1915+105","black hole X-ray binary","heartbeat oscillations","spectral-timing analysis"],"isBasedOn":{"@type":"ScholarlyArticle","@id":"https://doi.org/10.3847/1538-4357/ae877d","url":"https://doi.org/10.3847/1538-4357/ae877d","name":"Probing heartbeat oscillations from the black hole X-ray binary GRS 1915+105 using spectral-timing analysis","datePublished":"2026","isPartOf":{"@type":"PublicationVolume","volumeNumber":"1007","isPartOf":{"@type":"Periodical","name":"The Astrophysical Journal"}},"sameAs":"https://arxiv.org/abs/2604.18601"},"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .top{background:#0b0b0d;padding-block:1.25rem}
+    .top img{display:block;width:min(calc(100% - 2.5rem),46rem);margin:0 auto;border-radius:3px}
+    .top figcaption{width:min(calc(100% - 2.5rem),46rem);margin:.5rem auto 0;color:#cfc8bb}
+    /* keep the title and first lines on the first screen */
+    .top img{width:auto;max-width:min(calc(100% - 2.5rem),46rem);max-height:40vh;height:auto}
+    .top figcaption{text-align:center}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.7;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:2.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+    @media (max-width:480px){.meta{font-size:.78rem;line-height:1.45;font-weight:600;letter-spacing:.01em;text-transform:none}}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <figure class="top">
+      <img src="/assets/images/grs1915-chandra-xray-1200.jpg" width="1200" height="1200" decoding="async" alt="Star field around GRS 1915+105 with Chandra's X-ray view of the black hole binary in an inset.">
+      <figcaption><span class="credit">GRS 1915+105. X-ray: NASA/CXC/Harvard/J.Neilsen; Optical &amp; IR: Palomar DSS2. <a href="https://chandra.harvard.edu/photo/2009/g1915/">Source</a></span></figcaption>
+    </figure>
+
+    <article class="col">
+      <h1>GRS 1915+105, a black hole with a heartbeat</h1>
+      <p class="meta">Akbari, Patel, Bhattacharya, Bhattacharyya &amp; Choudhury · ApJ 1007, 64 (2026)</p>
+
+      <p>GRS 1915+105 is a black hole that flares every 50 to 100 seconds. Over and over.</p>
+      <p>So I cut every cycle into five pieces, three going up and two coming down, and fit each piece separately. With just the soft X-rays it looked like the disk was heating up and cooling down every single cycle. Then we added AstroSat, whose SXT and LAXPC reach up to 30 keV, and the disk could just sit at one temperature the whole time, which kind of ruined that.</p>
+      <p>The corona is the hot gas close to the black hole, and it's what makes most of the hard X-rays. In these data the disk temperature can stay the same through the whole cycle, and most of the change shows up in the corona.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/grs/heartbeat-phases.png"><img src="/assets/grs/heartbeat-phases.webp" width="1800" height="594" loading="lazy" decoding="async" alt="Swift XRT count rate over time through several heartbeat cycles of GRS 1915+105, with coloured points marking the phase groups."></a>
+        <figcaption>This is what the heartbeat looks like in Swift data: the count rate going up and down over and over, with each colour marking which of the five pieces a stretch belongs to.
+          <span class="credit">Akbari et al. (2026), Fig. 3. <a href="https://arxiv.org/html/2604.18601v2/output_plot_combined.png">Figure source</a> (arXiv, CC BY 4.0)</span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>I used 24 Swift observations and 2 from AstroSat. They weren't taken at the same time, so they show the same kind of heartbeat on different days.</p>
+          <p>Cutting the cycle into more pieces would show finer changes, but each piece would have fewer photons in it, so five was where I settled.</p>
+          <p>Swift only covers 1 to 10 keV. AstroSat's two instruments together go from 0.8 to 30 keV, and those extra hard X-rays are what pin down the corona.</p>
+          <p>To check the disk properly, we fit all five AstroSat pieces together, once letting the disk temperature change between pieces and once forcing it to stay the same. The version with one temperature still fit fine.</p>
+          <p>Forcing the whole disk to stay fixed, temperature and size together, did not fit. So something about the disk still changes during the cycle, just most likely not its temperature.</p>
+          <p>That size is an apparent size though. It comes out of the model and depends on things like the distance and the angle we see the disk at, so it doesn't mean the inner edge of the disk is actually moving in and out.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>For astronomers: data, fits, caveats</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Source</dt><dd>GRS 1915+105, ρ-class, period ≈50–100 s. Adopted d ≈ 8.6 kpc, M = 12.4 ± 2.0 M<sub>☉</sub> (Reid et al. 2014).</dd>
+            <dt>Swift XRT</dt><dd>24 WT-mode ρ-class observations, May 2014 to April 2015 (MJD 56778–57142, Table 1), selected from 702 archival observations. Fit over 1–10 keV with <code>tbabs*(diskbb+bremss+powerlaw)</code>.</dd>
+            <dt>AstroSat</dt><dd>2 ρ-class observations (MJD 57856–57857). LAXPC 3–30 keV (9378 s, 15269 s), SXT 0.8–7 keV (3604 s, 7898 s). Joint fit with <code>tbabs*const*(diskbb+nthcomp)</code>.</dd>
+            <dt>Phases</dt><dd>Each trough-to-peak interval split into three equal phases (1–3), each peak-to-trough interval into two (4–5). Matching phases stacked across cycles.</dd>
+            <dt>Swift fits</dt><dd>Table 2: T<sub>in</sub> = 1.53–1.91 keV and apparent R<sub>in</sub> = 18.1–37.6 km across phases; χ²<sub>ν</sub> = 1.09–1.20. Errors 90%.</dd>
+            <dt>AstroSat fits</dt><dd>Every parameter free per phase (Table 2): T<sub>in</sub> = 1.24–1.31 keV, Γ = 1.77–2.01, kT<sub>e</sub> from 6.2<sup>+0.6</sup><sub>−0.5</sub> keV (Phase 1) to 14.5<sup>+10.3</sup><sub>−3.4</sub> keV (Phase 4); χ²<sub>ν</sub> = 0.84–1.10.</dd>
+            <dt>Disk test</dt><dd>T<sub>in</sub> tied across all five phases (Table 3): T<sub>in</sub> = 1.275 ± 0.020 keV, Δχ² = +4.3 for 4 added constraints, χ²<sub>ν</sub> = 1.003 for 1881 dof. T<sub>in</sub> and normalization both tied: Δχ² = +175.9, rejected. Tied-T<sub>in</sub> apparent R<sub>in</sub> spans 18.1 ± 0.7 to 21.9 ± 0.7 km (≈20%), and kT<sub>e</sub> rises from 6.5<sup>+0.5</sup><sub>−0.4</sub> keV (Phase 1) to 13.8<sup>+8.7</sup><sub>−3.1</sub> keV (Phase 5).</dd>
+            <dt>Timing</dt><dd>Positive lags of 5–8 s at the heartbeat frequency (≈0.01–0.02 Hz) between the 1–3 keV reference and the 0.3–1 and 3–10 keV bands, near zero above ≈0.1 Hz. Counter-clockwise loop in the XRT hardness–intensity diagram.</dd>
+          </dl>
+          <p>The five phases are bins, and the source keeps changing inside each one, so they aren't five fixed states. SXT covers less time than LAXPC, so their phase-combined spectra include partly different cycles, and a cross-normalization constant fixes a mean offset but not that. The apparent inner radius depends on distance, inclination and the colour correction. The timing and spectra describe the sequence through a cycle, but they don't tell you what triggers the heartbeat.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>Paper and figures</h2></summary>
+        <div class="inner">
+          <p><strong>Akbari, K.</strong>, Patel, C., Bhattacharya, S., Bhattacharyya, S., &amp; Choudhury, M. “Probing heartbeat oscillations from the black hole X-ray binary GRS 1915+105 using spectral-timing analysis.” <i>The Astrophysical Journal</i> 1007, 64 (2026).</p>
+          <p><a class="text-link" href="https://doi.org/10.3847/1538-4357/ae877d">Read the paper (DOI)</a></p>
+        </div>
+      </details>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>

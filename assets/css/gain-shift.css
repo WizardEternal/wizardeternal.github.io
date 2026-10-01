@@ -1,0 +1,207 @@
+/*
+  /play/gain-shift/ ("the fit that can't tell"). Builds on play.css: intro and how-to
+  card, instrument card, bar, stage, caption, key, switch, chips, buttons, range
+  inputs and notes. Everything here is scoped under .toy-gain or .gs-howto.
+*/
+.toy-gain {
+  /* aliases into the shared palette in play.css */
+  --gs-pass: var(--inst-green);
+  --gs-warn: var(--inst-amber);
+  --gs-fail: var(--inst-red);
+  --gs-wait: var(--inst-faint);
+  --gs-fit: var(--inst-orange);
+  --gs-marg: var(--inst-honey);
+  --gs-now: var(--inst-teal);
+  overflow: clip;             /* keeps the rounded card but lets the gain bar stick */
+}
+
+/* ---------- how-to card: shared .play-howto, plus the step states the toy sets ---------- */
+.gs-howto li { transition: opacity .3s ease; }
+.gs-howto li::before { transition: background .3s ease, color .3s ease, box-shadow .3s ease; }
+.gs-howto li.is-current::before { box-shadow: 0 0 0 4px color-mix(in srgb, var(--rust) 24%, transparent); }
+.gs-howto li.is-done { opacity: .62; }
+.gs-howto li.is-done::before { content: "\2713"; background: transparent; border: 1.5px solid var(--teal); color: var(--teal); }
+.gs-howto li.is-climax strong { color: var(--rust); }
+
+/* ---------- sticky gain bar ---------- */
+.toy-gain .gs-bar {
+  position: sticky; top: 0; z-index: 6;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem 1.4rem; align-items: end;
+  background: color-mix(in srgb, var(--inst-bg) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.2); -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom: 1px solid var(--inst-line);
+}
+.toy-gain .gs-gain .slider-head output { font: 400 1.5rem/1 var(--serif); letter-spacing: -.02em; color: var(--inst-glow); }
+.toy-gain .gs-track { position: relative; padding-top: 1.45rem; }
+.toy-gain .gs-ticks { position: absolute; left: 9px; right: 9px; top: 0; height: 1.25rem; }
+.toy-gain .gs-tick {
+  position: absolute; bottom: 0; transform: translateX(-50%); white-space: nowrap;
+  color: var(--inst-faint); font-size: .66rem; letter-spacing: .02em; font-variant-numeric: tabular-nums;
+}
+.toy-gain .gs-tick:first-of-type { transform: none; }
+.toy-gain .gs-tick:last-of-type { transform: translateX(-100%); }
+.toy-gain .gs-tick em { font-style: normal; color: var(--inst-faint); opacity: .8; }
+.toy-gain .gs-tick.is-key { color: var(--inst-glow); }
+.toy-gain .gs-tick::after {
+  content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: .42rem; background: var(--inst-line-strong);
+}
+.toy-gain .gs-tick:first-of-type::after { left: 0; }
+.toy-gain .gs-tick:last-of-type::after { left: 100%; }
+.toy-gain .gs-real {
+  position: absolute; bottom: -1.02rem; height: 6px; min-width: 5px; border-radius: 3px;
+  background: var(--inst-teal); opacity: .75; box-shadow: 0 0 8px var(--inst-teal);
+}
+.toy-gain #gain { --fill: var(--inst-glow); }
+.toy-gain .gs-help { margin: .2rem 0 0; color: var(--inst-faint); font-size: .7rem; line-height: 1.4; }
+.toy-gain .gs-help-mobile { display: none; margin: 0 0 .6rem; }
+@media (max-width: 719px) {
+  .toy-gain .gs-bar .gs-help { display: none; }
+  .toy-gain .gs-help-mobile { display: block; }
+}
+.toy-gain .gs-real-key { display: inline-block; width: .9rem; height: 5px; margin: 0 .15rem .12rem 0; border-radius: 3px; background: var(--inst-teal); box-shadow: 0 0 6px var(--inst-teal); vertical-align: middle; }
+.toy-gain .gs-mini-label { color: var(--inst-muted); font: 700 .62rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; margin-right: .15rem; }
+
+/* ---------- live caption: .inst-caption + .verdict from play.css ---------- */
+.toy-gain .gs-caption-wrap { border-top: 0; border-bottom: 1px solid var(--inst-line); }
+.toy-gain .gs-caption { max-width: 62rem; }
+.toy-gain .gs-caption .v-fit { color: var(--gs-fit); }
+.toy-gain .gs-step {
+  display: inline-block; margin-right: .45rem; padding: .2rem .5rem; border-radius: 999px;
+  background: var(--inst-glow); color: var(--inst-on-light); font: 700 .66rem/1 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+}
+
+.toy-gain .gs-read { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; margin: 0; }
+.toy-gain .gs-read dt { color: var(--inst-muted); font: 600 .62rem/1.25 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+.toy-gain .gs-read dd {
+  margin: .15rem 0 0; font: 400 1.18rem/1.1 var(--serif); letter-spacing: -.01em;
+  font-variant-numeric: lining-nums tabular-nums; white-space: nowrap;
+}
+.toy-gain .gs-read .gs-drift dd { color: var(--gs-fit); }
+.toy-gain .gs-minilights { display: none; gap: .4rem; align-items: center; justify-self: end; padding-bottom: .35rem; }
+.toy-gain .mini-light { width: .6rem; height: .6rem; border-radius: 50%; background: var(--gs-wait); transition: background .4s ease, box-shadow .4s ease; }
+.toy-gain .mini-light[data-state="pass"] { background: var(--gs-pass); box-shadow: 0 0 9px var(--gs-pass); }
+.toy-gain .mini-light[data-state="warn"] { background: var(--gs-warn); box-shadow: 0 0 9px var(--gs-warn); }
+.toy-gain .mini-light[data-state="fail"] { background: var(--gs-fail); box-shadow: 0 0 11px var(--gs-fail); }
+
+/* ---------- controls ---------- */
+.toy-gain .gs-controls {
+  display: flex; flex-wrap: wrap; gap: .8rem 1.6rem; align-items: flex-end;
+  padding: .9rem var(--inst-pad) 1rem; border-bottom: 1px solid var(--inst-line);
+}
+.toy-gain .gs-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-left: auto; }
+
+/* ---------- the two 3D views ---------- */
+.toy-gain .gs-3d { display: grid; grid-template-columns: minmax(0, 1fr); }
+.toy-gain .gs-view + .gs-view { border-top: 1px solid var(--inst-line); }
+.toy-gain .gs-stage { aspect-ratio: 1 / 1.02; min-height: 330px; cursor: grab; outline: none; touch-action: pan-y; }
+.toy-gain .gs-stage:active { cursor: grabbing; }
+.toy-gain .gs-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--inst-amber); }
+.toy-gain .gs-stage > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.toy-gain .gs-fallback { position: absolute; inset: 0; }
+.toy-gain .gs-fallback canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.toy-gain .gs-fallback[hidden] { display: none; }
+.toy-gain .gs-hint { right: auto; }
+.toy-gain .gs-legend { align-items: flex-end; }
+.toy-gain .k-ball { background: var(--gs-fit); box-shadow: 0 0 8px var(--gs-fit); }
+.toy-gain .k-pin { background: #fff; box-shadow: 0 0 8px #fff; width: .22rem !important; border-radius: 1px !important; height: .75rem !important; }
+.toy-gain .k-ring { border: 2px solid var(--inst-silver); background: transparent; }
+.toy-gain .k-now { background: var(--gs-now); box-shadow: 0 0 8px var(--gs-now); }
+.toy-gain .k-ghost { background: var(--inst-ghost); }
+.toy-gain .k-marg { background: var(--gs-marg); box-shadow: 0 0 8px var(--gs-marg); }
+.toy-gain .k-push { width: 1rem !important; height: 0 !important; border-radius: 0 !important; border-top: 2px dashed var(--gs-fit); }
+.toy-gain .k-path { width: 1rem !important; height: 0 !important; border-radius: 0 !important; border-top: 2px solid var(--inst-peach); }
+.toy-gain .k-centre { background: var(--inst-mint); width: .45rem !important; height: .45rem !important; }
+.toy-gain .gs-note { display: block; color: var(--inst-faint); font-size: .68rem; line-height: 1.35; margin-top: .25rem; }
+.toy-gain .gs-gpost { pointer-events: none; text-align: right; }
+.toy-gain .gs-gpost[hidden] { display: none; }
+.toy-gain .gs-gpost canvas { display: block; width: 180px; height: 46px; margin: .3rem 0 0 auto; }
+
+.toy-gain .gs-stage > canvas.gs-inset {
+  inset: auto; right: auto; bottom: auto;
+  position: absolute; z-index: 3; left: auto; right: .9rem; top: .9rem; width: 190px; height: 130px;
+  border: 1px solid rgba(255, 255, 255, .14); border-radius: 8px; pointer-events: none;
+}
+.toy-gain .gs-climax { display: block; margin-top: .45rem; color: var(--inst-glow); }
+.toy-gain [data-state="off"] .lamp { background: color-mix(in srgb, var(--inst-faint) 40%, var(--inst-bg)); box-shadow: inset 0 0 0 1.5px var(--gs-wait); }
+.toy-gain .mini-light[data-state="off"] { background: transparent; box-shadow: inset 0 0 0 1.5px var(--gs-wait); }
+
+/* ---------- spectrum and checks ---------- */
+.toy-gain .gs-2d { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--inst-line); }
+.toy-gain .gs-spec-wrap { height: 280px; }
+.toy-gain .gs-resid-wrap { height: 118px; margin-bottom: .6rem; }
+.toy-gain .gs-checks { border-top: 1px solid var(--inst-line); display: flex; flex-direction: column; }
+.toy-gain .gs-lights { list-style: none; margin: 0; padding: .1rem var(--inst-pad) 0; display: grid; gap: .95rem; }
+.toy-gain .gs-light { display: grid; grid-template-columns: 1.35rem minmax(0, 1fr); gap: .75rem; align-items: start; }
+.toy-gain .gs-light h3 { margin: 0; font: 600 .95rem/1.25 var(--sans); letter-spacing: .01em; }
+.toy-gain .gs-light p { margin: .2rem 0 .3rem; color: var(--inst-muted); font-size: .8rem; line-height: 1.45; }
+.toy-gain .gs-light .val { font: 500 .8rem/1.3 var(--sans); font-variant-numeric: tabular-nums; color: var(--inst-text); transition: opacity .3s ease; }
+.toy-gain .gs-checks.is-busy .val { opacity: .55; }
+.toy-gain .lamp {
+  position: relative; width: 1.1rem; height: 1.1rem; margin-top: .12rem; border-radius: 50%;
+  background: var(--gs-wait); box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .35);
+  transition: background .5s ease, box-shadow .5s ease;
+}
+.toy-gain .lamp::after { content: ""; position: absolute; inset: 22% 28% 50% 24%; border-radius: 50%; background: rgba(255, 255, 255, .35); filter: blur(1px); }
+.toy-gain [data-state="wait"] .lamp { animation: gs-breathe 1.6s ease-in-out infinite; }
+.toy-gain [data-state="pass"] .lamp { background: var(--gs-pass); box-shadow: 0 0 14px color-mix(in srgb, var(--gs-pass) 75%, transparent), 0 0 34px color-mix(in srgb, var(--gs-pass) 28%, transparent), inset 0 -2px 3px rgba(0, 0, 0, .25); }
+.toy-gain [data-state="warn"] .lamp { background: var(--gs-warn); box-shadow: 0 0 14px color-mix(in srgb, var(--gs-warn) 80%, transparent), 0 0 34px color-mix(in srgb, var(--gs-warn) 30%, transparent), inset 0 -2px 3px rgba(0, 0, 0, .25); }
+.toy-gain [data-state="fail"] .lamp { background: var(--gs-fail); box-shadow: 0 0 16px color-mix(in srgb, var(--gs-fail) 90%, transparent), 0 0 40px color-mix(in srgb, var(--gs-fail) 38%, transparent), inset 0 -2px 3px rgba(0, 0, 0, .25); }
+.toy-gain [data-state="fail"] h3 { color: color-mix(in srgb, var(--gs-fail) 55%, #fff); }
+@keyframes gs-breathe { 50% { opacity: .45; } }
+.toy-gain .gs-checks-foot { margin: auto 0 0; padding: .9rem var(--inst-pad) 1.1rem; color: var(--inst-muted); font-size: .8rem; }
+
+/* ---------- catalogue ---------- */
+.toy-gain .gs-cat { border-top: 1px solid var(--inst-line); }
+.toy-gain .gs-cat-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem 1.6rem; padding: 0 var(--inst-pad) 1.2rem; }
+.toy-gain .gs-cat-stats { margin: .8rem 0 0; color: var(--inst-muted); font-size: .85rem; line-height: 1.55; }
+.toy-gain .gs-cat-stats strong { color: var(--inst-text); font-weight: 600; }
+.toy-gain .gs-cat-stats .v-fit { color: var(--gs-fit); }
+.toy-gain .gs-cat-wrap { height: 250px; }
+.toy-gain #btn-cat { min-width: 13rem; }
+.toy-gain #btn-cat[aria-busy="true"] { background: rgba(255, 255, 255, .1); color: var(--inst-text); }
+
+/* ---------- cue on the control the current step needs ---------- */
+.toy-gain .gs-cue:not(input) { box-shadow: 0 0 0 2px var(--inst-glow), 0 0 16px color-mix(in srgb, var(--inst-glow) 45%, transparent); animation: gs-cue 1.8s ease-in-out infinite; }
+.toy-gain input.gs-cue::-webkit-slider-thumb { box-shadow: 0 0 0 5px color-mix(in srgb, var(--inst-glow) 35%, transparent), 0 0 18px color-mix(in srgb, var(--inst-glow) 80%, transparent); animation: gs-cue 1.8s ease-in-out infinite; }
+.toy-gain input.gs-cue::-moz-range-thumb { box-shadow: 0 0 0 5px color-mix(in srgb, var(--inst-glow) 35%, transparent), 0 0 18px color-mix(in srgb, var(--inst-glow) 80%, transparent); }
+@keyframes gs-cue { 50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--inst-glow) 15%, transparent), 0 0 4px color-mix(in srgb, var(--inst-glow) 20%, transparent); } }
+
+/* ---------- wider screens ---------- */
+@media (min-width: 720px) {
+  .toy-gain .gs-bar { grid-template-columns: minmax(0, 1.3fr) auto auto; }
+  .toy-gain .gs-minilights { display: flex; }
+  .toy-gain .gs-cat-body { grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr); align-items: start; }
+  .toy-gain .gs-cat-wrap { height: 220px; }
+}
+@media (min-width: 980px) {
+  .toy-gain .gs-3d { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .toy-gain .gs-view + .gs-view { border-top: 0; border-left: 1px solid var(--inst-line); }
+  .toy-gain .gs-stage { aspect-ratio: auto; height: 470px; }
+  .toy-gain .gs-2d { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+  .toy-gain .gs-checks { border-top: 0; border-left: 1px solid var(--inst-line); }
+  .toy-gain .gs-spec-wrap { height: 300px; }
+}
+
+@media (max-width: 520px) {
+  .toy-gain .gs-bar { padding-top: .7rem; padding-bottom: .65rem; }
+  .toy-gain .gs-gain .slider-head output { font-size: 1.3rem; }
+  .toy-gain .gs-tick em { display: none; }
+  .toy-gain .gs-read { gap: .3rem 1rem; }
+  .toy-gain .gs-read dd { font-size: 1.02rem; }
+  .toy-gain .gs-controls { gap: .7rem 1rem; }
+  .toy-gain .gs-actions { margin-left: 0; }
+  .toy-gain .gs-stage { min-height: 300px; }
+  .toy-gain .gs-legend ul { font-size: .64rem; gap: .2rem .7rem; }
+  .toy-gain .gs-gpost canvas { width: 140px; height: 38px; }
+  .toy-gain .gs-stage > canvas.gs-inset { width: 150px; height: 104px; left: auto; right: .6rem; top: .6rem; }
+  .toy-gain .gs-spec-wrap { height: 230px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toy-gain *, .toy-gain *::before, .toy-gain *::after { transition: none !important; animation: none !important; }
+}
+
+/* gain-marginalised readout, shown only while the switch is on */
+.toy-gain .gs-read .gs-margread[hidden] { display: none; }
+.toy-gain .gs-read .gs-margread dd { color: var(--gs-marg); }
+.toy-gain .gs-read .gs-margread small { font: 500 .72rem/1.2 var(--sans); color: var(--inst-muted); letter-spacing: 0; }
