@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black hole binary recovery across mass | Karan Akbari</title>
+  <meta name="description" content="How often a Lomb-Scargle search catches a periodic black hole binary in a quasar light curve, from 10^6 to 10^10 solar masses, on PTF, Stripe 82 and LSST-like cadences.">
+  <meta name="author" content="Karan Akbari">
+  <link rel="canonical" href="https://karanakbari.com/research/lomb-scargle-recovery/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Would the search even catch it?">
+  <meta property="og:description" content="How often a Lomb-Scargle search catches a periodic black hole binary in a quasar light curve, from 10^6 to 10^10 solar masses, on PTF, Stripe 82 and LSST-like cadences.">
+  <meta property="og:url" content="https://karanakbari.com/research/lomb-scargle-recovery/">
+  <meta property="og:site_name" content="Karan Akbari">
+  <meta property="og:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Karan Akbari, astrophysics">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Would the search even catch it?">
+  <meta name="twitter:description" content="How often a Lomb-Scargle search catches a periodic black hole binary in a quasar light curve, from 10^6 to 10^10 solar masses, on PTF, Stripe 82 and LSST-like cadences.">
+  <meta name="twitter:image" content="https://karanakbari.com/assets/images/og-card.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Would the search even catch it?","description":"How often a Lomb-Scargle search catches a periodic black hole binary in a quasar light curve, from 10^6 to 10^10 solar masses, on PTF, Stripe 82 and LSST-like cadences.","url":"https://karanakbari.com/research/lomb-scargle-recovery/","mainEntityOfPage":"https://karanakbari.com/research/lomb-scargle-recovery/","author":{"@id":"https://karanakbari.com/#person","@type":"Person","name":"Karan Akbari","url":"https://karanakbari.com/"},"dateModified":"2026-10-25T00:00:00+05:30","image":"https://karanakbari.com/assets/images/og-card.png","about":["supermassive black hole binaries","periodicity search","quasar variability","Lomb-Scargle periodogram","IllustrisTNG"],"isBasedOn":{"@type":"ScholarlyArticle","@id":"https://arxiv.org/abs/2610.30772","url":"https://arxiv.org/abs/2610.30772","name":"Lomb-Scargle Recovery of Periodic Binary Signals across Black Hole Mass and Cadence","datePublished":"2026","author":[{"@type":"Person","name":"Karan Akbari"},{"@type":"Person","name":"Sayantan Bhattacharya"}]},"inLanguage":"en"}</script>
+  <meta name="theme-color" content="#f5f0e7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121618" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <script>(function(){var d=document.documentElement;d.classList.add("theme-js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.setAttribute("data-theme",t)}catch(e){}})();</script>
+  <script src="/assets/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .col{width:min(calc(100% - 2.5rem),50rem);margin-inline:auto}
+    .credit{display:block;font-family:system-ui,sans-serif;font-size:.74rem;opacity:.7;margin-top:.3rem}
+    .credit a{color:inherit}
+    h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:3.5rem 0 .4rem}
+    .meta{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:0 0 1.6rem}
+    .col p{font-size:1.2rem;line-height:1.7;margin:0 0 1.1rem}
+    .keyfig{margin:2rem 0}
+    .keyfig img{display:block;width:100%;height:auto;border-radius:3px;background:var(--figure-bg);padding:var(--figure-pad);filter:var(--figure-filter)}
+    .keyfig figcaption{font-size:.95rem;line-height:1.55;margin-top:.5rem;color:var(--ink-soft)}
+    details.layer{border-top:1px solid var(--rule);padding-block:.9rem}
+    details.layer:last-of-type{border-bottom:1px solid var(--rule);margin-bottom:4rem}
+    details.layer summary{cursor:pointer;font-size:1.3rem;list-style:none}
+    details.layer summary::before{content:"▸ ";color:var(--rust)}
+    details.layer[open] summary::before{content:"▾ "}
+    details.layer .inner{padding-top:1rem}
+    details.layer summary h2{display:inline;font:inherit;margin:0}
+    .spec{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.4rem 1.2rem;font-size:1rem;line-height:1.55;margin:0 0 1.2rem}
+    .spec dt{font-family:system-ui,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:.2rem}
+    .spec dd{margin:0}
+    @media (max-width:560px){.spec{grid-template-columns:1fr}.spec dd{margin-bottom:.6rem}}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Karan Akbari home"><span class="wordmark-mark">KA</span><span class="wordmark-name">Karan Akbari</span></a>
+      <nav aria-label="Main navigation"><ul class="nav-list"><li><a href="/research/">Work</a></li><li><a href="/play/">Play</a></li><li><a href="/software/">Code</a></li><li><a href="/notes/">Notes</a></li><li><a href="/research/#papers">Papers</a></li><li><a href="/cv/">CV</a></li><li class="nav-theme"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.75a7.25 7.25 0 0 0 0 14.5z" fill="currentColor"/></svg></button></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="col">
+      <h1>Would the search even catch it?</h1>
+      <p class="meta">Akbari &amp; Bhattacharya · Preprint · arXiv:2610.30772</p>
+
+      <p>People look for pairs of supermassive black holes by searching quasar light curves for a period. To turn "we found N" into "there are this many out there", you need to know how often the search catches a real one. Lin, Charisi and Haiman measured that in 2026 for the Lomb-Scargle periodogram, on PTF quasars, which are bright and heavy, mostly around a billion solar masses.</p>
+      <p>Sayantan Bhattacharya and I wanted to see how those numbers change for lighter black holes. So we took black hole mergers from the TNG100 simulation, from a million to ten billion solar masses, gave each one a quasar light curve, hid a periodic signal in it, and ran the same kind of search.</p>
+      <p>Whether heavy binaries are easier or harder to catch turns out to depend on how bright you assume each quasar is. Give them all the same brightness and the heavy ones get harder. Give them the brightness real quasars of that mass have and the heavy ones get easier, from 15% caught in the lightest bin to 48% in the heaviest on PTF.</p>
+      <p>For the heavy ones on PTF our version catches 39.8% of the signals, close to the published 44.7%. On a cadence like the coming LSST survey it catches 76.9%, where the published value is 22.6%. The two setups differ in several inputs, and the paper goes through them one by one, but most of that difference is still unexplained.</p>
+
+      <figure class="keyfig">
+        <a href="/assets/ls-recovery/recovery-vs-mass.png"><img src="/assets/ls-recovery/recovery-vs-mass.png" width="1264" height="526" loading="lazy" decoding="async" alt="Two panels of recovery fraction against black hole mass from 10^6 to 10^10 solar masses, for sinusoidal and sawtooth signals, on LSST-like, Stripe 82 and PTF cadences, plus a Stripe 82 run with every quasar at the same brightness, whose recovery falls with mass instead of rising."></a>
+        <figcaption>How many of the hidden signals the search got back, against black hole mass. With realistic brightness (solid lines) heavier is easier. With every quasar at the same brightness (grey dashed) it flips. The yellow band is the mass range the published numbers come from.
+          <span class="credit">Akbari &amp; Bhattacharya (2026), Fig. 1. <a href="https://arxiv.org/abs/2610.30772">Paper</a></span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>The longer story</h2></summary>
+        <div class="inner">
+          <p>A quasar flickers randomly, and random flickering is good at faking a period. So the search only counts a peak in the periodogram if it beats the tallest peak from 100,000 light curves of pure flicker made for that same quasar. This follows the rule Lin, Charisi and Haiman set up.</p>
+          <p>How much a quasar flickers depends on its black hole mass and its brightness. The simulation gives you the mass but not a sensible brightness, because most of its black holes are not shining as quasars when they merge. So each binary got the brightness of a real SDSS quasar with a similar mass, picked from about 105,000 of them.</p>
+          <p>That choice is what flips the mass trend. At a fixed brightness, heavier black holes flicker more and hide the signal. In real quasars heavier also means brighter, and brighter quasars flicker less, which more than cancels it.</p>
+          <p>We used three kinds of cadence: the real observation times of 49 PTF quasars, one real Stripe 82 light curve with 60 nights over nine years, and an LSST-like one with 484 nights over almost ten years. Even the sparse Stripe 82 cadence catches 37% of the sinusoids from heavy binaries.</p>
+          <p>Signals shaped like a sawtooth, a sudden drop and a slow climb back, are much harder. On PTF we catch 13.5% of them, on Stripe 82 only 3.3%, and even on the LSST-like cadence we miss more than half.</p>
+          <p>We also tried sampling the same PTF baselines every day. In our runs the extra points did not lower recovery beyond the error bars in any test.</p>
+          <p>The paper lists the recovery in each half-dex mass bin, for both signal shapes on all three cadences, so a forecast can use a different detection rate at each mass.</p>
+        </div>
+      </details>
+
+      <figure class="keyfig">
+        <a href="/assets/ls-recovery/cadence-comparison.png"><img src="/assets/ls-recovery/cadence-comparison.png" width="1126" height="468" loading="lazy" decoding="async" alt="Recovery fraction by cadence, PTF or PTF-like, idealised daily and LSST-like, for this work, Lin, Charisi and Haiman 2026, and a Gaussian-process analysis by Bertassi et al. 2026, for sinusoidal and sawtooth signals."></a>
+        <figcaption>Our numbers for heavy binaries (blue), the published periodogram values (orange), and a Gaussian-process analysis of those published light curves (pink), on each kind of cadence.
+          <span class="credit">Akbari &amp; Bhattacharya (2026), Fig. 5. <a href="https://arxiv.org/abs/2610.30772">Paper</a></span></figcaption>
+      </figure>
+
+      <details class="layer">
+        <summary><h2>For astronomers: data, method, caveats</h2></summary>
+        <div class="inner">
+          <dl class="spec">
+            <dt>Binaries</dt><dd>TNG100-1 public merger catalogue, 18,374 mergers. Primary mass from the black hole details record, log M<sub>1</sub> 6.07–10.09. Eight 0.5-dex bins over [6, 10), 375 systems per bin, 3000 per run.</dd>
+            <dt>Magnitudes</dt><dd>M<sub>i</sub>(z = 2) drawn per system from the 200 nearest-mass Shen et al. (2011) DR7 quasars (104,740 with a virial mass). Below log M = 6.502 a linear extrapolation with 1.02 mag scatter (16.2% of systems).</dd>
+            <dt>Noise</dt><dd>DRW with τ and σ from the MacLeod et al. (2010) relations. Photometric errors 0.05 (PTF), 0.02 (Stripe 82), 0.01 mag (LSST-like).</dd>
+            <dt>Signals</dt><dd>Sinusoid and sawtooth, A ~ U[0, 0.5) mag, P ~ U[30, 779] d (U[200, 1100] d on Stripe 82).</dd>
+            <dt>Cadences</dt><dd>49 observed PTF cadences of the Charisi et al. (2016) quasars (6207 epochs); one Stripe 82 light curve, 60 epochs over 9.14 yr; LSST-like, 5 d sampling with 1 d jitter and a 4-month annual gap, 484 epochs over 9.66 yr.</dd>
+            <dt>Detection</dt><dd>Generalised Lomb-Scargle, 1000 log-spaced frequencies from 1.5/T to 1/30 d<sup>−1</sup> in 25 bins. Significant if the injected periodogram beats the maximum over N<sub>MC</sub> = 10<sup>5</sup> null light curves in any bin, which caps the false-positive probability per light curve at 2.5 × 10<sup>−4</sup>.</dd>
+            <dt>High mass, PTF</dt><dd>Sinusoid 39.8 ± 1.6% (published: 44.7), sawtooth 13.5 ± 0.9% (published: 9.3). Errors widened for the shared cadences.</dd>
+            <dt>High mass, LSST-like</dt><dd>Sinusoid 76.9 ± 1.1% (published: 22.6), sawtooth 44.7 ± 1.3% (published: 1.1). With M<sub>i</sub> = −23 fixed: 49.5% and 22.4%.</dd>
+            <dt>High mass, Stripe 82</dt><dd>Sinusoid 37.0 ± 1.2%, sawtooth 3.3 ± 0.5%.</dd>
+          </dl>
+          <p>Of the 4.9-point PTF sinusoid difference, 1.4 points come from our fixed period range, which puts some injected periods past the search range of the shorter cadences. The rest, and most of the LSST-like difference, have no single identified cause, and the paper lists the candidates. Because DR7 is flux limited, the magnitudes drawn at low mass are brighter than typical, so the low-mass recovery is likely too high for a deeper survey. Host-galaxy light is not modelled. The null light curves use each system's true DRW parameters, where a real search has to estimate them. The threshold keeps rising with N<sub>MC</sub>: going from 10<sup>4</sup> to 10<sup>5</sup> lowered recovery by 7 to 10 points. A TNG100-1 merger is a kiloparsec-scale event, and the injected periods correspond to gravitational-wave frequencies of at least 21 nHz, at and above the upper end of the pulsar timing array band.</p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary><h2>Paper and code</h2></summary>
+        <div class="inner">
+          <p><strong>Akbari, K.</strong> &amp; Bhattacharya, S. “Lomb-Scargle Recovery of Periodic Binary Signals across Black Hole Mass and Cadence.” Preprint, arXiv:2610.30772.</p>
+          <p><a class="text-link" href="https://arxiv.org/abs/2610.30772">Read the paper (arXiv)</a> · <a class="text-link" href="https://github.com/WizardEternal/tng-smbhb-population">TNG population pipeline</a>. The injection-recovery outputs and analysis code are available on request.</p>
+        </div>
+      </details>
+    </article>
+  </main>
+  <footer class="site-footer"><div class="col"><p>© 2026 Karan Akbari</p></div></footer>
+</body>
+</html>
